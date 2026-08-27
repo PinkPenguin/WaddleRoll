@@ -92,3 +92,13 @@ python main.py
   It's just a place to record what you last verified your data against.
 - Windows-only right now (uses `os.startfile` for "Open Config Folder");
   easy to extend if that ever needs to change.
+
+
+## Data disclaimer
+
+The config/*.yaml files in each module contain class, skill, and item
+names compiled from their respective games for personal, non-commercial
+use. All game names, trademarks, and original content belong to their
+respective developers/publishers (Crate Entertainment, Panic Art Studios,
+Eleventh Hour Games, Bethesda). This project is an unofficial fan tool
+and is not affiliated with or endorsed by any of them.
