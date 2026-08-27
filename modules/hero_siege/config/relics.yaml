@@ -1,0 +1,600 @@
+# 142 relics parsed from your season 9 list.
+#
+# tags are derived from each relic's listed damage type (Arcane/Fire/
+# Cold->frost/Poison/Lightning/Physical Damage). Relics with no elemental
+# line (pure stat sticks -- life, movement speed, attributes, gold find,
+# etc.) are tagged "universal" AND set excluded: true by default, since
+# they're not build-defining. The universal-matching logic still lives in
+# roller.py in case you ever want to un-exclude one later or add a new
+# elementless relic that should stay in the pool.
+#
+# One name collision fixed: two different relics were both named "Bomb"
+# in the source list -- renamed to "Bomb (Explosion Damage)" and
+# "Bomb (Naval)" to keep them distinguishable in the editor.
+#
+# A handful of "proc" relics cast an actual class skill (e.g. Skull Axe
+# casts Demon Slayer's "Demon Form"). Only tagged by damage element, not
+# by which class the referenced skill belongs to -- worth a look if you
+# want those to lean toward their source class specifically.
+#
+relics:
+- name: Devil Horn
+  tags:
+  - universal
+  - lifereplenish
+  excluded: false
+- name: Frozen Orb
+  tags:
+  - frost
+  excluded: true
+- name: Skull Axe
+  tags:
+  - universal
+  excluded: false
+- name: Storm Dagger
+  tags:
+  - lightning
+  excluded: false
+- name: Odin's Sword
+  tags:
+  - fire
+  excluded: false
+- name: Devil Skull
+  tags:
+  - arcane
+  excluded: false
+- name: Ogre Club
+  tags:
+  - universal
+  excluded: false
+- name: Basilisk's Tooth
+  tags:
+  - arcane
+  excluded: false
+- name: Dragon Shield
+  tags:
+  - fire
+  excluded: false
+- name: Helm of Chaos
+  tags:
+  - arcane
+  excluded: false
+- name: Fire & Ice
+  tags:
+  - fire
+  - frost
+  excluded: false
+- name: Razorwire
+  tags:
+  - universal
+  excluded: false
+- name: Hungering Blade of Frost
+  tags:
+  - frost
+  excluded: false
+- name: Butcher's Knife
+  tags:
+  - arcane
+  excluded: false
+- name: Death's Scythe
+  tags:
+  - universal
+  - attack
+  excluded: false
+- name: Shiv
+  tags:
+  - universal
+  - attack
+  excluded: false
+- name: Cactus
+  tags:
+  - poison
+  excluded: false
+- name: Assassin's Shuriken
+  tags:
+  - arcane
+  excluded: false
+- name: Razor Leaf
+  tags:
+  - arcane
+  excluded: false
+- name: Rice & Chopsticks
+  tags:
+  - universal
+  excluded: true
+- name: DaPlayer's Dislocated Head
+  tags:
+  - fire
+  excluded: false
+- name: Witch Claw
+  tags:
+  - universal
+  excluded: true
+- name: The Holy Grail
+  tags:
+  - universal
+  - heal
+  excluded: false
+- name: Winner's Drug
+  tags:
+  - arcane
+  - cast
+  excluded: false
+- name: Lottery Ticket
+  tags:
+  - universal
+  excluded: true
+- name: Amazon's Spears
+  tags:
+  - poison
+  excluded: false
+- name: Jungle Vial
+  tags:
+  - poison
+  excluded: false
+- name: Mana Dice
+  tags:
+  - universal
+  - mana
+  excluded: false
+- name: Zombie's Face
+  tags:
+  - poison
+  excluded: false
+- name: Demon Sheep
+  tags:
+  - arcane
+  excluded: false
+- name: Shredder
+  tags:
+  - arcane
+  excluded: false
+- name: F.E.T.U.S.
+  tags:
+  - arcane
+  excluded: false
+- name: Templar Shield
+  tags:
+  - arcane
+  excluded: false
+- name: Guardian Angel
+  tags:
+  - arcane
+  excluded: false
+- name: Steve's Dirty Head
+  tags:
+  - arcane
+  excluded: false
+- name: Doom Flute
+  tags:
+  - arcane
+  excluded: true
+- name: Nunchucks
+  tags:
+  - universal
+  excluded: true
+- name: The Spoon
+  tags:
+  - universal
+  excluded: true
+- name: The Amputation Kit
+  tags:
+  - universal
+  excluded: true
+- name: Stigmata
+  tags:
+  - universal
+  excluded: true
+- name: Magic Mushroom
+  tags:
+  - universal
+  excluded: true
+- name: Jefre's Subscription
+  tags:
+  - universal
+  excluded: true
+- name: Rock Belt
+  tags:
+  - universal
+  excluded: true
+- name: Sausage
+  tags:
+  - universal
+  excluded: true
+- name: Spirit Skull
+  tags:
+  - universal
+  excluded: true
+- name: Whip
+  tags:
+  - universal
+  excluded: true
+- name: Cake
+  tags:
+  - universal
+  excluded: true
+- name: Cookies & Milk
+  tags:
+  - universal
+  excluded: true
+- name: Charmed Blood
+  tags:
+  - universal
+  excluded: true
+- name: Odd Book of Spells
+  tags:
+  - universal
+  excluded: true
+- name: The Holy Bible
+  tags:
+  - universal
+  excluded: true
+- name: Twin Blade
+  tags:
+  - universal
+  excluded: true
+- name: Hand Scythe
+  tags:
+  - universal
+  excluded: true
+- name: King's Crown
+  tags:
+  - universal
+  excluded: true
+- name: Damned Buckler
+  tags:
+  - universal
+  excluded: true
+- name: Barbed Shield
+  tags:
+  - universal
+  excluded: true
+- name: Bracer of Life
+  tags:
+  - universal
+  excluded: true
+- name: Token of Luck
+  tags:
+  - universal
+  excluded: true
+- name: Light Katana
+  tags:
+  - universal
+  excluded: true
+- name: Dirge
+  tags:
+  - physical
+  excluded: true
+- name: Hellscream Axe
+  tags:
+  - physical
+  excluded: true
+- name: Commander's Sword
+  tags:
+  - universal
+  excluded: true
+- name: Bomb (Explosion Damage)
+  tags:
+  - universal
+  excluded: true
+- name: Cheese Burger
+  tags:
+  - universal
+  excluded: true
+- name: Triforce
+  tags:
+  - universal
+  excluded: true
+- name: Razer Blade
+  tags:
+  - universal
+  excluded: true
+- name: Mayo's Old Sock
+  tags:
+  - universal
+  excluded: true
+- name: Shade of Death
+  tags:
+  - universal
+  excluded: true
+- name: Half Eaten Mochi
+  tags:
+  - cast
+  - life
+  excluded: true
+- name: Bonsai Tree
+  tags:
+  - universal
+  excluded: true
+- name: Orb of Fire
+  tags:
+  - fire
+  excluded: true
+- name: Orb of Ice
+  tags:
+  - frost
+  excluded: true
+- name: Orb of Poison
+  tags:
+  - poison
+  excluded: true
+- name: Orb of Chaos
+  tags:
+  - arcane
+  excluded: true
+- name: Butterfly Knife
+  tags:
+  - universal
+  excluded: true
+- name: Lightning Globe
+  tags:
+  - lightning
+  excluded: true
+- name: Steam Sale
+  tags:
+  - universal
+  excluded: true
+- name: Monkey King Bar
+  tags:
+  - universal
+  excluded: true
+- name: Horned Mask
+  tags:
+  - cast
+  - mana
+  excluded: true
+- name: Hand of Midas
+  tags:
+  - universal
+  excluded: true
+- name: Fortune Card
+  tags:
+  - universal
+  excluded: true
+- name: Metal Detector
+  tags:
+  - universal
+  excluded: true
+- name: Lost Wand
+  tags:
+  - universal
+  excluded: true
+- name: Newt Tail
+  tags:
+  - universal
+  excluded: true
+- name: Orb of Lightning
+  tags:
+  - lightning
+  excluded: true
+- name: Fire Globe
+  tags:
+  - fire
+  excluded: true
+- name: Ice Globe
+  tags:
+  - frost
+  excluded: true
+- name: Poison Globe
+  tags:
+  - poison
+  excluded: true
+- name: Arcane Globe
+  tags:
+  - arcane
+  excluded: true
+- name: Bomb (Naval)
+  tags:
+  - universal
+  excluded: true
+- name: Rubber Duck
+  tags:
+  - arcane
+  excluded: false
+- name: Apple
+  tags:
+  - arcane
+  excluded: false
+- name: Blazing Boots
+  tags:
+  - fire
+  excluded: false
+- name: Aaron's Staff
+  tags:
+  - universal
+  - heal
+  excluded: true
+- name: Book of Belial
+  tags:
+  - universal
+  excluded: true
+- name: Double Scythe
+  tags:
+  - arcane
+  excluded: false
+- name: Rainbow Gate
+  tags:
+  - arcane
+  excluded: false
+- name: Fly Swatter
+  tags:
+  - arcane
+  excluded: false
+- name: Angel Staff of Apocalypse
+  tags:
+  - arcane
+  excluded: false
+- name: Rocket Barrage
+  tags:
+  - arcane
+  excluded: false
+- name: Stickman Steve
+  tags:
+  - arcane
+  excluded: false
+- name: Meat Hook
+  tags:
+  - arcane
+  excluded: false
+- name: Candy Crusher
+  tags:
+  - arcane
+  excluded: false
+- name: Razer Headset
+  tags:
+  - arcane
+  excluded: false
+- name: Tequila!!!
+  tags:
+  - fire
+  excluded: false
+- name: The Mighty Sushi
+  tags:
+  - fire
+  excluded: false
+- name: Ninja Hook
+  tags:
+  - arcane
+  excluded: false
+- name: Dislocated Eye
+  tags:
+  - frost
+  excluded: false
+- name: Shattered Katana
+  tags:
+  - arcane
+  excluded: false
+- name: Large Beer
+  tags:
+  - universal
+  excluded: true
+- name: Bouncy
+  tags:
+  - arcane
+  excluded: false
+- name: Balalayka
+  tags:
+  - arcane
+  excluded: false
+- name: Darts
+  tags:
+  - arcane
+  excluded: false
+- name: Satan's Horn
+  tags:
+  - arcane
+  excluded: false
+- name: Necromancer's Finger
+  tags:
+  - arcane
+  excluded: false
+- name: Jar of Flies
+  tags:
+  - arcane
+  excluded: false
+- name: Satan's Tooth
+  tags:
+  - fire
+  excluded: false
+- name: ES Energy
+  tags:
+  - universal
+  - mana
+  excluded: true
+- name: Boomerang
+  tags:
+  - arcane
+  excluded: false
+- name: Squishy the Suicidal Pig
+  tags:
+  - arcane
+  excluded: false
+- name: Satan's Eye
+  tags:
+  - fire
+  excluded: false
+- name: Light Cola
+  tags:
+  - universal
+  excluded: true
+- name: 1000 KG
+  tags:
+  - arcane
+  excluded: false
+- name: Keygen.exe
+  tags:
+  - arcane
+  excluded: false
+- name: Dragon's Head
+  tags:
+  - fire
+  excluded: false
+- name: Casino Die
+  tags:
+  - arcane
+  excluded: false
+- name: Vadjra
+  tags:
+  - lightning
+  excluded: false
+- name: Maryo's Pipe
+  tags:
+  - universal
+  excluded: true
+- name: Rotten Apple
+  tags:
+  - poison
+  excluded: false
+- name: Delicious Pie
+  tags:
+  - arcane
+  excluded: false
+- name: A Wizard's Hat
+  tags:
+  - universal
+  - mana
+  excluded: true
+- name: Doggo
+  tags:
+  - arcane
+  excluded: false
+- name: Skullbat
+  tags:
+  - arcane
+  excluded: false
+- name: The Eye
+  tags:
+  - arcane
+  excluded: false
+- name: Shrunken Head
+  tags:
+  - poison
+  excluded: false
+- name: Ancient Rock
+  tags:
+  - arcane
+  excluded: false
+- name: The Allmighty Fedora
+  tags:
+  - arcane
+  excluded: false
+- name: War Zeppelin
+  tags:
+  - arcane
+  excluded: false
+- name: Karp Head
+  tags:
+  - frost
+  excluded: false
+- name: Minisect
+  tags:
+  - arcane
+  excluded: false
+- name: Honey Bee
+  tags:
+  - arcane
+  excluded: false
+- name: Pickled Brain
+  tags:
+  - arcane
+  excluded: false

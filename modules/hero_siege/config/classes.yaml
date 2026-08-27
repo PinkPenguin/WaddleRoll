@@ -1,0 +1,1465 @@
+# 24 classes, 432 total skill entries, compiled from your list.
+#
+# FLAGS TO REVIEW:
+#   - Redneck (tree 2) and Stormweaver (tree 1) were each 1 skill short
+#     in the source list (8 instead of 9). Both have a placeholder
+#     "__MISSING_9TH_SKILL__" entry, pre-excluded so it can never roll.
+#     Replace it once you find the real 9th skill name.
+#   - "tags" on every class are MY BEST GUESSES from skill/tree naming,
+#     not verified game data. Review/correct these via Manage Classes --
+#     they're what the relic wildcard's tag-matching relies on.
+#
+classes:
+- name: Viking
+  tags:
+  - physical
+  - melee
+  excluded: false
+  skills:
+  - name: Weapon Master
+    tree: 1
+    excluded: false
+  - name: Charge
+    tree: 1
+    excluded: false
+  - name: Devastating Charge
+    tree: 1
+    excluded: false
+  - name: Stoneskin
+    tree: 1
+    excluded: false
+  - name: Norse Resistance
+    tree: 1
+    excluded: false
+  - name: Defensive Shout
+    tree: 1
+    excluded: false
+  - name: Odin's Fury
+    tree: 1
+    excluded: false
+  - name: Battle Agility
+    tree: 1
+    excluded: false
+  - name: Combat Orders
+    tree: 1
+    excluded: false
+  - name: Seismic Slam
+    tree: 2
+    excluded: false
+  - name: Brute Force
+    tree: 2
+    excluded: false
+  - name: Zeal
+    tree: 2
+    excluded: false
+  - name: Throw!
+    tree: 2
+    excluded: false
+  - name: Ymir's Champion
+    tree: 2
+    excluded: false
+  - name: Whirlwind
+    tree: 2
+    excluded: false
+  - name: Shockwave
+    tree: 2
+    excluded: false
+  - name: Berserk
+    tree: 2
+    excluded: false
+  - name: Demolishing Winds
+    tree: 2
+    excluded: false
+- name: Pyromancer
+  tags:
+  - fire
+  excluded: false
+  skills:
+  - name: Blazing Trail
+    tree: 1
+    excluded: false
+  - name: Fire Enchant
+    tree: 1
+    excluded: false
+  - name: Phoenix Flight
+    tree: 1
+    excluded: false
+  - name: Inferno Slash
+    tree: 1
+    excluded: false
+  - name: Ignite
+    tree: 1
+    excluded: false
+  - name: Fire Shield
+    tree: 1
+    excluded: false
+  - name: Searing Chains
+    tree: 1
+    excluded: false
+  - name: Fiery Presence
+    tree: 1
+    excluded: false
+  - name: Avatar of Fire
+    tree: 1
+    excluded: false
+  - name: Fireball
+    tree: 2
+    excluded: false
+  - name: Breath of Fire
+    tree: 2
+    excluded: false
+  - name: Meteor
+    tree: 2
+    excluded: false
+  - name: Scorching Aura
+    tree: 2
+    excluded: false
+  - name: Hydra
+    tree: 2
+    excluded: false
+  - name: Comet
+    tree: 2
+    excluded: false
+  - name: Fire Nova
+    tree: 2
+    excluded: false
+  - name: Volcano
+    tree: 2
+    excluded: false
+  - name: Armageddon
+    tree: 2
+    excluded: false
+- name: Marksman
+  tags:
+  - physical
+  - ranged
+  - tech
+  excluded: false
+  skills:
+  - name: Trickshot
+    tree: 1
+    excluded: false
+  - name: Vault
+    tree: 1
+    excluded: false
+  - name: Multishot
+    tree: 1
+    excluded: false
+  - name: Arrow Rain
+    tree: 1
+    excluded: false
+  - name: Homing Missile
+    tree: 1
+    excluded: false
+  - name: Critical Accuracy
+    tree: 1
+    excluded: false
+  - name: Arrow Rampage
+    tree: 1
+    excluded: false
+  - name: Agility
+    tree: 1
+    excluded: false
+  - name: Volatile Shot
+    tree: 1
+    excluded: false
+  - name: Arrow Turret
+    tree: 2
+    excluded: false
+  - name: Frag Grenade
+    tree: 2
+    excluded: false
+  - name: B.E.A.C.O.N.
+    tree: 2
+    excluded: false
+  - name: Cannon Turret
+    tree: 2
+    excluded: false
+  - name: Turret Mastery
+    tree: 2
+    excluded: false
+  - name: Landmine
+    tree: 2
+    excluded: false
+  - name: Rocket Turret
+    tree: 2
+    excluded: false
+  - name: Master Mechanic
+    tree: 2
+    excluded: false
+  - name: Gunner Drone
+    tree: 2
+    excluded: false
+- name: Pirate
+  tags:
+  - physical
+  - ranged
+  - fire
+  excluded: false
+  skills:
+  - name: Buckshot
+    tree: 1
+    excluded: false
+  - name: Grenade Jump
+    tree: 1
+    excluded: false
+  - name: Explosive Barrel
+    tree: 1
+    excluded: false
+  - name: Cannonball
+    tree: 1
+    excluded: false
+  - name: Explosive Bullets
+    tree: 1
+    excluded: false
+  - name: Powder Trail
+    tree: 1
+    excluded: false
+  - name: Kneecap
+    tree: 1
+    excluded: false
+  - name: Bomb Barrage
+    tree: 1
+    excluded: false
+  - name: Rapid Fire
+    tree: 1
+    excluded: false
+  - name: Torrent
+    tree: 2
+    excluded: false
+  - name: Freezing Chain Shot
+    tree: 2
+    excluded: false
+  - name: Frozen Lead
+    tree: 2
+    excluded: false
+  - name: Parrot
+    tree: 2
+    excluded: false
+  - name: Set Sail
+    tree: 2
+    excluded: false
+  - name: Remiges
+    tree: 2
+    excluded: false
+  - name: Anchor Swing
+    tree: 2
+    excluded: false
+  - name: Treasure Hunter
+    tree: 2
+    excluded: false
+  - name: Land Ahoy!
+    tree: 2
+    excluded: false
+- name: Nomad
+  tags:
+  - physical
+  - melee
+  - sand
+  excluded: false
+  skills:
+  - name: Sand Carver
+    tree: 1
+    excluded: false
+  - name: Cloud of Sand
+    tree: 1
+    excluded: false
+  - name: Sand Gush
+    tree: 1
+    excluded: false
+  - name: Sand Entombment
+    tree: 1
+    excluded: false
+  - name: Oasis Aura
+    tree: 1
+    excluded: false
+  - name: Sand Tremors
+    tree: 1
+    excluded: false
+  - name: Mystic Sand
+    tree: 1
+    excluded: false
+  - name: Dissipating Tornado
+    tree: 1
+    excluded: false
+  - name: Sand Vortex
+    tree: 1
+    excluded: false
+  - name: Blade Strike
+    tree: 2
+    excluded: false
+  - name: Scimitar Charge
+    tree: 2
+    excluded: false
+  - name: Eye of Ra
+    tree: 2
+    excluded: false
+  - name: Healing Sunrays
+    tree: 2
+    excluded: false
+  - name: Flying Scimitar
+    tree: 2
+    excluded: false
+  - name: Rupture
+    tree: 2
+    excluded: false
+  - name: Chainslice
+    tree: 2
+    excluded: false
+  - name: Phantom Blade
+    tree: 2
+    excluded: false
+  - name: Hemorrhage
+    tree: 2
+    excluded: false
+- name: Redneck
+  tags:
+  - fire
+  - physical
+  - melee
+  excluded: false
+  skills:
+  - name: Moonshine Molotov
+    tree: 1
+    excluded: false
+  - name: Pipe Bombs
+    tree: 1
+    excluded: false
+  - name: Oil Spill
+    tree: 1
+    excluded: false
+  - name: Tire Fire
+    tree: 1
+    excluded: false
+  - name: Spontaneous Combustion
+    tree: 1
+    excluded: false
+  - name: Hillbilly Rage
+    tree: 1
+    excluded: false
+  - name: Moonshine Madness
+    tree: 1
+    excluded: false
+  - name: Combustible Oil
+    tree: 1
+    excluded: false
+  - name: Pickup Raid
+    tree: 1
+    excluded: false
+  - name: Chainsaw Slash
+    tree: 2
+    excluded: false
+  - name: Durable Wear
+    tree: 2
+    excluded: false
+  - name: Chainsaw Massacre
+    tree: 2
+    excluded: false
+  - name: Chainsaw Mastery
+    tree: 2
+    excluded: false
+  - name: Revved Up
+    tree: 2
+    excluded: false
+  - name: Experienced Logger
+    tree: 2
+    excluded: false
+  - name: Logger's Endurance
+    tree: 2
+    excluded: false
+  - name: Rogue Chainsaw
+    tree: 2
+    excluded: false
+  - name: Tree Trunk Triumph
+    tree: 2
+    excluded: false
+- name: Necromancer
+  tags:
+  - poison
+  - summon
+  excluded: false
+  skills:
+  - name: Bone Shred
+    tree: 1
+    excluded: false
+  - name: Meat Shield
+    tree: 1
+    excluded: false
+  - name: Meat Bomb
+    tree: 1
+    excluded: false
+  - name: Poison Breath
+    tree: 1
+    excluded: false
+  - name: Bone Spear
+    tree: 1
+    excluded: false
+  - name: Cursed Ground
+    tree: 1
+    excluded: false
+  - name: Bone Spirit
+    tree: 1
+    excluded: false
+  - name: Corpse Explosion
+    tree: 1
+    excluded: false
+  - name: Poison Nova
+    tree: 1
+    excluded: false
+  - name: Amplify damage
+    tree: 2
+    excluded: false
+  - name: Raise Skeleton
+    tree: 2
+    excluded: false
+  - name: Summon Mastery
+    tree: 2
+    excluded: false
+  - name: Raise Skeleton Mage
+    tree: 2
+    excluded: false
+  - name: Life Tap
+    tree: 2
+    excluded: false
+  - name: Summon Frenzy
+    tree: 2
+    excluded: false
+  - name: Summon Damned Legion
+    tree: 2
+    excluded: false
+  - name: Summon Resistance
+    tree: 2
+    excluded: false
+  - name: Summon Vengeful Spirit
+    tree: 2
+    excluded: false
+- name: Samurai
+  tags:
+  - physical
+  - melee
+  excluded: false
+  skills:
+  - name: Quickslash
+    tree: 1
+    excluded: false
+  - name: Battle Glance
+    tree: 1
+    excluded: false
+  - name: Evasion
+    tree: 1
+    excluded: false
+  - name: Smoke Bomb
+    tree: 1
+    excluded: false
+  - name: Shuriken Throw
+    tree: 1
+    excluded: false
+  - name: Warrior's Spirit
+    tree: 1
+    excluded: false
+  - name: Bushido
+    tree: 1
+    excluded: false
+  - name: Explosive Kunai
+    tree: 1
+    excluded: false
+  - name: Live by the Sword
+    tree: 1
+    excluded: false
+  - name: Blade Barrier
+    tree: 2
+    excluded: false
+  - name: Fan of Knives
+    tree: 2
+    excluded: false
+  - name: Omnislash
+    tree: 2
+    excluded: false
+  - name: Exploding Bolas
+    tree: 2
+    excluded: false
+  - name: Way of the Warrior
+    tree: 2
+    excluded: false
+  - name: For Honor
+    tree: 2
+    excluded: false
+  - name: Shadow Step
+    tree: 2
+    excluded: false
+  - name: Burst of Speed
+    tree: 2
+    excluded: false
+  - name: Empire's Slash
+    tree: 2
+    excluded: false
+- name: Paladin
+  tags:
+  - holy
+  - lightning
+  excluded: false
+  skills:
+  - name: Vengeance
+    tree: 1
+    excluded: false
+  - name: Thunder Shield
+    tree: 1
+    excluded: false
+  - name: Lightning Fury
+    tree: 1
+    excluded: false
+  - name: Holy Shock Aura
+    tree: 1
+    excluded: false
+  - name: Divine Storm
+    tree: 1
+    excluded: false
+  - name: Fanaticism Aura
+    tree: 1
+    excluded: false
+  - name: Ball Lightning
+    tree: 1
+    excluded: false
+  - name: Eye of the Storm
+    tree: 1
+    excluded: false
+  - name: Thor's Fury
+    tree: 1
+    excluded: false
+  - name: Holy Bolt
+    tree: 2
+    excluded: false
+  - name: Divine Wisdom
+    tree: 2
+    excluded: false
+  - name: Holy Aura
+    tree: 2
+    excluded: false
+  - name: Holy Hammer
+    tree: 2
+    excluded: false
+  - name: Holy Retribution
+    tree: 2
+    excluded: false
+  - name: Light's Embrace
+    tree: 2
+    excluded: false
+  - name: Fist of the Heavens
+    tree: 2
+    excluded: false
+  - name: Holy Nova
+    tree: 2
+    excluded: false
+  - name: The Venerated One
+    tree: 2
+    excluded: false
+- name: Amazon
+  tags:
+  - poison
+  - physical
+  - lightning
+  excluded: false
+  skills:
+  - name: Noxious Strike
+    tree: 1
+    excluded: false
+  - name: Caustic Spearhead
+    tree: 1
+    excluded: false
+  - name: Leaping Ambush
+    tree: 1
+    excluded: false
+  - name: Death from Above
+    tree: 1
+    excluded: false
+  - name: Toxic Remains
+    tree: 1
+    excluded: false
+  - name: Master Poisoner
+    tree: 1
+    excluded: false
+  - name: Jungle Camouflage
+    tree: 1
+    excluded: false
+  - name: Thrill of the Hunt
+    tree: 1
+    excluded: false
+  - name: Envenom
+    tree: 1
+    excluded: false
+  - name: Astope's Gift
+    tree: 2
+    excluded: false
+  - name: Feint
+    tree: 2
+    excluded: false
+  - name: Rebound
+    tree: 2
+    excluded: false
+  - name: Spearnage
+    tree: 2
+    excluded: false
+  - name: Storm Dash
+    tree: 2
+    excluded: false
+  - name: Thunder Goddesses Chosen
+    tree: 2
+    excluded: false
+  - name: Chooser of the Slain
+    tree: 2
+    excluded: false
+  - name: Thunder Fury
+    tree: 2
+    excluded: false
+  - name: Astrope's Battle Maiden
+    tree: 2
+    excluded: false
+- name: Demon Slayer
+  tags:
+  - physical
+  - ranged
+  - melee
+  excluded: false
+  skills:
+  - name: Trigger Finger
+    tree: 1
+    excluded: false
+  - name: Eagle Eye
+    tree: 1
+    excluded: false
+  - name: Execute
+    tree: 1
+    excluded: false
+  - name: Bullet Hell
+    tree: 1
+    excluded: false
+  - name: Shredder Trap
+    tree: 1
+    excluded: false
+  - name: Possessed Bullet
+    tree: 1
+    excluded: false
+  - name: Demon's Presence
+    tree: 1
+    excluded: false
+  - name: Concentration Aura
+    tree: 1
+    excluded: false
+  - name: Absolute Mayhem
+    tree: 1
+    excluded: false
+  - name: Fast Slices
+    tree: 2
+    excluded: false
+  - name: Demon's Calling
+    tree: 2
+    excluded: false
+  - name: Heart Attack
+    tree: 2
+    excluded: false
+  - name: Shadow Anomalies
+    tree: 2
+    excluded: false
+  - name: Soul Leech
+    tree: 2
+    excluded: false
+  - name: Sword Handler
+    tree: 2
+    excluded: false
+  - name: Demon's Shield
+    tree: 2
+    excluded: false
+  - name: Slice of Shadows
+    tree: 2
+    excluded: false
+  - name: Demon Form
+    tree: 2
+    excluded: false
+- name: Demonspawn
+  tags:
+  - physical
+  - blood
+  - arcane
+  excluded: false
+  skills:
+  - name: Bone Fragments
+    tree: 1
+    excluded: false
+  - name: Impale
+    tree: 1
+    excluded: false
+  - name: Ossification
+    tree: 1
+    excluded: false
+  - name: Single Out
+    tree: 1
+    excluded: false
+  - name: Bone Storm
+    tree: 1
+    excluded: false
+  - name: Cartilage Build Up
+    tree: 1
+    excluded: false
+  - name: Ominous Aura
+    tree: 1
+    excluded: false
+  - name: Spinal Tap
+    tree: 1
+    excluded: false
+  - name: Bone Barrage
+    tree: 1
+    excluded: false
+  - name: Blood Bolts
+    tree: 2
+    excluded: false
+  - name: Gut Spread
+    tree: 2
+    excluded: false
+  - name: Manapool Aura
+    tree: 2
+    excluded: false
+  - name: Mana Shield
+    tree: 2
+    excluded: false
+  - name: Mana Devourer
+    tree: 2
+    excluded: false
+  - name: Demonic Presence
+    tree: 2
+    excluded: false
+  - name: Blood Surge
+    tree: 2
+    excluded: false
+  - name: Blood Demons
+    tree: 2
+    excluded: false
+  - name: Blood Tendrils
+    tree: 2
+    excluded: false
+- name: Shaman
+  tags:
+  - earth
+  - lightning
+  - fire
+  - summon
+  excluded: false
+  skills:
+  - name: Tectonic Boulder
+    tree: 1
+    excluded: false
+  - name: Twisters
+    tree: 1
+    excluded: false
+  - name: Rock Fragments
+    tree: 1
+    excluded: false
+  - name: Earth Bind
+    tree: 1
+    excluded: false
+  - name: Tornado
+    tree: 1
+    excluded: false
+  - name: Earth's Grace
+    tree: 1
+    excluded: false
+  - name: Meteor Storm
+    tree: 1
+    excluded: false
+  - name: Nature's Prophet
+    tree: 1
+    excluded: false
+  - name: Fissures
+    tree: 1
+    excluded: false
+  - name: Earth Totem
+    tree: 2
+    excluded: false
+  - name: Spiritual Guide
+    tree: 2
+    excluded: false
+  - name: Storm Totem
+    tree: 2
+    excluded: false
+  - name: Spirit Wolves
+    tree: 2
+    excluded: false
+  - name: Scent of the Wolf
+    tree: 2
+    excluded: false
+  - name: Fire Totem
+    tree: 2
+    excluded: false
+  - name: Fractal Mind
+    tree: 2
+    excluded: false
+  - name: Astral Intellect
+    tree: 2
+    excluded: false
+  - name: Chaos Totem
+    tree: 2
+    excluded: false
+- name: White Mage
+  tags:
+  - dark
+  - holy
+  excluded: false
+  skills:
+  - name: Satan's Mark
+    tree: 1
+    excluded: false
+  - name: Restless Spirit
+    tree: 1
+    excluded: false
+  - name: Digest Souls
+    tree: 1
+    excluded: false
+  - name: Shadow Bolt
+    tree: 1
+    excluded: false
+  - name: Soul Spurn
+    tree: 1
+    excluded: false
+  - name: Martyr
+    tree: 1
+    excluded: false
+  - name: Dark Oath
+    tree: 1
+    excluded: false
+  - name: Malediction
+    tree: 1
+    excluded: false
+  - name: Black Mass
+    tree: 1
+    excluded: false
+  - name: Heavenly Fire
+    tree: 2
+    excluded: false
+  - name: Burst of Light
+    tree: 2
+    excluded: false
+  - name: Flash Heal
+    tree: 2
+    excluded: false
+  - name: Benediction
+    tree: 2
+    excluded: false
+  - name: Divine Healing
+    tree: 2
+    excluded: false
+  - name: Chain of Holy Lightning
+    tree: 2
+    excluded: false
+  - name: Holy Shield
+    tree: 2
+    excluded: false
+  - name: Healing Zone
+    tree: 2
+    excluded: false
+  - name: Mana Orb
+    tree: 2
+    excluded: false
+- name: Marauder
+  tags:
+  - physical
+  - fire
+  - melee
+  excluded: false
+  skills:
+  - name: Heavy Ball
+    tree: 1
+    excluded: false
+  - name: Bouncing Grenade
+    tree: 1
+    excluded: false
+  - name: Unstable Bomb
+    tree: 1
+    excluded: false
+  - name: The Big Bo-oM
+    tree: 1
+    excluded: false
+  - name: Wrecking Ball
+    tree: 1
+    excluded: false
+  - name: Crazy Grapple
+    tree: 1
+    excluded: false
+  - name: Flail Mastery
+    tree: 1
+    excluded: false
+  - name: Bombardment
+    tree: 1
+    excluded: false
+  - name: Force Overwhelming
+    tree: 1
+    excluded: false
+  - name: Serrated Chains
+    tree: 2
+    excluded: false
+  - name: Retiarius Net
+    tree: 2
+    excluded: false
+  - name: Chain Trap
+    tree: 2
+    excluded: false
+  - name: Titanium Chains
+    tree: 2
+    excluded: false
+  - name: Master Trap Maker
+    tree: 2
+    excluded: false
+  - name: Rend Flesh
+    tree: 2
+    excluded: false
+  - name: Madness Control
+    tree: 2
+    excluded: false
+  - name: Resilient Gladiator
+    tree: 2
+    excluded: false
+  - name: Annihilation
+    tree: 2
+    excluded: false
+- name: Plague Doctor
+  tags:
+  - poison
+  - blood
+  excluded: false
+  skills:
+  - name: Surgical Blood Letting
+    tree: 1
+    excluded: false
+  - name: Malpractice
+    tree: 1
+    excluded: false
+  - name: Crow Mask's Presence
+    tree: 1
+    excluded: false
+  - name: Blood Sustenance
+    tree: 1
+    excluded: false
+  - name: Miasma
+    tree: 1
+    excluded: false
+  - name: Booster Shot
+    tree: 1
+    excluded: false
+  - name: Lifeblood Aura
+    tree: 1
+    excluded: false
+  - name: Devout Doctor
+    tree: 1
+    excluded: false
+  - name: Defunct Surgeon
+    tree: 1
+    excluded: false
+  - name: Plague of Rats
+    tree: 2
+    excluded: false
+  - name: Toxic Flask
+    tree: 2
+    excluded: false
+  - name: Crematus
+    tree: 2
+    excluded: false
+  - name: Oops
+    tree: 2
+    excluded: false
+  - name: Chant of Weakness
+    tree: 2
+    excluded: false
+  - name: Exploding Mice
+    tree: 2
+    excluded: false
+  - name: Jar of Leeches
+    tree: 2
+    excluded: false
+  - name: Plague Master
+    tree: 2
+    excluded: false
+  - name: Randy the Rancid Rat
+    tree: 2
+    excluded: false
+- name: Shield Lancer
+  tags:
+  - physical
+  - melee
+  excluded: false
+  skills:
+  - name: Glorious Strike
+    tree: 1
+    excluded: false
+  - name: Commending Banner
+    tree: 1
+    excluded: false
+  - name: Battle Charge
+    tree: 1
+    excluded: false
+  - name: Lance Thrust
+    tree: 1
+    excluded: false
+  - name: Parry
+    tree: 1
+    excluded: false
+  - name: Armor Crush
+    tree: 1
+    excluded: false
+  - name: Crushing Lance
+    tree: 1
+    excluded: false
+  - name: Lance Throw
+    tree: 1
+    excluded: false
+  - name: Glory
+    tree: 1
+    excluded: false
+  - name: Shield Slam
+    tree: 2
+    excluded: false
+  - name: Taunt
+    tree: 2
+    excluded: false
+  - name: Counter
+    tree: 2
+    excluded: false
+  - name: Knight's Resilience
+    tree: 2
+    excluded: false
+  - name: Damage Reflect
+    tree: 2
+    excluded: false
+  - name: Honed Defenses
+    tree: 2
+    excluded: false
+  - name: Shield Wall
+    tree: 2
+    excluded: false
+  - name: Knight's Vigor
+    tree: 2
+    excluded: false
+  - name: Last Stand
+    tree: 2
+    excluded: false
+- name: Illusionist
+  tags:
+  - arcane
+  - time
+  - sand
+  excluded: false
+  skills:
+  - name: Sand Guardians
+    tree: 1
+    excluded: false
+  - name: Piercing Sand
+    tree: 1
+    excluded: false
+  - name: Call For War
+    tree: 1
+    excluded: false
+  - name: Link of Sand
+    tree: 1
+    excluded: false
+  - name: Dissipation
+    tree: 1
+    excluded: false
+  - name: Spirit Link
+    tree: 1
+    excluded: false
+  - name: Cheapshot
+    tree: 1
+    excluded: false
+  - name: Circle of Guardians
+    tree: 1
+    excluded: false
+  - name: Combat Order
+    tree: 1
+    excluded: false
+  - name: Age Proliferation
+    tree: 2
+    excluded: false
+  - name: Gravitation Slam
+    tree: 2
+    excluded: false
+  - name: Split Reality
+    tree: 2
+    excluded: false
+  - name: Sands of Time
+    tree: 2
+    excluded: false
+  - name: Time Deceleration
+    tree: 2
+    excluded: false
+  - name: Dimensional Displacement
+    tree: 2
+    excluded: false
+  - name: Precognition
+    tree: 2
+    excluded: false
+  - name: Expansive Mind
+    tree: 2
+    excluded: false
+  - name: Temporal Heroes
+    tree: 2
+    excluded: false
+- name: Jotunn
+  tags:
+  - frost
+  excluded: false
+  skills:
+  - name: Frozen Boulder
+    tree: 1
+    excluded: false
+  - name: Breath of Ice
+    tree: 1
+    excluded: false
+  - name: Power of the Ancients
+    tree: 1
+    excluded: false
+  - name: Orb of Frost
+    tree: 1
+    excluded: false
+  - name: Frozen Hide
+    tree: 1
+    excluded: false
+  - name: Icicles
+    tree: 1
+    excluded: false
+  - name: Portal of Ice
+    tree: 1
+    excluded: false
+  - name: Avatar of Frost
+    tree: 1
+    excluded: false
+  - name: Blizzard
+    tree: 1
+    excluded: false
+  - name: Glacial Tremors
+    tree: 2
+    excluded: false
+  - name: Flash Freeze
+    tree: 2
+    excluded: false
+  - name: Freezing Leap
+    tree: 2
+    excluded: false
+  - name: Permafrost
+    tree: 2
+    excluded: false
+  - name: Glacial Armor
+    tree: 2
+    excluded: false
+  - name: Frost Sunder
+    tree: 2
+    excluded: false
+  - name: Avalanche
+    tree: 2
+    excluded: false
+  - name: Absolute Zero
+    tree: 2
+    excluded: false
+  - name: The Embodiment of Aurgelmir
+    tree: 2
+    excluded: false
+- name: Exo
+  tags:
+  - solar
+  - lunar
+  - fire
+  - dark
+  excluded: false
+  skills:
+  - name: Scorching Whip
+    tree: 1
+    excluded: false
+  - name: Whiplash
+    tree: 1
+    excluded: false
+  - name: Solar Flare
+    tree: 1
+    excluded: false
+  - name: Shine Bright
+    tree: 1
+    excluded: false
+  - name: Solar Dash
+    tree: 1
+    excluded: false
+  - name: Blinding Light
+    tree: 1
+    excluded: false
+  - name: Solar Form
+    tree: 1
+    excluded: false
+  - name: Solar Burst
+    tree: 1
+    excluded: false
+  - name: Supernova
+    tree: 1
+    excluded: false
+  - name: Collision
+    tree: 2
+    excluded: false
+  - name: Dark Side of the Moon
+    tree: 2
+    excluded: false
+  - name: Tsunami
+    tree: 2
+    excluded: false
+  - name: Asteroid
+    tree: 2
+    excluded: false
+  - name: Lunar Form
+    tree: 2
+    excluded: false
+  - name: Lunar Orbit
+    tree: 2
+    excluded: false
+  - name: Blood Moon
+    tree: 2
+    excluded: false
+  - name: Moonlight
+    tree: 2
+    excluded: false
+  - name: Black Hole
+    tree: 2
+    excluded: false
+- name: Butcher
+  tags:
+  - physical
+  - melee
+  - chaos
+  excluded: false
+  skills:
+  - name: Slicing Throw
+    tree: 1
+    excluded: false
+  - name: Furious Strike
+    tree: 1
+    excluded: false
+  - name: Holy Form
+    tree: 1
+    excluded: false
+  - name: Unholy Form
+    tree: 1
+    excluded: false
+  - name: Sacrilegious Scorn
+    tree: 1
+    excluded: false
+  - name: EndingFate
+    tree: 1
+    excluded: false
+  - name: Spiritual Duality
+    tree: 1
+    excluded: false
+  - name: Awakening Fury
+    tree: 1
+    excluded: false
+  - name: Insatiable Hunger
+    tree: 1
+    excluded: false
+  - name: Chain Rip
+    tree: 2
+    excluded: false
+  - name: Brutalizing Slice
+    tree: 2
+    excluded: false
+  - name: Fuel to Fire
+    tree: 2
+    excluded: false
+  - name: Hunger For Blood
+    tree: 2
+    excluded: false
+  - name: Butchers Hook
+    tree: 2
+    excluded: false
+  - name: Chain Swing
+    tree: 2
+    excluded: false
+  - name: Submerged Knives
+    tree: 2
+    excluded: false
+  - name: Enraged Mania
+    tree: 2
+    excluded: false
+  - name: Blender
+    tree: 2
+    excluded: false
+- name: Stormweaver
+  tags:
+  - lightning
+  excluded: false
+  skills:
+  - name: Charged Bolts
+    tree: 1
+    excluded: false
+  - name: Manafiend
+    tree: 1
+    excluded: false
+  - name: Pulsing Charge
+    tree: 1
+    excluded: false
+  - name: Lightning Surge
+    tree: 1
+    excluded: true
+  - name: Gateway
+    tree: 1
+    excluded: false
+  - name: Chain Lightning
+    tree: 1
+    excluded: false
+  - name: Static Shock
+    tree: 1
+    excluded: false
+  - name: Storm Cloud
+    tree: 1
+    excluded: false
+  - name: Symphony of Thunder
+    tree: 1
+    excluded: false
+  - name: Electric Cells
+    tree: 2
+    excluded: false
+  - name: Storm Bolt
+    tree: 2
+    excluded: false
+  - name: High Voltage Aura
+    tree: 2
+    excluded: false
+  - name: Loaded Pulse
+    tree: 2
+    excluded: false
+  - name: Wave Length
+    tree: 2
+    excluded: false
+  - name: The Battery Within
+    tree: 2
+    excluded: false
+  - name: Hyper Charged
+    tree: 2
+    excluded: false
+  - name: Apocalyptic Thunder
+    tree: 2
+    excluded: false
+  - name: Aftershock
+    tree: 2
+    excluded: false
+- name: Bard
+  tags:
+  - physical
+  - sonic
+  - chaos
+  excluded: false
+  skills:
+  - name: Slaying Riffs
+    tree: 1
+    excluded: false
+  - name: Insane Riff
+    tree: 1
+    excluded: false
+  - name: Visceral Growl
+    tree: 1
+    excluded: false
+  - name: Amping Up
+    tree: 1
+    excluded: false
+  - name: Sacrilegious Symphony
+    tree: 1
+    excluded: false
+  - name: Satan's Melody
+    tree: 1
+    excluded: false
+  - name: Sound of Silence
+    tree: 1
+    excluded: false
+  - name: High dB
+    tree: 1
+    excluded: false
+  - name: Progenies of the Great Cataclysm
+    tree: 1
+    excluded: false
+  - name: Headbanger
+    tree: 2
+    excluded: false
+  - name: Crowd Pummeler
+    tree: 2
+    excluded: false
+  - name: Crowd Dive
+    tree: 2
+    excluded: false
+  - name: Adrenaline Momentum
+    tree: 2
+    excluded: false
+  - name: Craving For Attention
+    tree: 2
+    excluded: false
+  - name: Pyro Technician
+    tree: 2
+    excluded: false
+  - name: Craving For Another Killing
+    tree: 2
+    excluded: false
+  - name: Antisocial Pit Fighter
+    tree: 2
+    excluded: false
+  - name: Moshpit Massacre
+    tree: 2
+    excluded: false
+- name: Prophet
+  tags:
+  - nature
+  - summon
+  - frost
+  excluded: false
+  skills:
+  - name: Carrion Worm
+    tree: 1
+    excluded: false
+  - name: Thorned Roots
+    tree: 1
+    excluded: false
+  - name: Summon Raven
+    tree: 1
+    excluded: false
+  - name: Blessed Nature
+    tree: 1
+    excluded: false
+  - name: Summon Ent
+    tree: 1
+    excluded: false
+  - name: Thorned Branch
+    tree: 1
+    excluded: false
+  - name: Summon Spirit of The Forest
+    tree: 1
+    excluded: false
+  - name: Deep Rooted
+    tree: 1
+    excluded: false
+  - name: Summon Ent Colossus
+    tree: 1
+    excluded: false
+  - name: Spirit of The Wendigo
+    tree: 2
+    excluded: false
+  - name: Wounding Paw
+    tree: 2
+    excluded: false
+  - name: Skinwalker
+    tree: 2
+    excluded: false
+  - name: Leaping Charge
+    tree: 2
+    excluded: false
+  - name: Spirit of the Ent
+    tree: 2
+    excluded: false
+  - name: Maelstrom of Frost
+    tree: 2
+    excluded: false
+  - name: Swamp's Essence
+    tree: 2
+    excluded: false
+  - name: Manadwelling
+    tree: 2
+    excluded: false
+  - name: Storm Hawk
+    tree: 2
+    excluded: false

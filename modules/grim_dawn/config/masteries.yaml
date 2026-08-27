@@ -1,0 +1,653 @@
+masteries:
+- name: Soldier
+  excluded: false
+  skills:
+  - name: Markovian's Advantage
+    excluded: false
+  - name: Zolhan's Technique
+    excluded: false
+  - name: War Cry
+    excluded: true
+  - name: Terrify
+    excluded: true
+  - name: Break Morale
+    excluded: true
+  - name: Fighting Spirit
+    excluded: true
+  - name: Blade Arc
+    excluded: false
+  - name: Clean Sweep
+    excluded: true
+  - name: Laceration
+    excluded: true
+  - name: Oleron's Rage
+    excluded: true
+  - name: Forceweave
+    excluded: false
+  - name: Tremor
+    excluded: true
+  - name: Rending Force
+    excluded: true
+  - name: Internal Trauma
+    excluded: true
+  - name: Blitz
+    excluded: false
+  - name: Blindside
+    excluded: true
+  - name: Counter Strike
+    excluded: false
+  - name: Cadence
+    excluded: false
+  - name: Discord
+    excluded: true
+  - name: Fighting Form
+    excluded: true
+  - name: Deadly Momentum
+    excluded: true
+  - name: Menhir's Will
+    excluded: true
+  - name: Overguard
+    excluded: true
+  - name: Markovian's Defense
+    excluded: true
+  - name: Field Command
+    excluded: true
+  - name: Squad Tactics
+    excluded: true
+  - name: Menhir's Bulwark
+    excluded: true
+  - name: Military Conditioning
+    excluded: true
+  - name: Shield Training
+    excluded: true
+  - name: Veterancy
+    excluded: true
+  - name: Decorated Soldier
+    excluded: true
+  - name: Scars of Battle
+    excluded: true
+- name: Demolitionist
+  excluded: false
+  skills:
+  - name: Flame Touched
+    excluded: true
+  - name: Temper
+    excluded: true
+  - name: Blast Shield
+    excluded: true
+  - name: Fire Strike
+    excluded: false
+  - name: Explosive Shot
+    excluded: true
+  - name: Searing Might
+    excluded: true
+  - name: Searing Strike
+    excluded: true
+  - name: Static Strike
+    excluded: true
+  - name: Brimstone
+    excluded: true
+  - name: Blackwater Cocktail
+    excluded: false
+  - name: High Potency
+    excluded: true
+  - name: Demon Fire
+    excluded: true
+  - name: Agonizing Flames
+    excluded: true
+  - name: Stun Jacks
+    excluded: false
+  - name: Quick Jacks
+    excluded: true
+  - name: Full Spread
+    excluded: true
+  - name: Canister Bomb
+    excluded: false
+  - name: Concussive Bomb
+    excluded: true
+  - name: Improved Casing
+    excluded: true
+  - name: Ulzuin's Chosen
+    excluded: true
+  - name: Thermite Mine
+    excluded: false
+  - name: Hellfire Mine
+    excluded: true
+  - name: Flashbang
+    excluded: true
+  - name: Searing Light
+    excluded: true
+  - name: Grenado
+    excluded: false
+  - name: Skyfire Grenado
+    excluded: true
+  - name: High Impact
+    excluded: true
+  - name: Shattering Blast
+    excluded: true
+  - name: Vindictive Flame
+    excluded: false
+  - name: Ulzuin's Wrath
+    excluded: true
+  - name: Mortar Trap
+    excluded: false
+  - name: Heavy Ordnance
+    excluded: true
+  - name: '"The Big One"'
+    excluded: true
+- name: Occultist
+  excluded: false
+  skills:
+  - name: Sigil of Consumption
+    excluded: false
+  - name: Destruction
+    excluded: true
+  - name: Doom Bolt
+    excluded: false
+  - name: Solael's Witchfire
+    excluded: false
+  - name: Consecrated Blade
+    excluded: true
+  - name: Second Rite
+    excluded: true
+  - name: Possession
+    excluded: true
+  - name: Dreeg's Evil Eye
+    excluded: false
+  - name: Blood Burst
+    excluded: true
+  - name: Focused Gaze
+    excluded: true
+  - name: Terrifying Gaze
+    excluded: true
+  - name: Vile Eruption
+    excluded: true
+  - name: Bloody Pox
+    excluded: false
+  - name: Fevered Rage
+    excluded: true
+  - name: Wasting
+    excluded: true
+  - name: Black Death
+    excluded: true
+  - name: Curse of Frailty
+    excluded: true
+  - name: Vulnerability
+    excluded: true
+  - name: Blood of Dreeg
+    excluded: false
+  - name: Aspect of the Guardian
+    excluded: true
+  - name: Summon Familiar
+    excluded: false
+  - name: Mend Flesh
+    excluded: true
+  - name: Storm Spirit
+    excluded: true
+  - name: Lightning Strike
+    excluded: true
+  - name: Bonds of Bysmiel
+    excluded: true
+  - name: Manipulation
+    excluded: true
+  - name: Summon Hellhound
+    excluded: false
+  - name: Ember Claw
+    excluded: true
+  - name: Hellfire
+    excluded: true
+  - name: Infernal Breath
+    excluded: true
+- name: Nightblade
+  excluded: false
+  skills:
+  - name: Dual Blades
+    excluded: true
+  - name: Belgothian's Shears
+    excluded: false
+  - name: Nidalla's Hidden Hand
+    excluded: true
+  - name: Amarasta's Quick Cut
+    excluded: false
+  - name: Whirling Death
+    excluded: false
+  - name: Execution
+    excluded: false
+  - name: Phantasmal Blades
+    excluded: false
+  - name: Frenetic Throw
+    excluded: true
+  - name: Heart Seeker
+    excluded: true
+  - name: Nether Edge
+    excluded: true
+  - name: Blade Spirit
+    excluded: false
+  - name: Amarasta's Blade Burst
+    excluded: false
+  - name: Lethal Assault
+    excluded: true
+  - name: Ring of Steel
+    excluded: false
+  - name: Ring of Frost
+    excluded: true
+  - name: Circle of Slaughter
+    excluded: true
+  - name: Shadow Strike
+    excluded: false
+  - name: Nidalla's Justifiable Ends
+    excluded: true
+  - name: Nightfall
+    excluded: true
+  - name: Pneumatic Burst
+    excluded: true
+  - name: Breath of Belgothian
+    excluded: true
+  - name: Shadow Dance
+    excluded: true
+  - name: Elemental Awakening
+    excluded: true
+  - name: Veil of Shadow
+    excluded: true
+  - name: Night's Chill
+    excluded: true
+  - name: Blade Barrier
+    excluded: true
+  - name: Blade Trap
+    excluded: false
+  - name: Devouring Blades
+    excluded: true
+  - name: Phantasmal Armor
+    excluded: true
+  - name: Anatomy of Murder
+    excluded: true
+  - name: Merciless Repertoire
+    excluded: true
+- name: Arcanist
+  excluded: false
+  skills:
+  - name: Iskandra's Elemental Exchange
+    excluded: true
+  - name: Manifestation
+    excluded: true
+  - name: Overload
+    excluded: true
+  - name: Elemental Balance
+    excluded: true
+  - name: Mirror of Ereoctes
+    excluded: true
+  - name: Maiven's Sphere of Protection
+    excluded: true
+  - name: Conversion
+    excluded: true
+  - name: Reckless Power
+    excluded: true
+  - name: Callidor's Tempest
+    excluded: false
+  - name: Wrath of Agrivix
+    excluded: true
+  - name: Inferno
+    excluded: true
+  - name: Panetti's Replicating Missile
+    excluded: false
+  - name: Distortion
+    excluded: true
+  - name: Supercharged
+    excluded: true
+  - name: Proliferation
+    excluded: true
+  - name: Devastation
+    excluded: false
+  - name: Olexra's Flash Freeze
+    excluded: false
+  - name: Absolute Zero
+    excluded: true
+  - name: Albrecht's Aether Ray
+    excluded: false
+  - name: Tainted Power
+    excluded: true
+  - name: Disintegration
+    excluded: true
+  - name: Trozan's Sky Shard
+    excluded: false
+  - name: Frozen Core
+    excluded: true
+  - name: Shattered Star
+    excluded: true
+  - name: Star Pact
+    excluded: true
+  - name: Inner Focus
+    excluded: true
+  - name: Arcane Will
+    excluded: true
+  - name: Nullification
+    excluded: true
+  - name: Mental Alacrity
+    excluded: true
+  - name: Fabric of Reality
+    excluded: true
+- name: Shaman
+  excluded: false
+  skills:
+  - name: Brute Force
+    excluded: true
+  - name: Feral Hunger
+    excluded: false
+  - name: Upheaval
+    excluded: false
+  - name: Wendigo Totem
+    excluded: false
+  - name: Blood Pact
+    excluded: true
+  - name: Primal Strike
+    excluded: false
+  - name: Thunderous Strike
+    excluded: true
+  - name: Torrent
+    excluded: true
+  - name: Storm Surge
+    excluded: true
+  - name: Storm Totem
+    excluded: false
+  - name: Corrupted Storm
+    excluded: true
+  - name: Stormcaller's Pact
+    excluded: true
+  - name: Savagery
+    excluded: false
+  - name: Might of the Bear
+    excluded: true
+  - name: Tenacity of the Boar
+    excluded: true
+  - name: Storm Touched
+    excluded: true
+  - name: Wind Devil
+    excluded: false
+  - name: Raging Tempest
+    excluded: true
+  - name: Maelstrom
+    excluded: true
+  - name: Devouring Swarm
+    excluded: false
+  - name: Grasping Vines
+    excluded: false
+  - name: Entangling Vines
+    excluded: true
+  - name: Conjure Primal Spirit
+    excluded: false
+  - name: Summon Briarthorn
+    excluded: false
+  - name: Ground Slam
+    excluded: true
+  - name: Emboldening Presence
+    excluded: true
+  - name: Primal Bond
+    excluded: true
+  - name: Mogdrogen's Pact
+    excluded: true
+  - name: Heart of the Wild
+    excluded: true
+  - name: Oak Skin
+    excluded: true
+- name: Inquisitor
+  excluded: false
+  skills:
+  - name: Ranged Expertise
+    excluded: true
+  - name: Bursting Round
+    excluded: false
+  - name: Chilling Rounds
+    excluded: false
+  - name: Storm Spread
+    excluded: false
+  - name: Word of Renewal
+    excluded: true
+  - name: Word of Arms
+    excluded: true
+  - name: Vigor
+    excluded: true
+  - name: Steel Resolve
+    excluded: true
+  - name: Aura of Conviction
+    excluded: true
+  - name: Word of Pain
+    excluded: false
+  - name: Word of Agony
+    excluded: true
+  - name: Death Sentence
+    excluded: true
+  - name: Horn of Gandarr
+    excluded: false
+  - name: Flames of Ignaffar
+    excluded: false
+  - name: Tainted Flame
+    excluded: true
+  - name: Intensify
+    excluded: true
+  - name: Infernal Purge
+    excluded: true
+  - name: Endless Flame
+    excluded: true
+  - name: Rune of Hagarrad
+    excluded: false
+  - name: Biting Cold
+    excluded: true
+  - name: Chillsurge
+    excluded: true
+  - name: Aura of Censure
+    excluded: false
+  - name: Storm Box of Elgoloth
+    excluded: false
+  - name: Allagast's Arcane Net
+    excluded: true
+  - name: Lightning Tether
+    excluded: true
+  - name: Inquisitor Seal
+    excluded: false
+  - name: Runic Seal
+    excluded: true
+  - name: Arcane Empowerment
+    excluded: true
+  - name: Deadly Aim
+    excluded: true
+  - name: Rune of Kalastor
+    excluded: false
+  - name: Ignition
+    excluded: true
+  - name: Artifact Handling
+    excluded: true
+- name: Necromancer
+  excluded: false
+  skills:
+  - name: Reaping Strike
+    excluded: false
+  - name: Necrotic Edge
+    excluded: false
+  - name: Siphon Souls
+    excluded: false
+  - name: Sear Souls
+    excluded: true
+  - name: Blood Boil
+    excluded: true
+  - name: Drain Essence
+    excluded: false
+  - name: Gravechill
+    excluded: true
+  - name: Hungering Reach
+    excluded: true
+  - name: Decomposition
+    excluded: true
+  - name: Harbinger of Souls
+    excluded: true
+  - name: Ravenous Earth
+    excluded: false
+  - name: Decay
+    excluded: true
+  - name: Foul Eruption
+    excluded: true
+  - name: Bone Harvest
+    excluded: false
+  - name: Harvester of Death
+    excluded: true
+  - name: Dread
+    excluded: true
+  - name: Soul Harvest
+    excluded: true
+  - name: Reap Spirit
+    excluded: false
+  - name: Raise Skeletons
+    excluded: false
+  - name: Undead Legion
+    excluded: true
+  - name: Will of the Crypt
+    excluded: true
+  - name: Ill Omen
+    excluded: false
+  - name: Summon Blight Fiend
+    excluded: false
+  - name: Unstable Anomaly
+    excluded: true
+  - name: Rotting Fumes
+    excluded: true
+  - name: Blight Burst
+    excluded: true
+  - name: Master of Death
+    excluded: true
+  - name: Spectral Binding
+    excluded: true
+  - name: Spectral Wrath
+    excluded: true
+  - name: Call of the Grave
+    excluded: true
+  - name: Mark of Torment
+    excluded: true
+- name: Oathkeeper
+  excluded: false
+  skills:
+  - name: Safeguard
+    excluded: true
+  - name: Smite
+    excluded: false
+  - name: Shattering Smash
+    excluded: false
+  - name: Eye of Reckoning
+    excluded: false
+  - name: Soulfire
+    excluded: true
+  - name: Vire's Might
+    excluded: false
+  - name: Volcanic Might
+    excluded: true
+  - name: Volcanic Stride
+    excluded: true
+  - name: Tectonic Shift
+    excluded: true
+  - name: Aegis of Menhir
+    excluded: false
+  - name: Avenging Shield
+    excluded: true
+  - name: Aegis of Thorns
+    excluded: true
+  - name: Reprisal
+    excluded: true
+  - name: Summon Guardian of Empyrion
+    excluded: false
+  - name: Scion of Dreeg
+    excluded: true
+  - name: Celestial Presence
+    excluded: true
+  - name: Judgement
+    excluded: false
+  - name: Crushing Verdict
+    excluded: true
+  - name: Heart of Wrath
+    excluded: true
+  - name: Divine Mandate
+    excluded: true
+  - name: Righteous Fervor
+    excluded: false
+  - name: Dreeg's Reproach
+    excluded: true
+  - name: Consecration
+    excluded: true
+  - name: Retribution
+    excluded: true
+  - name: Presence of Virtue
+    excluded: true
+  - name: Haven
+    excluded: true
+  - name: Rebuke
+    excluded: true
+  - name: Path of the Three
+    excluded: true
+  - name: Resilience
+    excluded: true
+  - name: Ascension
+    excluded: true
+  - name: Clarity of Purpose
+    excluded: true
+- name: Berserker
+  excluded: false
+  skills:
+  - name: Implements of War
+    excluded: true
+  - name: Bloodfangs
+    excluded: false
+  - name: Avalanche
+    excluded: false
+  - name: Leap
+    excluded: false
+  - name: Fault Line
+    excluded: true
+  - name: Rallying Cry
+    excluded: true
+  - name: Frenzied Cry
+    excluded: true
+  - name: Impulse
+    excluded: true
+  - name: Bonechilling Cry
+    excluded: true
+  - name: Bloodborne
+    excluded: true
+  - name: Onslaught
+    excluded: false
+  - name: Covenant of Ch'thon
+    excluded: true
+  - name: Open Wounds
+    excluded: true
+  - name: Endless Rage
+    excluded: true
+  - name: Amatok's Pact
+    excluded: true
+  - name: Bloodfrenzy
+    excluded: true
+  - name: Icebound
+    excluded: true
+  - name: Heart of Asterkarn
+    excluded: true
+  - name: Werewolf
+    excluded: false
+  - name: Blight of Ch'thon
+    excluded: true
+  - name: Voracity
+    excluded: true
+  - name: Recklessness
+    excluded: true
+  - name: Wereraven
+    excluded: false
+  - name: Talons of Ch'thon
+    excluded: true
+  - name: Glacial Talons
+    excluded: true
+  - name: Everwinter
+    excluded: true
+  - name: Form of the Beast
+    excluded: true
+  - name: Battle Surge
+    excluded: true
+  - name: Untamed Rage
+    excluded: true
+  - name: Winds of Asterkarn
+    excluded: false
+  - name: Hailstorm
+    excluded: true
