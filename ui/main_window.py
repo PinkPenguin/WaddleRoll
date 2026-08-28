@@ -17,15 +17,15 @@ from PySide6.QtCore import Qt
 from core.discovery import discover_modules
 from ui.game_picker import GamePicker
 
-BG = "#121219"
-PICKER_DEFAULT_SIZE = (480, 620)
+BG = "#F280A1"
+PICKER_DEFAULT_SIZE = (420, 620)
 PICKER_MIN_SIZE = (420, 480)
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Build Randomizer Launcher")
+        self.setWindowTitle("WaddleRoll, A build randomizer")
         self.resize(*PICKER_DEFAULT_SIZE)
         self.setMinimumSize(*PICKER_MIN_SIZE)
         self.setStyleSheet(f"background-color: {BG};")

@@ -5,11 +5,21 @@ Pip-Boy themed screen for the Fallout 4 module. Ported from the original
 Tkinter fo4_gui.py to PySide6 so it can be mounted as a widget inside the
 launcher shell's QStackedWidget. Same options, same behavior, same colors.
 
+Weapon groups, named weapons, utility perks, and weapon-type tags are now
+loaded from config/*.yaml (editable in-app via Manage buttons) instead of
+being hardcoded constants -- same data-editor pattern the other modules
+use.
+
 Checkboxes are rendered as terminal-style "[X] Label" text toggles rather
 than Qt's default checkbox indicator -- fits the Pip-Boy aesthetic and
 sidesteps Qt's default checkmark rendering, which needs extra work to
 show correctly once you override its box styling.
 """
+
+import os
+import platform
+import subprocess
+from pathlib import Path
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QPushButton,
@@ -17,16 +27,21 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 
-from pathlib import Path
 from modules.fallout4.roller import (
-    generate_special, roll_weapon, roll_utility_perks,
-    STATS, WEAPON_GROUPS, NAMED_WEAPONS,
+    generate_special, roll_weapon, roll_utility_perks, STATS,
+    load_weapon_groups, save_weapon_groups,
+    load_named_weapons, save_named_weapons,
+    load_utility_perks, save_utility_perks,
+    load_weapon_tags, save_weapon_tags,
+)
+from modules.fallout4.editor import (
+    open_weapon_groups_editor, open_named_weapons_editor,
+    open_utility_perks_editor, open_weapon_tags_editor,
 )
 from ui.version_badge import VersionBadge
 
 # ── Pip-Boy palette ──────────────────────────────────────────────────────
-BG         = "#0f1a10"
-BG_PANEL   = "#182818"
+BG         = "#0a0f0a"
 GREEN      = "#4aff91"
 GREEN_DIM  = "#2a8a4a"
 GREEN_DARK = "#163320"
@@ -57,9 +72,8 @@ def _panel() -> tuple[QWidget, QVBoxLayout]:
     look of the original Tkinter version.
     """
     widget = QWidget()
-    widget.setStyleSheet(f"background-color: {BG_PANEL}; border-radius: 4px;")
     layout = QVBoxLayout(widget)
-    layout.setContentsMargins(10, 10, 10, 10)
+    layout.setContentsMargins(4, 4, 4, 4)
     layout.setSpacing(8)
     return widget, layout
 
@@ -116,6 +130,12 @@ class FO4Widget(QWidget):
         self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent / "config"
         self.setStyleSheet(f"background-color: {BG};")
 
+        # ── Data ───────────────────────────────────────────────────────
+        self.weapon_groups = load_weapon_groups(self.config_dir / "weapon_groups.yaml")
+        self.named_weapons = load_named_weapons(self.config_dir / "named_weapons.yaml")
+        self.utility_perks = load_utility_perks(self.config_dir / "utility_perks.yaml")
+        self.weapon_tags = load_weapon_tags(self.config_dir / "weapon_tags.yaml")
+
         # ── State ──────────────────────────────────────────────────────
         self.num_perks = 1
         self.current_special = None
@@ -148,6 +168,22 @@ class FO4Widget(QWidget):
         version_row.addWidget(self.version_badge)
         version_row.addStretch(1)
         root.addLayout(version_row)
+
+        # Tool row -- data management
+        tools = QHBoxLayout()
+        tools.setSpacing(10)
+        tools.addStretch(1)
+        for label, handler in [
+            ("Manage Weapon Groups", self._manage_weapon_groups),
+            ("Manage Named Weapons", self._manage_named_weapons),
+            ("Manage Perks", self._manage_perks),
+            ("Manage Weapon Tags", self._manage_weapon_tags),
+            ("Open Config Folder", self._open_config_folder),
+        ]:
+            btn = _pip_button(f"[ {label} ]", GREEN_DIM, compact=True)
+            btn.clicked.connect(handler)
+            tools.addWidget(btn)
+        root.addLayout(tools)
 
         root.addWidget(_divider())
 
@@ -240,15 +276,17 @@ class FO4Widget(QWidget):
         dlc_col.addWidget(dlc_widget)
         layout.addLayout(dlc_col)
 
-        # Weapon groups
+        # Weapon groups -- now sourced from loaded config, not a hardcoded dict,
+        # so adding/removing a group via Manage Weapon Groups shows up here
+        # automatically on next open.
         grp_col = QVBoxLayout()
         grp_col.setSpacing(6)
         grp_col.addWidget(_section_label("GROUPS"))
         grp_widget, grp_layout = _panel()
         self.group_toggles = {}
-        for group in WEAPON_GROUPS:
-            cb = TermCheckbox(group, True)
-            self.group_toggles[group] = cb
+        for group in self.weapon_groups:
+            cb = TermCheckbox(group["name"], True)
+            self.group_toggles[group["name"]] = cb
             grp_layout.addWidget(cb)
         grp_col.addWidget(grp_widget)
         layout.addLayout(grp_col)
@@ -343,8 +381,8 @@ class FO4Widget(QWidget):
             self.num_perks -= 1
             self.perk_count_lbl.setText(str(self.num_perks))
 
-    def _active_groups(self) -> dict:
-        return {g: w for g, w in WEAPON_GROUPS.items() if self.group_toggles[g].isChecked()}
+    def _active_group_names(self) -> set:
+        return {name for name, cb in self.group_toggles.items() if cb.isChecked()}
 
     def _active_named_weapons(self) -> list:
         dlc_map = {
@@ -352,13 +390,16 @@ class FO4Widget(QWidget):
             "Nuka-World": self.dlc_nuka_world.isChecked(),
             "Automatron": self.dlc_automatron.isChecked(),
         }
-        return [w for w in NAMED_WEAPONS if w["dlc"] is None or dlc_map.get(w["dlc"], True)]
+        return [
+            w for w in self.named_weapons
+            if not w.get("dlc") or dlc_map.get(w["dlc"], True)
+        ]
 
     # ── Roll logic ─────────────────────────────────────────────────────
 
     def _do_roll(self):
-        active_groups = self._active_groups()
-        if not active_groups:
+        active_group_names = self._active_group_names()
+        if not active_group_names:
             self._set_status("> ERROR: NO WEAPON GROUPS ENABLED", AMBER)
             return
 
@@ -369,15 +410,22 @@ class FO4Widget(QWidget):
             self.current_roll = roll_weapon(
                 self.current_special,
                 named_weapons=self._active_named_weapons(),
-                weapon_groups=active_groups,
+                weapon_groups=self.weapon_groups,
                 allow_special=self.allow_special.isChecked(),
+                active_group_names=active_group_names,
             )
+
+        if self.current_roll and self.current_roll.get("weapon") is None:
+            self._set_status("> ERROR: NO NON-EXCLUDED WEAPONS IN ELIGIBLE GROUP(S)", AMBER)
+            return
 
         if not self.perk_locked.isChecked() and self.current_roll:
             weapon_type = self.current_roll["weapon"]["type"]
             self.current_perks = roll_utility_perks(
                 self.current_special,
                 weapon_type,
+                perks=self.utility_perks,
+                weapon_tags=self.weapon_tags,
                 num_perks=self.num_perks,
             )
 
@@ -404,7 +452,7 @@ class FO4Widget(QWidget):
             for stat, val in self.current_special.items():
                 self.special_labels[stat].setText(str(val))
 
-        if self.current_roll:
+        if self.current_roll and self.current_roll.get("weapon"):
             w = self.current_roll["weapon"]
             cat = self.current_roll["category"]
             grp = self.current_roll.get("group")
@@ -420,3 +468,40 @@ class FO4Widget(QWidget):
                 lbl.setText(f"▸ {self.current_perks[i]}")
             else:
                 lbl.setText("")
+
+    # ── Data management ─────────────────────────────────────────────────
+
+    def _manage_weapon_groups(self):
+        result = open_weapon_groups_editor(self, self.weapon_groups)
+        if result is not None:
+            self.weapon_groups = result
+            save_weapon_groups(self.config_dir / "weapon_groups.yaml", self.weapon_groups)
+            self._set_status("> WEAPON GROUPS UPDATED — REOPEN MODULE TO REFRESH GROUP TOGGLES", GREEN_DIM)
+
+    def _manage_named_weapons(self):
+        result = open_named_weapons_editor(self, self.named_weapons)
+        if result is not None:
+            self.named_weapons = result
+            save_named_weapons(self.config_dir / "named_weapons.yaml", self.named_weapons)
+
+    def _manage_perks(self):
+        result = open_utility_perks_editor(self, self.utility_perks)
+        if result is not None:
+            self.utility_perks = result
+            save_utility_perks(self.config_dir / "utility_perks.yaml", self.utility_perks)
+
+    def _manage_weapon_tags(self):
+        result = open_weapon_tags_editor(self, self.weapon_tags)
+        if result is not None:
+            self.weapon_tags = result
+            save_weapon_tags(self.config_dir / "weapon_tags.yaml", self.weapon_tags)
+
+    def _open_config_folder(self):
+        path = str(self.config_dir)
+        system = platform.system()
+        if system == "Windows":
+            os.startfile(path)  # noqa: S606 -- Windows-only call, deliberate
+        elif system == "Darwin":
+            subprocess.run(["open", path])
+        else:
+            subprocess.run(["xdg-open", path])

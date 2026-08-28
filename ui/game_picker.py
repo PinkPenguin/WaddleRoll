@@ -4,16 +4,20 @@ ui/game_picker.py
 The first screen the user sees: a list of every discovered game module.
 Clicking one tells the main window to switch to that module's widget.
 Purely generic -- knows nothing about any specific game.
+
+Palette: pink/magenta, matching the PNGN (PinkPenguin) branding.
 """
 
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame
 from PySide6.QtCore import Qt, Signal
 
-BG = "#0a0a0f"
-CARD_BG = "#15151f"
-ACCENT = "#7c5cff"
-TEXT = "#e4e4f0"
-TEXT_DIM = "#8888a0"
+BG = "#F280A1"
+CARD_BG = "#20101a"
+CARD_HOVER = "#2c1524"
+ACCENT = "#ff5fa8"
+TEXT = "#f7e4ef"
+TEXT_DIM = "#a3708f"
+
 
 class GameCard(QWidget):
     clicked = Signal()
@@ -29,7 +33,7 @@ class GameCard(QWidget):
                 border: none;
                 border-radius: 4px;
             }}
-            GameCard:hover {{ background-color: #232333; }}
+            GameCard:hover {{ background-color: {CARD_HOVER}; }}
         """)
 
         outer = QHBoxLayout(self)
@@ -38,7 +42,10 @@ class GameCard(QWidget):
 
         accent = QFrame()
         accent.setFixedWidth(4)
-        accent.setStyleSheet(f"background-color: {module.accent_color}; border: none; border-top-left-radius: 4px; border-bottom-left-radius: 4px;")
+        accent.setStyleSheet(
+            f"background-color: {module.accent_color}; border: none; "
+            f"border-top-left-radius: 4px; border-bottom-left-radius: 4px;"
+        )
         outer.addWidget(accent)
 
         text_col = QVBoxLayout()
@@ -59,6 +66,7 @@ class GameCard(QWidget):
         self.clicked.emit()
         super().mousePressEvent(event)
 
+
 class GamePicker(QWidget):
     game_selected = Signal(str)  # emits the chosen module's id
 
@@ -70,12 +78,12 @@ class GamePicker(QWidget):
         layout.setContentsMargins(40, 40, 40, 40)
         layout.setSpacing(12)
 
-        title = QLabel("BUILD RANDOMIZER LAUNCHER")
-        title.setStyleSheet(f"color: {TEXT}; font-size: 24px; font-weight: bold; letter-spacing: 1px;")
+        title = QLabel("🐧 WADDLEROLL")
+        title.setStyleSheet(f"color: {TEXT}; font-size: 32px; font-weight: bold; letter-spacing: 1px;")
         layout.addWidget(title)
 
         subtitle = QLabel("Choose a game to randomize a build")
-        subtitle.setStyleSheet(f"color: {TEXT_DIM}; font-size: 11px; font-style: italic;")
+        subtitle.setStyleSheet(f"color: {TEXT}; font-size: 14px; font-style: italic;")
         layout.addWidget(subtitle)
 
         layout.addSpacing(16)

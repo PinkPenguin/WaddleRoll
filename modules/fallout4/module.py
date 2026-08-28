@@ -18,12 +18,15 @@ CONFIG_DIR = MODULE_DIR / "config"
 class Module(GameModule):
     id = "fallout4"
     display_name = "Fallout 4"
-    description = "SPECIAL, weapon & perk ironman roller"
-    background_color = "#0f1a10"
-    default_size = (700, 650)
-    min_size = (700, 650)
-    accent_color = "#4aff91"
+    description = "S.P.E.C.I.A.L, weapon & perk ironman roller"
+
+    background_color = "#0a0f0a"   # keep in sync with BG in ui.py
+    accent_color = "#4aff91"       # keep in sync with GREEN in ui.py
     icon = "☢"
+
+    # Measured via sizeHint() rather than guessed
+    default_size = (1100, 690)
+    min_size = (1100, 690)
 
     def get_widget(self, parent=None):
         return FO4Widget(config_dir=CONFIG_DIR, parent=parent)

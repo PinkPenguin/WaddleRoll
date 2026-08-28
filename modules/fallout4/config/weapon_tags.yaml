@@ -1,0 +1,67 @@
+# Migrated from the original hardcoded WEAPON_TAGS. Maps a weapon
+# type name to the combat tags used by perk "requires" checks.
+# Add an entry here whenever you add a weapon with a new type string.
+
+weapon_tags:
+- name: Semi-automatic Rifle
+  tags:
+  - gun
+  - non-auto rifle
+  - suppressor
+- name: Automatic Rifle
+  tags:
+  - gun
+  - suppressor
+- name: Pistol
+  tags:
+  - gun
+  - suppressor
+- name: Semi-automatic Shotgun
+  tags:
+  - gun
+  - suppressor
+- name: Automatic Shotgun
+  tags:
+  - gun
+  - suppressor
+- name: Semi-auto Energy Rifle
+  tags:
+  - gun
+  - non-auto rifle
+- name: Automatic Energy Rifle
+  tags:
+  - gun
+- name: Energy Pistol
+  tags:
+  - gun
+- name: Light Melee
+  tags:
+  - melee
+- name: Heavy Melee
+  tags:
+  - melee
+- name: Unarmed
+  tags:
+  - melee
+- name: Heavy Ballistic
+  tags:
+  - gun
+- name: Heavy Energy
+  tags:
+  - gun
+- name: Flamer
+  tags:
+  - gun
+- name: Thrown Explosives
+  tags:
+  - explosive
+- name: Heavy Rocket
+  tags:
+  - explosive
+- name: Fat Man
+  tags:
+  - explosive
+- name: Pipe Weapons
+  tags:
+  - gun
+  - suppressor

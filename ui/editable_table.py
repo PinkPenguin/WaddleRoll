@@ -130,6 +130,10 @@ class EditableTableDialog(QDialog):
             elif ftype == "tags":
                 text = ", ".join(row.get(key, []) or [])
                 self.table.setItem(r, c, QTableWidgetItem(text))
+            elif ftype == "stats":
+                pairs = row.get(key, {}) or {}
+                text = ", ".join(f"{k}:{v}" for k, v in pairs.items())
+                self.table.setItem(r, c, QTableWidgetItem(text))
             else:
                 self.table.setItem(r, c, QTableWidgetItem(str(row.get(key, ""))))
 
@@ -142,7 +146,7 @@ class EditableTableDialog(QDialog):
     def _add_row(self):
         new_row = {}
         for key, _label, ftype in self.columns:
-            new_row[key] = [] if ftype == "tags" else (False if ftype == "bool" else "")
+            new_row[key] = [] if ftype == "tags" else ({} if ftype == "stats" else (False if ftype == "bool" else ""))
         for key, factory in self.extra_row_defaults.items():
             new_row[key] = factory()
 
@@ -166,6 +170,8 @@ class EditableTableDialog(QDialog):
             for key, _label, ftype in self.columns:
                 if ftype == "tags":
                     haystack_parts.append(", ".join(row.get(key, []) or []))
+                elif ftype == "stats":
+                    haystack_parts.append(", ".join(f"{k}:{v}" for k, v in (row.get(key, {}) or {}).items()))
                 elif ftype == "text":
                     haystack_parts.append(str(row.get(key, "")))
             haystack = " ".join(haystack_parts).lower()
@@ -182,6 +188,25 @@ class EditableTableDialog(QDialog):
                     item = self.table.item(r, c)
                     text = item.text() if item else ""
                     row[key] = [t.strip() for t in text.split(",") if t.strip()]
+                elif ftype == "stats":
+                    item = self.table.item(r, c)
+                    text = item.text() if item else ""
+                    parsed = {}
+                    for chunk in text.split(","):
+                        chunk = chunk.strip()
+                        if not chunk or ":" not in chunk:
+                            continue
+                        stat, _, val = chunk.partition(":")
+                        stat = stat.strip()
+                        val = val.strip()
+                        try:
+                            parsed[stat] = int(val)
+                        except ValueError:
+                            try:
+                                parsed[stat] = float(val)
+                            except ValueError:
+                                continue
+                    row[key] = parsed
                 else:
                     item = self.table.item(r, c)
                     row[key] = item.text() if item else ""

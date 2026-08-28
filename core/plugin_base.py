@@ -29,19 +29,18 @@ class GameModule(ABC):
     # not just the content inside its widget.
     background_color: str = "#111118"
 
-    # Window size applied when this module's page opens. default_size is
-    # what the window resizes to; min_size is the floor the user can't
-    # shrink below. Each module sets these to whatever actually fits its
-    # own layout.
-    default_size: tuple[int, int] = (900, 650)
-    min_size: tuple[int, int] = (700, 500)
-
-    # Shown on the game picker card. accent_color is used as a colored
-    # stripe/highlight so each game reads distinctly even before opening
-    # it. icon is a single character or emoji shown next to the name --
-    # keeps things simple without needing real image assets per game.
+    # Shown on the game picker card: accent_color is a colored stripe/
+    # highlight, icon is a single character/emoji shown next to the name.
     accent_color: str = "#7c5cff"
     icon: str = "🎮"
+
+    # Window size applied when this module's page opens. default_size is
+    # what the window resizes to; min_size is the floor the user can't
+    # shrink below. Each module should measure these off its widget's
+    # actual sizeHint() rather than guessing -- windows should only be as
+    # large as their content actually needs.
+    default_size: tuple[int, int] = (900, 650)
+    min_size: tuple[int, int] = (700, 500)
 
     @abstractmethod
     def get_widget(self, parent=None):

@@ -1,0 +1,88 @@
+# Migrated from the original hardcoded NAMED_WEAPONS.
+# dlc: "" means base game (no DLC required).
+
+named_weapons:
+- name: Deliverer
+  type: Pistol
+  dlc: ''
+  excluded: false
+- name: Cryolator
+  type: Energy Pistol
+  dlc: ''
+  excluded: false
+- name: Tesla Rifle
+  type: Automatic Energy Rifle
+  dlc: Automatron
+  excluded: false
+- name: Broadsider
+  type: Heavy Ballistic
+  dlc: ''
+  excluded: false
+- name: Lorenzo's Artifact
+  type: Energy Pistol
+  dlc: ''
+  excluded: false
+- name: Prototype UP77
+  type: Semi-auto Energy Rifle
+  dlc: ''
+  excluded: false
+- name: Good Intentions
+  type: Semi-auto Energy Rifle
+  dlc: ''
+  excluded: false
+- name: Aeternus
+  type: Heavy Energy
+  dlc: Nuka-World
+  excluded: false
+- name: Death From Above
+  type: Heavy Rocket
+  dlc: ''
+  excluded: false
+- name: 2076 World Series Bat
+  type: Heavy Melee
+  dlc: ''
+  excluded: false
+- name: Kremvh's Tooth
+  type: Light Melee
+  dlc: ''
+  excluded: false
+- name: Shem Drowne Sword
+  type: Light Melee
+  dlc: ''
+  excluded: false
+- name: Tinker Tom Special
+  type: Semi-automatic Rifle
+  dlc: ''
+  excluded: false
+- name: The Problem Solver
+  type: Automatic Rifle
+  dlc: Nuka-World
+  excluded: false
+- name: December's Child
+  type: Automatic Rifle
+  dlc: Far Harbor
+  excluded: false
+- name: Salvaged Assaultron Head
+  type: Heavy Energy
+  dlc: Automatron
+  excluded: false
+- name: Flare Gun
+  type: Semi-auto Energy Rifle
+  dlc: ''
+  excluded: false
+- name: Junk Jet
+  type: Heavy Ballistic
+  dlc: ''
+  excluded: false
+- name: Syringer
+  type: Pistol
+  dlc: ''
+  excluded: false
+- name: Railway Rifle
+  type: Semi-automatic Rifle
+  dlc: ''
+  excluded: false
+- name: Ripper
+  type: Light Melee
+  dlc: ''
+  excluded: false

@@ -1,0 +1,285 @@
+# Migrated from the original hardcoded UTILITY_PERKS + PERK_REQUIRES.
+# "requires" lists which weapon tags (see weapon_tags.yaml) the current
+# weapon must have at least one of, for this perk to be eligible at all.
+
+perks:
+- name: Armorer
+  min_stats:
+    STR: 1
+  requires: []
+  excluded: false
+- name: Strong Back
+  min_stats:
+    STR: 3
+  requires: []
+  excluded: false
+- name: Steady Aim
+  min_stats:
+    STR: 4
+  requires:
+  - gun
+  excluded: false
+- name: Basher
+  min_stats:
+    STR: 5
+  requires:
+  - gun
+  excluded: false
+- name: Rooted
+  min_stats:
+    STR: 6
+  requires:
+  - gun
+  - melee
+  excluded: false
+- name: Pain Train
+  min_stats:
+    STR: 7
+  requires: []
+  excluded: false
+- name: Pickpocket
+  min_stats:
+    PER: 1
+  requires: []
+  excluded: false
+- name: Awareness
+  min_stats:
+    PER: 1
+  requires: []
+  excluded: false
+- name: Locksmith
+  min_stats:
+    PER: 1
+  requires: []
+  excluded: false
+- name: Night Person
+  min_stats:
+    PER: 3
+  requires: []
+  excluded: false
+- name: Sniper
+  min_stats:
+    PER: 5
+  requires:
+  - non-auto rifle
+  excluded: false
+- name: Penetrator
+  min_stats:
+    PER: 6
+  requires:
+  - gun
+  excluded: false
+- name: Concentrated Fire
+  min_stats:
+    PER: 7
+  requires:
+  - gun
+  excluded: false
+- name: Life Giver
+  min_stats:
+    END: 1
+  requires: []
+  excluded: false
+- name: Toughness
+  min_stats:
+    END: 1
+  requires: []
+  excluded: false
+- name: Lead Belly
+  min_stats:
+    END: 1
+  requires: []
+  excluded: false
+- name: Chem Resistant
+  min_stats:
+    END: 1
+  requires: []
+  excluded: false
+- name: Aquaboy
+  min_stats:
+    END: 2
+  requires: []
+  excluded: false
+- name: Rad Resistant
+  min_stats:
+    END: 3
+  requires: []
+  excluded: false
+- name: Adamantium Skeleton
+  min_stats:
+    END: 4
+  requires: []
+  excluded: false
+- name: Cannibal
+  min_stats:
+    END: 5
+  requires: []
+  excluded: false
+- name: Ghoulish
+  min_stats:
+    END: 6
+  requires: []
+  excluded: false
+- name: Solar Powered
+  min_stats:
+    END: 7
+  requires: []
+  excluded: false
+- name: Lone Wanderer
+  min_stats:
+    CHA: 1
+  requires: []
+  excluded: false
+- name: Cap Collector
+  min_stats:
+    CHA: 1
+  requires: []
+  excluded: false
+- name: Attack Dog
+  min_stats:
+    CHA: 1
+  requires: []
+  excluded: false
+- name: Animal Friend
+  min_stats:
+    CHA: 2
+  requires: []
+  excluded: false
+- name: Local Leader
+  min_stats:
+    CHA: 3
+  requires: []
+  excluded: false
+- name: Inspiration
+  min_stats:
+    CHA: 5
+  requires: []
+  excluded: false
+- name: Idiot Savant
+  min_stats:
+    INT: 1
+  requires: []
+  excluded: false
+- name: Gun Nut
+  min_stats:
+    INT: 1
+  requires: []
+  excluded: false
+- name: Hacker
+  min_stats:
+    INT: 1
+  requires: []
+  excluded: false
+- name: Medic
+  min_stats:
+    INT: 1
+  requires: []
+  excluded: false
+- name: Scrapper
+  min_stats:
+    INT: 2
+  requires: []
+  excluded: false
+- name: Science
+  min_stats:
+    INT: 3
+  requires: []
+  excluded: false
+- name: Chemist
+  min_stats:
+    INT: 4
+  requires: []
+  excluded: false
+- name: Robotics Expert
+  min_stats:
+    INT: 5
+  requires: []
+  excluded: false
+- name: Nuclear Physicist
+  min_stats:
+    INT: 6
+  requires: []
+  excluded: false
+- name: Nerd Rage
+  min_stats:
+    INT: 7
+  requires: []
+  excluded: false
+- name: Sneak
+  min_stats:
+    AGI: 1
+  requires: []
+  excluded: false
+- name: Mister Sandman
+  min_stats:
+    AGI: 1
+  requires:
+  - suppressor
+  excluded: false
+- name: Action Boy/Girl
+  min_stats:
+    AGI: 2
+  requires: []
+  excluded: false
+- name: Moving Target
+  min_stats:
+    AGI: 3
+  requires: []
+  excluded: false
+- name: Ninja
+  min_stats:
+    AGI: 4
+  requires: []
+  excluded: false
+- name: Quick Hands
+  min_stats:
+    AGI: 5
+  requires:
+  - gun
+  excluded: false
+- name: Gun Fu
+  min_stats:
+    AGI: 7
+  requires:
+  - gun
+  excluded: false
+- name: Mysterious Stranger
+  min_stats:
+    LCK: 1
+  requires: []
+  excluded: false
+- name: Four Leaf Clover
+  min_stats:
+    LCK: 6
+  requires: []
+  excluded: false
+- name: Ricochet
+  min_stats:
+    LCK: 7
+  requires: []
+  excluded: false
+- name: Fortune Finder
+  min_stats:
+    LCK: 1
+  requires: []
+  excluded: false
+- name: Scrounger
+  min_stats:
+    LCK: 1
+  requires: []
+  excluded: false
+- name: Better Criticals
+  min_stats:
+    LCK: 3
+  requires: []
+  excluded: false
+- name: Critical Banker
+  min_stats:
+    LCK: 4
+  requires: []
+  excluded: false
+- name: Grim Reaper's Sprint
+  min_stats:
+    LCK: 5
+  requires: []
+  excluded: false

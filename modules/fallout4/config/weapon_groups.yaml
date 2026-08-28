@@ -1,0 +1,92 @@
+# Migrated from the original hardcoded WEAPON_GROUPS. Manage via
+# Manage Weapon Groups in-app, or edit by hand.
+
+groups:
+- name: Ballistic
+  weapons:
+  - name: Semi-automatic Rifle
+    min_stats:
+      PER: 3
+    excluded: false
+  - name: Automatic Rifle
+    min_stats:
+      PER: 3
+    excluded: false
+  - name: Pistol
+    min_stats:
+      PER: 2
+    excluded: false
+  - name: Semi-automatic Shotgun
+    min_stats:
+      STR: 2
+    excluded: false
+  - name: Automatic Shotgun
+    min_stats:
+      STR: 3
+    excluded: false
+- name: Energy
+  weapons:
+  - name: Semi-auto Energy Rifle
+    min_stats:
+      PER: 3
+      INT: 2
+    excluded: false
+  - name: Automatic Energy Rifle
+    min_stats:
+      PER: 3
+      INT: 2
+    excluded: false
+  - name: Energy Pistol
+    min_stats:
+      PER: 2
+      INT: 2
+    excluded: false
+- name: Melee
+  weapons:
+  - name: Light Melee
+    min_stats:
+      STR: 2
+      AGI: 3
+    excluded: false
+  - name: Heavy Melee
+    min_stats:
+      STR: 4
+      END: 2
+    excluded: false
+  - name: Unarmed
+    min_stats:
+      STR: 3
+      AGI: 2
+      END: 2
+    excluded: false
+- name: Heavy
+  weapons:
+  - name: Heavy Ballistic
+    min_stats:
+      STR: 5
+    excluded: false
+  - name: Heavy Energy
+    min_stats:
+      STR: 5
+      INT: 2
+    excluded: false
+  - name: Flamer
+    min_stats:
+      STR: 4
+      END: 2
+    excluded: false
+- name: Explosives
+  weapons:
+  - name: Thrown Explosives
+    min_stats:
+      PER: 2
+    excluded: false
+  - name: Heavy Rocket
+    min_stats:
+      STR: 4
+      PER: 2
+    excluded: false
+  - name: Fat Man
+    min_stats:
+      STR: 5
+    excluded: false
