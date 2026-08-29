@@ -3,33 +3,1588 @@
 # IsItemSkill, plus a new IsAscendancySkill flag for skills only usable
 # via a specific ascendancy.
 skills:
+  - name: "Boneshatter"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Earthquake"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Rolling Slam"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Armour Breaker"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Infernal Cry"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Shield Charge"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Shockwave Totem"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Herald of Ash"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Magma Barrier"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Scavenged Plating"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Molten Blast"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Perfect Strike"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Resonating Shield"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Earthshatter"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Leap Slam"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Shield Wall"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Overwhelming Presence"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Time of Need"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Sunder"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Volcanic Fissure"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Seismic Cry"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Stampede"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Supercharged Slam"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Hammer of the Gods"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Berserk"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Escape Shot"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Lightning Arrow"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Lightning Rod"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Poisonburst Arrow"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Snipe"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Stormcaller Arrow"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Vine Arrow"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Herald of Thunder"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Plague Bearer"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Wind Dancer"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Barrage (Spear)"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Barrage (Bow)"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Electrocuting Arrow"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Freezing Salvo"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Toxic Growth"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Gas Arrow"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Sniper's Mark"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Voltaic Mark"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Combat Frenzy"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Herald of Plague"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Detonating Arrow"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ice Shot"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Rain of Arrows"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Shockchain Arrow"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Tornado Shot"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Magnetic Salvo"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Spiral Volley"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Alchemist's Boon"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Bone Blast"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Chaos Bolt"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Decompose"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Dark Pact"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Discipline"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Firebolt"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Freezing Shards"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Galvanic Field"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Lightning Bolt"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Living Bomb"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Malice"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Mana Drain"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Power Siphon"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Purity of Fire"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Purity of Ice"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Purity of Lightning"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Shock Nova"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Sigil of Power"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Skeletal Warrior"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Soulrend"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Unleash"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ember Fusillade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Spark"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Volatile Dead"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Wither"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Contagion"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Flame Wall"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Frost Bomb"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ice Nova"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Skeletal Sniper"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Unearth"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Bone Cage"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Enfeeble"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Essence Drain"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Frostbolt"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Orb of Storms"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Skeletal Arsonist"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Arctic Armour"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Grim Feast"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Mana Remnants"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Raging Spirits"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Withering Presence"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Arc"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Bonestorm"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Snap"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Incinerate"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Pain Offering"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Raise Zombie"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Skeletal Frost Mage"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Solar Orb"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Detonate Dead"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Profane Ritual"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Vulnerability"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Dark Effigy"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Despair"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
   - name: "Fireball"
     is_vaal_skill: false
     is_item_skill: false
     is_ascendancy_skill: false
     excluded: false
-  - name: "Vaal Fireball"
-    is_vaal_skill: true
+  - name: "Frost Wall"
+    is_vaal_skill: false
     is_item_skill: false
     is_ascendancy_skill: false
     excluded: false
-  - name: "1"
-    is_vaal_skill: true
+  - name: "Lightning Warp"
+    is_vaal_skill: false
     is_item_skill: false
     is_ascendancy_skill: false
     excluded: false
-  - name: "2"
-    is_vaal_skill: true
+  - name: "Mana Tempest"
+    is_vaal_skill: false
     is_item_skill: false
     is_ascendancy_skill: false
     excluded: false
-  - name: "3"
-    is_vaal_skill: true
+  - name: "Skeletal Reaver"
+    is_vaal_skill: false
     is_item_skill: false
     is_ascendancy_skill: false
     excluded: false
-  - name: "4"
-    is_vaal_skill: true
+  - name: "Ball Lightning"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Bone Offering"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Comet"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Firestorm"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Hexblast"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Skeletal Storm Mage"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Eye of Winter"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Flameblast"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Lightning Conduit"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Skeletal Brute"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Skeletal Cleric"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Soul Offering"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Temporal Chains"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Archmage"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Blink"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Elemental Conflux"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Sacrifice"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Exsanguinate"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Reap"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Raise Shield"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Consecrate"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Armour Piercing Rounds"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Explosive Grenade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Falling Thunder"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Fragmentation Rounds"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Frozen Locus"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Glacial Cascade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Killing Palm"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Permafrost Bolts"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Flash Grenade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "High Velocity Rounds"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Incendiary Shot"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Staggering Palm"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Tempest Bell"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Vaulting Impact"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ghost Dance"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Herald of Ice"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "War Banner"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Galvanic Shards"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ice Shards"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ice Strike"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Rapid Shot"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Tempest Flurry"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Gas Grenade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Wind Blast"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Explosive Shot"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Freezing Mark"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Glacial Bolt"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Artillery Ballista"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Voltaic Grenade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Siphoning Strike"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Storm Wave"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Wave of Frost"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Defiance Banner"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Lingering Illusion"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Shard Scavenger"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Siege Ballista"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Charged Staff"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Mantra of Destruction"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Oil Grenade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Stormblast Bolts"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Emergency Reload"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Hailstorm Rounds"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Shattering Palm"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Shockburst Rounds"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Whirling Assault"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Cluster Grenade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Flicker Strike"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Gathering Storm"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Plasma Blast"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Siege Cascade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Attrition"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Charge Infusion"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Dread Banner"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Rhoa Mount"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Convalescence"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ancestral Spirit"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Bleeding Concoction"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Elemental Expression"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Elemental Storm"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Encase in Jade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Explosive Concoction"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Fulminating Concoction"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Life Remnants"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Meditate"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Poisonous Concoction"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Shattering Concoction"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Summon Infernal Hound"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Infuse Weapon"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Unbound Avatar"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Blood Boil"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Fire Spell on Hit"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Demon Form"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Into the Breach"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Manifest Weapon"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Parry"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Ritual Sacrifice"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Sorcery Ward"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Supporting Fire"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Tempered Weapon"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Temporal Rift"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Time Freeze"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Time Snap"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Spearfield"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Tame Beast"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Temper Weapon"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: true
+    excluded: false
+  - name: "Companion"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Disengage"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Explosive Spear"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Twister"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Whirling Slash"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Fangs of Frost"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Lightning Spear"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Rake"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Rapid Assault"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Storm Lance"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Bind Spectre"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Blood Hunt"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Glacial Lance"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Primal Strikes"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Trail of Caltrops"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Bloodhound's Mark"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Thunderous Leap"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Elemental Sundering"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Whirlwind Lance"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Spear of Solaris"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Wind Serpent's Fury"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Trinity"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Herald of Blood"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Cull the Weak"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Hand of Chayula"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ancestral Warrior Totem"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Fortifying Cry"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Forge Hammer"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ancestral Cry"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Toxic Domain"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ice-Tipped Arrow"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Frost Darts"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Iron Ward"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Mortar Cannon"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Mirage Archer"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ravenous Swarm"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Siphon Elements"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Heart of Ice"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Icestorm"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Pinnacle of Power"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Impurity"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Chaotic Infusion"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Thundergod's Wrath"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Elemental Weakness"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Cast on Block"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Cast on Charm Use"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Cast on Minion Death"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Barrier Invocation"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Elemental Invocation"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Cast on Critical"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Cast on Elemental Ailment"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Cast on Dodge"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Reapers Invocation"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Requiem"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Bursting Fen Toad"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Chaotic Surge"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Future-Past"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Crackling Palm"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Living Lightning"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Mana Flare"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Elemental Discharge"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Lunar Assault"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Cross Slash"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Lunar Blessing"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Furious Slam"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Ferocious Roar"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Walking Calamity"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Wing Blast"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Devour"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Oil Barrage"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Flame Breath"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Volcano"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Entangle"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Thunderstorm"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Spell Totem"
+    is_vaal_skill: false
+    is_item_skill: true
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Animus Exchange"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Animus Splinters"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Bitter Dead"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Conductive Runes"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Detonate Living"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Eternal March"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Explosive Transmutation"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Fragments of the Past"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Frostflame Nova"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Grim Pillars"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Hollow Shell"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Leylines"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Powered by Verisium"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Rain of Blades"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Refutation"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Remnants of Kalguur"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Repulsion"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Runic Reprieve"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: true
+  - name: "Skyfall"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Triskelion Cascade"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Verisium Manifestations"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Voltaic Barrier"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Wardbound Minions"
+    is_vaal_skill: false
     is_item_skill: false
     is_ascendancy_skill: false
     excluded: false

@@ -23,13 +23,14 @@ from PySide6.QtCore import Qt
 from modules.poe2.roller import (
     load_skills, save_skills, load_classes, save_classes,
     load_settings, save_settings, roll_skill, roll_ascendancy,
+    eligible_skill_pool,
 )
 from modules.poe2.editor import open_skills_editor, open_classes_editor
 from ui.slot_machine import SlotMachine
 from ui.version_badge import VersionBadge
 
 # ── Palette: deep crimson + gold ──────────────────────────────────────
-BG        = "#0d0705"
+BG        = "#170d0a"
 BG_PANEL  = "#1a0f0c"
 CRIMSON   = "#8a1f1f"
 GOLD      = "#c9a227"
@@ -39,6 +40,13 @@ WARN      = "#d99a4e"
 
 FONT_FAMILY = "Cambria"
 
+# Slot-machine entry colors by skill type -- basic skills use the default
+# TEXT/dim colors (no override); these two are for is_item_skill /
+# is_ascendancy_skill. If a skill is somehow flagged as both, ascendancy
+# wins (rarer/more build-defining, worth the visual priority).
+ITEM_SKILL_COLOR       = "#7fb8d9"  # light blue
+ASCENDANCY_SKILL_COLOR = "#e8c34a"  # bright gold, distinct from the panel's own GOLD
+VAAL_SKILL_COLOR       = "#e0483c"  # red
 
 def _checkbox_qss(text_color: str) -> str:
     return f"""
@@ -147,6 +155,7 @@ class PoE2Widget(QWidget):
         for cb in (self.allow_vaal_cb, self.allow_item_cb, self.allow_ascendancy_skill_cb):
             cb.setStyleSheet(_checkbox_qss(TEXT))
             cb.toggled.connect(self._persist_settings)
+            cb.toggled.connect(self._refresh_idle_pool)
             filters.addWidget(cb)
         filters.addStretch(1)
         root.addLayout(filters)
@@ -155,8 +164,8 @@ class PoE2Widget(QWidget):
         panel = QFrame()
         panel.setStyleSheet(f"background-color: {BG_PANEL}; border: 1px solid {CRIMSON}; border-radius: 6px;")
         panel_layout = QVBoxLayout(panel)
-        panel_layout.setContentsMargins(20, 22, 20, 22)
-        panel_layout.setSpacing(10)
+        panel_layout.setContentsMargins(24, 28, 24, 28)
+        panel_layout.setSpacing(12)
 
         skill_label = QLabel("MAIN SKILL")
         skill_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -209,6 +218,7 @@ class PoE2Widget(QWidget):
         root.addLayout(locks)
 
         self._update_ascendancy_visibility()
+        self._refresh_idle_pool()
 
         # Footer
         footer = QHBoxLayout()
@@ -232,7 +242,47 @@ class PoE2Widget(QWidget):
         self.lock_class.setEnabled(enabled)
         self.lock_ascendancy.setEnabled(enabled)
 
+    def _refresh_idle_pool(self, *_args):
+        """Keeps the idle spin's visible pool in sync with current filters/
+        data. Only actually restarts the animation if it's currently idling
+        -- doesn't interrupt a mid-spin or already-landed result."""
+        pool = eligible_skill_pool(
+            self.skills,
+            allow_vaal_skills=self.allow_vaal_cb.isChecked(),
+            allow_item_skills=self.allow_item_cb.isChecked(),
+            allow_ascendancy_skills=self.allow_ascendancy_skill_cb.isChecked(),
+        )
+        entries = [(s["name"], self._skill_color(s)) for s in pool]
+        self._idle_pool_entries = entries
+        # Auto-(re)start idling on first load (nothing rolled yet) or while
+        # already idling -- but don't interrupt an already-landed result
+        # just because a filter checkbox got toggled.
+        if self.last_skill_result is None or self.slot_machine._mode == "idle":
+            self.slot_machine.start_idle(entries)
+
     # ── Actions ──────────────────────────────────────────────────────
+
+    def _skill_color(self, skill: dict) -> str | None:
+        """Display-only color for a skill dict, based on its type flags.
+        None means "use the slot machine's default text color" -- covers
+        basic skills and (for now) vaal skills"""
+        if skill.get("is_ascendancy_skill", False):
+            return ASCENDANCY_SKILL_COLOR
+        if skill.get("is_item_skill", False):
+            return ITEM_SKILL_COLOR
+        if skill.get("is_vaal_skill", False):
+            return VAAL_SKILL_COLOR
+        return None
+
+    def _skill_color_by_name(self, name: str) -> str | None:
+        """Same as _skill_color, but looks the skill up by name against
+        the full (unfiltered) skill list -- used for the locked/static
+        case, where the skill might not be in the currently eligible pool
+        if filters changed after it was locked."""
+        for s in self.skills:
+            if s.get("name") == name:
+                return self._skill_color(s)
+        return None
 
     def _do_roll(self):
         locked_skill = self.last_skill_result.get("skill") if (self.lock_skill.isChecked() and self.last_skill_result) else None
@@ -252,9 +302,21 @@ class PoE2Widget(QWidget):
         else:
             self.warning_lbl.setText("")
             if locked_skill:
-                self.slot_machine.set_static(skill_result["skill"])
+                color = self._skill_color_by_name(skill_result["skill"])
+                self.slot_machine.set_static(skill_result["skill"], color)
             else:
-                self.slot_machine.spin(skill_result["pool_names"], skill_result["skill"])
+                # Recompute eligible entries with color attached -- roller.py
+                # stays UI-agnostic (still just returns names in pool_names),
+                # eligible_skill_pool() is the same shared filter it already
+                # used internally, called again here to get the full dicts.
+                pool = eligible_skill_pool(
+                    self.skills,
+                    allow_vaal_skills=self.allow_vaal_cb.isChecked(),
+                    allow_item_skills=self.allow_item_cb.isChecked(),
+                    allow_ascendancy_skills=self.allow_ascendancy_skill_cb.isChecked(),
+                )
+                entries = [(s["name"], self._skill_color(s)) for s in pool]
+                self.slot_machine.spin(entries, skill_result["skill"])
 
         if self.ascendancy_roll_cb.isChecked():
             locked_class = self.last_ascendancy_result.get("class") if (self.lock_class.isChecked() and self.last_ascendancy_result) else None
@@ -277,15 +339,16 @@ class PoE2Widget(QWidget):
         self.lock_skill.setChecked(False)
         self.lock_class.setChecked(False)
         self.lock_ascendancy.setChecked(False)
-        self.slot_machine.set_static("—")
         self.ascendancy_result_lbl.setText("")
         self.warning_lbl.setText("")
+        self.slot_machine.start_idle(self._idle_pool_entries)
 
     def _manage_skills(self):
         result = open_skills_editor(self, self.skills)
         if result is not None:
             self.skills = result
             save_skills(self.config_dir / "skills.yaml", self.skills)
+            self._refresh_idle_pool()
 
     def _manage_classes(self):
         result = open_classes_editor(self, self.classes)
