@@ -1,0 +1,5 @@
+# modules/poe2/config/settings.yaml
+allow_vaal_skills: true
+allow_item_skills: true
+allow_ascendancy_skills: true
+ascendancy_roll_enabled: false

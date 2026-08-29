@@ -1,0 +1,6 @@
+# modules/poe2/config/classes.yaml
+# PLACEHOLDER. PoE2 is still in active development and its class/
+# ascendancy roster has changed during early access, so nothing real is
+# pre-filled here -- fill in via Manage Classes -> Edit Ascendancies...,
+# or by hand, once you've confirmed the current roster.
+classes: []

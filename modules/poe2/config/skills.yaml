@@ -1,0 +1,35 @@
+# PLACEHOLDER. Populate via Manage Skills, or by hand -- same shape as
+# your old Java slot machine's config: Name, IsExcluded, IsVaalSkill,
+# IsItemSkill, plus a new IsAscendancySkill flag for skills only usable
+# via a specific ascendancy.
+skills:
+  - name: "Fireball"
+    is_vaal_skill: false
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "Vaal Fireball"
+    is_vaal_skill: true
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "1"
+    is_vaal_skill: true
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "2"
+    is_vaal_skill: true
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "3"
+    is_vaal_skill: true
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
+  - name: "4"
+    is_vaal_skill: true
+    is_item_skill: false
+    is_ascendancy_skill: false
+    excluded: false
