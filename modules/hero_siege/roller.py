@@ -12,6 +12,11 @@ Roll shape:
     chosen class. If no enabled class among all of them has a tag-matching
     relic, falls back to a normal skill roll and reports which classes
     were tried, so tagging mistakes are easy to spot.
+
+No passive/buff-style category flags -- deliberately kept to one signal
+(excluded) for what should or shouldn't come up, plus an optional
+ignore_exclusions override for an occasional "roll from everything"
+pass, rather than proliferating separate category tags to maintain.
 """
 
 import random
@@ -50,6 +55,7 @@ def load_settings(path: Path) -> dict:
     return {
         "wildcard_enabled": data.get("wildcard_enabled", True),
         "wildcard_chance": data.get("wildcard_chance", 0.12),
+        "ignore_exclusions": data.get("ignore_exclusions", False),
     }
 
 
@@ -60,8 +66,11 @@ def save_settings(path: Path, settings: dict) -> None:
 
 # ── Roll logic ───────────────────────────────────────────────────────────
 
-def _roll_skill(chosen_class: dict) -> str | None:
-    pool = [s["name"] for s in chosen_class.get("skills", []) if not s.get("excluded", False)]
+def _roll_skill(chosen_class: dict, ignore_exclusions: bool = False) -> str | None:
+    pool = [
+        s["name"] for s in chosen_class.get("skills", [])
+        if ignore_exclusions or not s.get("excluded", False)
+    ]
     if not pool:
         return None
     return random.choice(pool)
@@ -77,11 +86,11 @@ def _norm_tags(tags: list[str]) -> set[str]:
     return {t.strip().lower() for t in tags if t.strip()}
 
 
-def _roll_relic(chosen_class: dict, relics: list[dict]) -> str | None:
+def _roll_relic(chosen_class: dict, relics: list[dict], ignore_exclusions: bool = False) -> str | None:
     class_tags = _norm_tags(chosen_class.get("tags", []))
     pool = [
         r["name"] for r in relics
-        if not r.get("excluded", False)
+        if (ignore_exclusions or not r.get("excluded", False))
         and (UNIVERSAL_TAG in _norm_tags(r.get("tags", [])) or _norm_tags(r.get("tags", [])) & class_tags)
     ]
     if not pool:
@@ -89,14 +98,19 @@ def _roll_relic(chosen_class: dict, relics: list[dict]) -> str | None:
     return random.choice(pool)
 
 
-def roll(classes: list[dict], relics: list[dict], wildcard_enabled: bool, wildcard_chance: float) -> dict:
+def roll(classes: list[dict], relics: list[dict], wildcard_enabled: bool, wildcard_chance: float, ignore_exclusions: bool = False) -> dict:
     """
     Returns a dict:
       {"class": str, "mode": "skill"|"relic", "result": str|None,
        "warning": str|None, "skipped_classes": list[str]}
     or {"error": str} if nothing is rollable at all.
+
+    ignore_exclusions bypasses every excluded=true check uniformly --
+    classes, skills, and relics alike -- for an occasional "roll from
+    everything" pass, e.g. rediscovering something you'd previously
+    excluded.
     """
-    enabled_classes = [c for c in classes if not c.get("excluded", False)]
+    enabled_classes = classes if ignore_exclusions else [c for c in classes if not c.get("excluded", False)]
     if not enabled_classes:
         return {"error": "No classes enabled. Check Manage Classes."}
 
@@ -104,7 +118,7 @@ def roll(classes: list[dict], relics: list[dict], wildcard_enabled: bool, wildca
 
     if not do_wildcard:
         chosen_class = random.choice(enabled_classes)
-        skill = _roll_skill(chosen_class)
+        skill = _roll_skill(chosen_class, ignore_exclusions)
         warning = None if skill else f"No non-excluded skills available for {chosen_class['name']}."
         return {
             "class": chosen_class["name"], "mode": "skill", "result": skill,
@@ -118,7 +132,7 @@ def roll(classes: list[dict], relics: list[dict], wildcard_enabled: bool, wildca
     random.shuffle(shuffled)
     skipped = []
     for chosen_class in shuffled:
-        relic = _roll_relic(chosen_class, relics)
+        relic = _roll_relic(chosen_class, relics, ignore_exclusions)
         if relic is not None:
             return {
                 "class": chosen_class["name"], "mode": "relic", "result": relic,
@@ -130,7 +144,7 @@ def roll(classes: list[dict], relics: list[dict], wildcard_enabled: bool, wildca
     # normal skill roll and report every class that was tried, so a
     # tagging mistake is easy to track down.
     chosen_class = random.choice(enabled_classes)
-    skill = _roll_skill(chosen_class)
+    skill = _roll_skill(chosen_class, ignore_exclusions)
     return {
         "class": chosen_class["name"], "mode": "skill", "result": skill,
         "warning": (

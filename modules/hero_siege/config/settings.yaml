@@ -1,2 +1,2 @@
-wildcard_enabled: true
-wildcard_chance: 0.05
+wildcard_enabled: false
+wildcard_chance: 0.01

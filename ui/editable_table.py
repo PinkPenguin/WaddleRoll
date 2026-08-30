@@ -82,12 +82,31 @@ class EditableTableDialog(QDialog):
         self.extra_row_defaults = extra_row_defaults or {}
         self._saved_rows = None
 
+        # 'excluded' is a convention followed at every level of every
+        # module's data, but this dialog doesn't assume it's there --
+        # only offers the "show excluded only" filter when a caller
+        # actually included that column.
+        self._excluded_col_index = next(
+            (i for i, (key, _label, _ftype) in enumerate(columns) if key == "excluded"), None
+        )
+
         layout = QVBoxLayout(self)
 
+        filter_row = QHBoxLayout()
         self.search_box = QLineEdit()
         self.search_box.setPlaceholderText("Search...")
         self.search_box.textChanged.connect(self._apply_filter)
-        layout.addWidget(self.search_box)
+        filter_row.addWidget(self.search_box, 1)
+
+        if self._excluded_col_index is not None:
+            self.excluded_only_cb = QCheckBox("Show Excluded Only")
+            self.excluded_only_cb.setStyleSheet(f"QCheckBox {{ color: {DIALOG_TEXT}; }}\n{CHECKBOX_QSS}")
+            self.excluded_only_cb.toggled.connect(self._apply_filter)
+            filter_row.addWidget(self.excluded_only_cb)
+        else:
+            self.excluded_only_cb = None
+
+        layout.addLayout(filter_row)
 
         self.table = QTableWidget()
         col_count = len(columns) + (1 if extra_action else 0)
@@ -126,6 +145,13 @@ class EditableTableDialog(QDialog):
                 cb = QCheckBox()
                 cb.setChecked(bool(row.get(key, False)))
                 cb.setStyleSheet(CHECKBOX_QSS)
+                if c == self._excluded_col_index:
+                    # Live-reactive: unchecking "excluded" while "Show
+                    # Excluded Only" is active should drop the row out of
+                    # view immediately, not just after Save+reopen -- this
+                    # is specifically what makes "browse and fix mistakes"
+                    # workable in one pass.
+                    cb.toggled.connect(self._apply_filter)
                 self.table.setCellWidget(r, c, cb)
             elif ftype == "tags":
                 text = ", ".join(row.get(key, []) or [])
@@ -153,6 +179,7 @@ class EditableTableDialog(QDialog):
         self.rows.append(new_row)
         self.table.setRowCount(len(self.rows))
         self._populate_row(len(self.rows) - 1, new_row)
+        self._apply_filter()
 
     def _remove_selected(self):
         selected_rows = sorted({idx.row() for idx in self.table.selectedIndexes()}, reverse=True)
@@ -160,22 +187,36 @@ class EditableTableDialog(QDialog):
             del self.rows[r]
             self.table.removeRow(r)
 
-    def _apply_filter(self, query: str):
-        query = query.strip().lower()
+    def _apply_filter(self, *_args):
+        """Re-applies both active filters together: the text search (still
+        read from self.rows, same as before -- doesn't reflect an unsaved
+        text edit mid-session, matching existing behavior) and "Show
+        Excluded Only" (read live from each row's actual checkbox widget,
+        not the stale self.rows snapshot, so toggling excluded off while
+        filtered updates the view immediately)."""
+        query = self.search_box.text().strip().lower()
+        show_excluded_only = bool(self.excluded_only_cb and self.excluded_only_cb.isChecked())
+
         for r, row in enumerate(self.rows):
-            if not query:
-                self.table.setRowHidden(r, False)
-                continue
-            haystack_parts = []
-            for key, _label, ftype in self.columns:
-                if ftype == "tags":
-                    haystack_parts.append(", ".join(row.get(key, []) or []))
-                elif ftype == "stats":
-                    haystack_parts.append(", ".join(f"{k}:{v}" for k, v in (row.get(key, {}) or {}).items()))
-                elif ftype == "text":
-                    haystack_parts.append(str(row.get(key, "")))
-            haystack = " ".join(haystack_parts).lower()
-            self.table.setRowHidden(r, query not in haystack)
+            matches_query = True
+            if query:
+                haystack_parts = []
+                for key, _label, ftype in self.columns:
+                    if ftype == "tags":
+                        haystack_parts.append(", ".join(row.get(key, []) or []))
+                    elif ftype == "stats":
+                        haystack_parts.append(", ".join(f"{k}:{v}" for k, v in (row.get(key, {}) or {}).items()))
+                    elif ftype == "text":
+                        haystack_parts.append(str(row.get(key, "")))
+                haystack = " ".join(haystack_parts).lower()
+                matches_query = query in haystack
+
+            matches_excluded = True
+            if show_excluded_only:
+                cb = self.table.cellWidget(r, self._excluded_col_index)
+                matches_excluded = bool(cb.isChecked()) if cb else bool(row.get("excluded", False))
+
+            self.table.setRowHidden(r, not (matches_query and matches_excluded))
 
     def _harvest(self):
         """Pulls current widget/item values back into self.rows before saving."""

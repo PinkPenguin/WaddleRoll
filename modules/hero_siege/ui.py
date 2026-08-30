@@ -13,7 +13,7 @@ from pathlib import Path
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QCheckBox,
-    QFrame,
+    QFrame, QMessageBox,
 )
 from PySide6.QtCore import Qt
 
@@ -182,6 +182,11 @@ class HeroSiegeWidget(QWidget):
         self.result_lbl.setStyleSheet(f"color: {WHITE}; font-family: '{FONT_FAMILY}'; font-size: 19px;")
         panel_layout.addWidget(self.result_lbl)
 
+        self.exclude_btn = _action_button("Exclude This Skill", ORANGE_DIM, compact=True)
+        self.exclude_btn.setEnabled(False)
+        self.exclude_btn.clicked.connect(self._exclude_current_skill)
+        panel_layout.addWidget(self.exclude_btn)
+
         self.warning_lbl = QLabel("")
         self.warning_lbl.setWordWrap(True)
         self.warning_lbl.setStyleSheet(f"color: {AMBER}; font-family: '{FONT_FAMILY}'; font-size: 11px;")
@@ -202,6 +207,13 @@ class HeroSiegeWidget(QWidget):
         self.lock_class_cb = QCheckBox("Lock Class")
         self.lock_class_cb.setStyleSheet(_checkbox_qss(ORANGE_DIM))
         footer.addWidget(self.lock_class_cb)
+
+        self.ignore_exclusions_cb = QCheckBox("Ignore Exclusions")
+        self.ignore_exclusions_cb.setChecked(self.settings.get("ignore_exclusions", False))
+        self.ignore_exclusions_cb.setStyleSheet(_checkbox_qss(ORANGE_DIM))
+        self.ignore_exclusions_cb.toggled.connect(self._persist_settings)
+        footer.addWidget(self.ignore_exclusions_cb)
+
         footer.addStretch(1)
 
         clear_btn = _action_button("Clear", ORANGE_DIM)
@@ -225,7 +237,7 @@ class HeroSiegeWidget(QWidget):
             locked_name = self.last_result["class"]
             classes = [c for c in self.classes if c["name"] == locked_name] or self.classes
 
-        result = roll(classes, self.relics, wildcard_enabled, wildcard_chance)
+        result = roll(classes, self.relics, wildcard_enabled, wildcard_chance, self.ignore_exclusions_cb.isChecked())
         self.last_result = result
         self._update_display(result)
 
@@ -236,6 +248,7 @@ class HeroSiegeWidget(QWidget):
             self.result_lbl.setText(result["error"])
             self.warning_lbl.setText("")
             self.debug_lbl.setText("")
+            self.exclude_btn.setEnabled(False)
             return
 
         self.class_lbl.setText(result["class"])
@@ -248,6 +261,11 @@ class HeroSiegeWidget(QWidget):
             f"Skipped (no relic tag match): {', '.join(skipped)}" if skipped else ""
         )
 
+        # Only meaningful for an actual skill result -- relic rolls and
+        # empty results have nothing here to exclude.
+        self.exclude_btn.setText("Exclude This Skill")
+        self.exclude_btn.setEnabled(result["mode"] == "skill" and bool(result["result"]))
+
     def _clear(self):
         self.last_result = None
         self.lock_class_cb.setChecked(False)
@@ -256,12 +274,54 @@ class HeroSiegeWidget(QWidget):
         self.result_lbl.setText("Roll to get started")
         self.warning_lbl.setText("")
         self.debug_lbl.setText("")
+        self.exclude_btn.setText("Exclude This Skill")
+        self.exclude_btn.setEnabled(False)
 
     def _manage_classes(self):
         result = open_classes_editor(self, self.classes)
         if result is not None:
             self.classes = result
             save_classes(self.config_dir / "classes.yaml", self.classes)
+
+    def _exclude_current_skill(self):
+        """Flips excluded=true on the exact skill just rolled, within the
+        exact class it came from (not a global name search -- skill names
+        aren't guaranteed unique across classes, only within one). Saves
+        immediately, same as any other edit made through the editors.
+        Confirms first -- this is a single click with permanent effect and
+        no review step, unlike toggling a checkbox in the editor (which
+        already has Save as its natural confirmation)."""
+        if not self.last_result or self.last_result.get("mode") != "skill":
+            return
+        class_name = self.last_result.get("class")
+        skill_name = self.last_result.get("result")
+        if not class_name or not skill_name:
+            return
+
+        reply = QMessageBox.question(
+            self,
+            "Exclude Skill",
+            f'Exclude "{skill_name}" ({class_name})?\n\n'
+            f"This removes it from every future roll until you manually "
+            f"re-include it via Manage Classes.",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if reply != QMessageBox.StandardButton.Yes:
+            return
+
+        for c in self.classes:
+            if c.get("name") != class_name:
+                continue
+            for s in c.get("skills", []):
+                if s.get("name") == skill_name:
+                    s["excluded"] = True
+                    break
+            break
+
+        save_classes(self.config_dir / "classes.yaml", self.classes)
+        self.exclude_btn.setText("Excluded ✓")
+        self.exclude_btn.setEnabled(False)
 
     def _manage_relics(self):
         result = open_relics_editor(self, self.relics)
@@ -285,6 +345,7 @@ class HeroSiegeWidget(QWidget):
         self.settings = {
             "wildcard_enabled": self.wildcard_cb.isChecked(),
             "wildcard_chance": self.wildcard_chance_pct / 100.0,
+            "ignore_exclusions": self.ignore_exclusions_cb.isChecked(),
         }
         save_settings(self.config_dir / "settings.yaml", self.settings)
 
