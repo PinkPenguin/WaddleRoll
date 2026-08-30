@@ -1,4 +1,4 @@
-allow_vaal_skills: true
+allow_vaal_skills: false
 allow_item_skills: true
 allow_ascendancy_skills: false
 ascendancy_roll_enabled: false

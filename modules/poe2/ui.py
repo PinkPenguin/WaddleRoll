@@ -14,11 +14,13 @@ import os
 import platform
 import subprocess
 from pathlib import Path
+from urllib.parse import quote_plus
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QCheckBox, QFrame,
 )
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QUrl
+from PySide6.QtGui import QDesktopServices
 
 from modules.poe2.roller import (
     load_skills, save_skills, load_classes, save_classes,
@@ -38,7 +40,7 @@ GOLD_DIM  = "#6e5818"
 TEXT      = "#e8ddc7"
 WARN      = "#d99a4e"
 
-FONT_FAMILY = "Cambria"
+WIKI_SEARCH_URL = "https://www.poe2wiki.net/index.php?title=Special:Search&search=%s"
 
 # Slot-machine entry colors by skill type -- basic skills use the default
 # TEXT/dim colors (no override); these two are for is_item_skill /
@@ -46,7 +48,10 @@ FONT_FAMILY = "Cambria"
 # wins (rarer/more build-defining, worth the visual priority).
 ITEM_SKILL_COLOR       = "#7fb8d9"  # light blue
 ASCENDANCY_SKILL_COLOR = "#e8c34a"  # bright gold, distinct from the panel's own GOLD
-VAAL_SKILL_COLOR       = "#e0483c"  # red
+VAAL_SKILL_COLOR       = "#e0483c"  # red -- same one PoE1 will reuse later
+
+FONT_FAMILY = "Cambria"
+
 
 def _checkbox_qss(text_color: str) -> str:
     return f"""
@@ -119,9 +124,32 @@ class PoE2Widget(QWidget):
         root.setContentsMargins(30, 24, 30, 24)
         root.setSpacing(14)
 
-        title = QLabel("PATH OF EXILE 2 — SKILL ROLLER")
-        title.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 23px; font-weight: bold; letter-spacing: 1px;")
-        root.addWidget(title)
+        # Kicker + title + short accent rule, centered. Plain local widgets
+        # on purpose -- not pulled into a shared component, so this can be
+        # ripped out for a custom logo/banner asset later without touching
+        # anything shared with the other modules.
+        title_wrap = QWidget()
+        title_layout = QVBoxLayout(title_wrap)
+        title_layout.setContentsMargins(0, 0, 0, 0)
+        title_layout.setSpacing(4)
+
+        kicker_lbl = QLabel("PATH OF EXILE 2")
+        kicker_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        kicker_lbl.setStyleSheet(f"color: {GOLD}; font-family: '{FONT_FAMILY}'; font-size: 12px; font-weight: bold; letter-spacing: 3px;")
+        title_layout.addWidget(kicker_lbl)
+
+        title_lbl = QLabel("SKILL ROLLER")
+        title_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        title_lbl.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 28px; font-weight: bold; letter-spacing: 1px;")
+        title_layout.addWidget(title_lbl)
+
+        title_rule = QFrame()
+        title_rule.setFrameShape(QFrame.Shape.HLine)
+        title_rule.setFixedWidth(70)
+        title_rule.setStyleSheet(f"background-color: {GOLD}; max-height: 2px; border: none;")
+        title_layout.addWidget(title_rule, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        root.addWidget(title_wrap)
 
         self.version_badge = VersionBadge(self.config_dir, GOLD_DIM, GOLD_DIM, BG, FONT_FAMILY)
         root.addWidget(self.version_badge)
@@ -173,6 +201,7 @@ class PoE2Widget(QWidget):
         panel_layout.addWidget(skill_label)
 
         self.slot_machine = SlotMachine(text_color=TEXT, dim_color=GOLD_DIM, font_family=FONT_FAMILY)
+        self.slot_machine.clicked.connect(self._open_wiki)
         panel_layout.addWidget(self.slot_machine)
 
         root.addWidget(panel)
@@ -265,13 +294,16 @@ class PoE2Widget(QWidget):
     def _skill_color(self, skill: dict) -> str | None:
         """Display-only color for a skill dict, based on its type flags.
         None means "use the slot machine's default text color" -- covers
-        basic skills and (for now) vaal skills"""
+        plain basic skills. Priority when multiple flags are set:
+        ascendancy > vaal > item (ascendancy is rarest/most build-defining;
+        adjust if that ordering doesn't match how you actually think
+        about overlap cases)."""
         if skill.get("is_ascendancy_skill", False):
             return ASCENDANCY_SKILL_COLOR
-        if skill.get("is_item_skill", False):
-            return ITEM_SKILL_COLOR
         if skill.get("is_vaal_skill", False):
             return VAAL_SKILL_COLOR
+        if skill.get("is_item_skill", False):
+            return ITEM_SKILL_COLOR
         return None
 
     def _skill_color_by_name(self, name: str) -> str | None:
@@ -364,6 +396,10 @@ class PoE2Widget(QWidget):
             "ascendancy_roll_enabled": self.ascendancy_roll_cb.isChecked(),
         }
         save_settings(self.config_dir / "settings.yaml", self.settings)
+
+    def _open_wiki(self, skill_name: str):
+        url = WIKI_SEARCH_URL.replace("%s", quote_plus(skill_name))
+        QDesktopServices.openUrl(QUrl(url))
 
     def _open_config_folder(self):
         path = str(self.config_dir)

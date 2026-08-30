@@ -22,11 +22,13 @@ import os
 import platform
 import subprocess
 from pathlib import Path
+from urllib.parse import quote_plus
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QCheckBox, QFrame,
 )
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QUrl
+from PySide6.QtGui import QDesktopServices
 
 from modules.poe1.roller import (
     load_skills, save_skills, load_classes, save_classes,
@@ -44,6 +46,8 @@ ACCENT      = "#9a9d9f"   # muted steel-silver -- borders, buttons, kicker
 ACCENT_DIM  = "#55575a"
 TEXT        = "#dedcd4"   # warm bone-white
 WARN        = "#d9954e"
+
+WIKI_SEARCH_URL = "https://www.poewiki.net/index.php?title=Special:Search&search=%s"
 
 # Skill-type colors -- same semantic mapping as PoE2. Vaal reuses PoE2's
 # exact red (per the plan already noted in PoE2's own code).
@@ -202,6 +206,7 @@ class PoE1Widget(QWidget):
         panel_layout.addWidget(skill_label)
 
         self.slot_machine = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY)
+        self.slot_machine.clicked.connect(self._open_wiki)
         panel_layout.addWidget(self.slot_machine)
 
         root.addWidget(panel)
@@ -385,6 +390,10 @@ class PoE1Widget(QWidget):
             "ascendancy_roll_enabled": self.ascendancy_roll_cb.isChecked(),
         }
         save_settings(self.config_dir / "settings.yaml", self.settings)
+
+    def _open_wiki(self, skill_name: str):
+        url = WIKI_SEARCH_URL.replace("%s", quote_plus(skill_name))
+        QDesktopServices.openUrl(QUrl(url))
 
     def _open_config_folder(self):
         path = str(self.config_dir)

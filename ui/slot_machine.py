@@ -48,6 +48,7 @@ def _normalize_pool(pool):
 
 class SlotMachine(QWidget):
     finished = Signal(str)
+    clicked = Signal(str)  # emitted with the landed result, click only registers while stopped
 
     def __init__(self, text_color="#ffffff", dim_color="#888888",
                  font_family="Arial", parent=None):
@@ -83,6 +84,11 @@ class SlotMachine(QWidget):
         self._glow.setEnabled(False)
         self.current_lbl.setGraphicsEffect(self._glow)
 
+        # Pointing-hand cursor is the click affordance, only while
+        # actually landed -- set alongside the glow at every mode
+        # transition. Starts as a plain arrow since nothing's landed yet.
+        self.setCursor(Qt.CursorShape.ArrowCursor)
+
         self._timer = QTimer(self)
         self._timer.timeout.connect(self._tick)
         self._ring = []
@@ -96,6 +102,10 @@ class SlotMachine(QWidget):
     def _make_label(self, color, size, bold=False):
         lbl = QLabel("")
         lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        # Labels themselves don't handle clicks -- let them fall through
+        # to the SlotMachine widget underneath, which owns the actual
+        # click logic (mode-aware, one place to reason about).
+        lbl.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
         lbl.setProperty("_base_size", size)
         lbl.setProperty("_base_bold", bold)
         self._apply_label_style(lbl, color, size, bold)
@@ -122,6 +132,11 @@ class SlotMachine(QWidget):
     def _clear_landed_glow(self):
         self._glow.setEnabled(False)
 
+    def mousePressEvent(self, event):
+        if self._mode == "stopped" and self._result:
+            self.clicked.emit(self._result)
+        super().mousePressEvent(event)
+
     def start_idle(self, pool):
         """Begin continuous fast spinning with no landing -- the default
         state whenever nothing's been rolled/committed yet.
@@ -139,6 +154,7 @@ class SlotMachine(QWidget):
         self._index = 0
         self._mode = "idle"
         self._clear_landed_glow()
+        self.setCursor(Qt.CursorShape.ArrowCursor)
         self._update_labels()
         self._timer.start(IDLE_INTERVAL_MS)
 
@@ -203,6 +219,7 @@ class SlotMachine(QWidget):
         self._result = result_name
         self._mode = "spinning"
         self._clear_landed_glow()
+        self.setCursor(Qt.CursorShape.ArrowCursor)
 
         self._update_labels()
         if self._schedule:
@@ -212,6 +229,7 @@ class SlotMachine(QWidget):
             self._index = landing_index
             self._update_labels()
             self._apply_landed_glow(result_color or self._text_color)
+            self.setCursor(Qt.CursorShape.PointingHandCursor)
             self.finished.emit(result_name)
 
     def _build_schedule(self, duration_ms: int, max_interval: int = 220,
@@ -263,6 +281,7 @@ class SlotMachine(QWidget):
             self._update_labels()
             _, landed_color = self._ring[self._landing_index % len(self._ring)]
             self._apply_landed_glow(landed_color or self._text_color)
+            self.setCursor(Qt.CursorShape.PointingHandCursor)
             self.finished.emit(self._result)
             return
 
@@ -298,8 +317,10 @@ class SlotMachine(QWidget):
         if self._timer.isActive():
             self._timer.stop()
         self._mode = "stopped"
+        self._result = text
         self.prev_lbl.setText("")
         self.current_lbl.setText(text)
         self.next_lbl.setText("")
         self._set_label_color(self.current_lbl, color or self._text_color)
         self._apply_landed_glow(color or self._text_color)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
