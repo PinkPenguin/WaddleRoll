@@ -1,0 +1,397 @@
+"""
+modules/poe1/ui.py
+
+PoE1 module screen. Same core mechanic as PoE2 -- a skill roll using the
+shared SlotMachine spin reveal, plus an optional (off by default)
+ascendancy class roll, independent of the skill roll -- same shape as
+PoE2's, full parity. Skills can also be flagged is_ascendancy_skill
+(granted by an ascendancy tree), same as is_vaal_skill/is_item_skill,
+filterable and colored the same way -- that's a separate thing from the
+ascendancy *class* roll below.
+
+Distinct palette/font from every other module: ash + iron -- near-black
+background, muted steel-silver accent, warm bone-white text. Kept
+deliberately desaturated/monochrome rather than picking yet another
+saturated hue, so the blue (item) / red (vaal) / gold (ascendancy)
+skill-type colors read clearly against it instead of blending in.
+Trebuchet MS -- not used by any other module (others are
+Cambria/Georgia/Segoe UI/Courier New).
+"""
+
+import os
+import platform
+import subprocess
+from pathlib import Path
+
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QCheckBox, QFrame,
+)
+from PySide6.QtCore import Qt
+
+from modules.poe1.roller import (
+    load_skills, save_skills, load_classes, save_classes,
+    load_settings, save_settings, roll_skill, roll_ascendancy,
+    eligible_skill_pool,
+)
+from modules.poe1.editor import open_skills_editor, open_classes_editor
+from ui.slot_machine import SlotMachine
+from ui.version_badge import VersionBadge
+
+# ── Palette: ash + iron (deliberately desaturated) ────────────────────
+BG          = "#0b0b0c"
+BG_PANEL    = "#18181b"
+ACCENT      = "#9a9d9f"   # muted steel-silver -- borders, buttons, kicker
+ACCENT_DIM  = "#55575a"
+TEXT        = "#dedcd4"   # warm bone-white
+WARN        = "#d9954e"
+
+# Skill-type colors -- same semantic mapping as PoE2. Vaal reuses PoE2's
+# exact red (per the plan already noted in PoE2's own code).
+ITEM_SKILL_COLOR       = "#7fb8d9"  # light blue
+VAAL_SKILL_COLOR       = "#e0483c"  # red -- same value as PoE2's
+ASCENDANCY_SKILL_COLOR = "#e8c34a"  # gold -- same value as PoE2's
+
+FONT_FAMILY = "Trebuchet MS"
+
+
+def _checkbox_qss(text_color: str) -> str:
+    return f"""
+        QCheckBox {{ color: {text_color}; font-family: '{FONT_FAMILY}'; font-size: 11px; }}
+        QCheckBox::indicator {{
+            width: 14px; height: 14px;
+            border: 1px solid {ACCENT}; border-radius: 2px;
+            background: transparent;
+        }}
+        QCheckBox::indicator:checked {{
+            background-color: {ACCENT}; border: 1px solid {ACCENT};
+        }}
+    """
+
+
+def _divider() -> QFrame:
+    line = QFrame()
+    line.setFrameShape(QFrame.Shape.HLine)
+    line.setStyleSheet(f"background-color: {ACCENT_DIM}; max-height: 1px; border: none;")
+    return line
+
+
+def _tool_button(text: str) -> QPushButton:
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {ACCENT}; background-color: {BG};
+            border: 1px solid {ACCENT}; padding: 6px 12px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        }}
+        QPushButton:hover {{ background-color: {ACCENT_DIM}; color: {TEXT}; }}
+    """)
+    return btn
+
+
+def _action_button(text: str, color: str) -> QPushButton:
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {color}; background-color: {BG};
+            border: 2px solid {color}; border-radius: 3px; padding: 8px 24px;
+            font-family: '{FONT_FAMILY}'; font-size: 13px; font-weight: bold;
+        }}
+        QPushButton:hover {{ background-color: {ACCENT_DIM}; color: {TEXT}; }}
+    """)
+    return btn
+
+
+class PoE1Widget(QWidget):
+    def __init__(self, config_dir: Path, parent=None):
+        super().__init__(parent)
+        self.config_dir = Path(config_dir)
+        self.setStyleSheet(f"background-color: {BG};")
+
+        self.skills = load_skills(self.config_dir / "skills.yaml")
+        self.classes = load_classes(self.config_dir / "classes.yaml")
+        self.settings = load_settings(self.config_dir / "settings.yaml")
+
+        self.last_skill_result = None
+        self.last_ascendancy_result = None
+
+        self._build_ui()
+
+    # ── UI construction ───────────────────────────────────────────────
+
+    def _build_ui(self):
+        root = QVBoxLayout(self)
+        root.setContentsMargins(30, 24, 30, 24)
+        root.setSpacing(14)
+
+        # Kicker + title + short accent rule, centered. Plain local
+        # widgets, same approach as PoE2 -- not a shared component, so
+        # it's free to be replaced with a logo/banner asset later without
+        # touching anything else.
+        title_wrap = QWidget()
+        title_layout = QVBoxLayout(title_wrap)
+        title_layout.setContentsMargins(0, 0, 0, 0)
+        title_layout.setSpacing(4)
+
+        kicker_lbl = QLabel("PATH OF EXILE")
+        kicker_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        kicker_lbl.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 12px; font-weight: bold; letter-spacing: 3px;")
+        title_layout.addWidget(kicker_lbl)
+
+        title_lbl = QLabel("SKILL ROLLER")
+        title_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        title_lbl.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 28px; font-weight: bold; letter-spacing: 1px;")
+        title_layout.addWidget(title_lbl)
+
+        title_rule = QFrame()
+        title_rule.setFrameShape(QFrame.Shape.HLine)
+        title_rule.setFixedWidth(70)
+        title_rule.setStyleSheet(f"background-color: {ACCENT}; max-height: 2px; border: none;")
+        title_layout.addWidget(title_rule, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        root.addWidget(title_wrap)
+
+        self.version_badge = VersionBadge(self.config_dir, ACCENT_DIM, ACCENT_DIM, BG, FONT_FAMILY)
+        root.addWidget(self.version_badge)
+
+        # Tool row
+        tools = QHBoxLayout()
+        tools.setSpacing(10)
+        tools.addStretch(1)
+        manage_skills_btn = _tool_button("Manage Skills")
+        manage_skills_btn.clicked.connect(self._manage_skills)
+        tools.addWidget(manage_skills_btn)
+        manage_classes_btn = _tool_button("Manage Classes")
+        manage_classes_btn.clicked.connect(self._manage_classes)
+        tools.addWidget(manage_classes_btn)
+        open_folder_btn = _tool_button("Open Config Folder")
+        open_folder_btn.clicked.connect(self._open_config_folder)
+        tools.addWidget(open_folder_btn)
+        root.addLayout(tools)
+
+        root.addWidget(_divider())
+
+        # Filter toggles
+        filters = QHBoxLayout()
+        filters.setSpacing(16)
+        self.allow_vaal_cb = QCheckBox("Allow Vaal Skills")
+        self.allow_item_cb = QCheckBox("Allow Item Skills")
+        self.allow_ascendancy_skill_cb = QCheckBox("Allow Ascendancy Skills")
+        self.allow_vaal_cb.setChecked(self.settings.get("allow_vaal_skills", True))
+        self.allow_item_cb.setChecked(self.settings.get("allow_item_skills", True))
+        self.allow_ascendancy_skill_cb.setChecked(self.settings.get("allow_ascendancy_skills", True))
+        for cb in (self.allow_vaal_cb, self.allow_item_cb, self.allow_ascendancy_skill_cb):
+            cb.setStyleSheet(_checkbox_qss(TEXT))
+            cb.toggled.connect(self._persist_settings)
+            cb.toggled.connect(self._refresh_idle_pool)
+            filters.addWidget(cb)
+        filters.addStretch(1)
+        root.addLayout(filters)
+
+        # Skill slot machine panel
+        panel = QFrame()
+        panel.setStyleSheet(f"background-color: {BG_PANEL}; border: 1px solid {ACCENT_DIM}; border-radius: 6px;")
+        panel_layout = QVBoxLayout(panel)
+        panel_layout.setContentsMargins(24, 28, 24, 28)
+        panel_layout.setSpacing(12)
+
+        skill_label = QLabel("SKILL")
+        skill_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        skill_label.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
+        panel_layout.addWidget(skill_label)
+
+        self.slot_machine = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY)
+        panel_layout.addWidget(self.slot_machine)
+
+        root.addWidget(panel)
+
+        # Ascendancy toggle + result (optional, off by default)
+        asc_row = QHBoxLayout()
+        asc_row.setSpacing(14)
+        self.ascendancy_roll_cb = QCheckBox("Also Roll Ascendancy")
+        self.ascendancy_roll_cb.setChecked(self.settings.get("ascendancy_roll_enabled", False))
+        self.ascendancy_roll_cb.setStyleSheet(_checkbox_qss(TEXT))
+        self.ascendancy_roll_cb.toggled.connect(self._persist_settings)
+        self.ascendancy_roll_cb.toggled.connect(self._update_ascendancy_visibility)
+        asc_row.addWidget(self.ascendancy_roll_cb)
+        asc_row.addStretch(1)
+        root.addLayout(asc_row)
+
+        self.ascendancy_result_lbl = QLabel("")
+        self.ascendancy_result_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.ascendancy_result_lbl.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 15px;")
+        root.addWidget(self.ascendancy_result_lbl)
+
+        self.warning_lbl = QLabel("")
+        self.warning_lbl.setWordWrap(True)
+        self.warning_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.warning_lbl.setStyleSheet(f"color: {WARN}; font-family: '{FONT_FAMILY}'; font-size: 11px;")
+        root.addWidget(self.warning_lbl)
+
+        root.addStretch(1)
+
+        # Lock row
+        locks = QHBoxLayout()
+        locks.setSpacing(16)
+        lock_label = QLabel("LOCK:")
+        lock_label.setStyleSheet(f"color: {ACCENT_DIM}; font-family: '{FONT_FAMILY}'; font-size: 11px;")
+        locks.addWidget(lock_label)
+        self.lock_skill = QCheckBox("Skill")
+        self.lock_skill.setStyleSheet(_checkbox_qss(ACCENT_DIM))
+        locks.addWidget(self.lock_skill)
+        self.lock_class = QCheckBox("Class")
+        self.lock_ascendancy = QCheckBox("Ascendancy")
+        for cb in (self.lock_class, self.lock_ascendancy):
+            cb.setStyleSheet(_checkbox_qss(ACCENT_DIM))
+            locks.addWidget(cb)
+        locks.addStretch(1)
+        root.addLayout(locks)
+
+        self._update_ascendancy_visibility()
+        self._refresh_idle_pool()
+
+        # Footer
+        footer = QHBoxLayout()
+        footer.setSpacing(14)
+        footer.addStretch(1)
+        clear_btn = _action_button("Clear", ACCENT_DIM)
+        clear_btn.clicked.connect(self._clear)
+        footer.addWidget(clear_btn)
+        roll_btn = _action_button("ROLL", ACCENT)
+        roll_btn.clicked.connect(self._do_roll)
+        footer.addWidget(roll_btn)
+        root.addLayout(footer)
+
+    def _update_ascendancy_visibility(self):
+        """Uses setEnabled rather than setVisible -- setVisible(False) called
+        before the widget's top-level window has ever been shown doesn't
+        reliably survive a later show() call (a real Qt quirk, same one
+        PoE2 works around the same way), whereas setEnabled is unaffected
+        by that timing issue."""
+        enabled = self.ascendancy_roll_cb.isChecked()
+        self.ascendancy_result_lbl.setEnabled(enabled)
+        self.lock_class.setEnabled(enabled)
+        self.lock_ascendancy.setEnabled(enabled)
+
+    # ── Skill color ──────────────────────────────────────────────────
+
+    def _skill_color(self, skill: dict) -> str | None:
+        """Display-only color for a skill dict. Priority when multiple
+        flags are set: ascendancy > vaal > item, matching PoE2 -- vaal
+        and item are exclusive in practice, so this mostly only matters
+        for an ascendancy skill that also happens to be vaal/item."""
+        if skill.get("is_ascendancy_skill", False):
+            return ASCENDANCY_SKILL_COLOR
+        if skill.get("is_vaal_skill", False):
+            return VAAL_SKILL_COLOR
+        if skill.get("is_item_skill", False):
+            return ITEM_SKILL_COLOR
+        return None
+
+    def _skill_color_by_name(self, name: str) -> str | None:
+        for s in self.skills:
+            if s.get("name") == name:
+                return self._skill_color(s)
+        return None
+
+    def _refresh_idle_pool(self, *_args):
+        pool = eligible_skill_pool(
+            self.skills,
+            allow_vaal_skills=self.allow_vaal_cb.isChecked(),
+            allow_item_skills=self.allow_item_cb.isChecked(),
+            allow_ascendancy_skills=self.allow_ascendancy_skill_cb.isChecked(),
+        )
+        entries = [(s["name"], self._skill_color(s)) for s in pool]
+        self._idle_pool_entries = entries
+        if self.last_skill_result is None or self.slot_machine._mode == "idle":
+            self.slot_machine.start_idle(entries)
+
+    # ── Actions ──────────────────────────────────────────────────────
+
+    def _do_roll(self):
+        locked_skill = self.last_skill_result.get("skill") if (self.lock_skill.isChecked() and self.last_skill_result) else None
+
+        skill_result = roll_skill(
+            self.skills,
+            allow_vaal_skills=self.allow_vaal_cb.isChecked(),
+            allow_item_skills=self.allow_item_cb.isChecked(),
+            allow_ascendancy_skills=self.allow_ascendancy_skill_cb.isChecked(),
+            locked_skill=locked_skill,
+        )
+        self.last_skill_result = skill_result
+
+        if skill_result["skill"] is None:
+            self.warning_lbl.setText(skill_result.get("warning") or "")
+            self.slot_machine.set_static("—")
+        else:
+            self.warning_lbl.setText("")
+            if locked_skill:
+                color = self._skill_color_by_name(skill_result["skill"])
+                self.slot_machine.set_static(skill_result["skill"], color)
+            else:
+                pool = eligible_skill_pool(
+                    self.skills,
+                    allow_vaal_skills=self.allow_vaal_cb.isChecked(),
+                    allow_item_skills=self.allow_item_cb.isChecked(),
+                    allow_ascendancy_skills=self.allow_ascendancy_skill_cb.isChecked(),
+                )
+                entries = [(s["name"], self._skill_color(s)) for s in pool]
+                self.slot_machine.spin(entries, skill_result["skill"])
+
+        if self.ascendancy_roll_cb.isChecked():
+            locked_class = self.last_ascendancy_result.get("class") if (self.lock_class.isChecked() and self.last_ascendancy_result) else None
+            locked_asc = self.last_ascendancy_result.get("ascendancy") if (self.lock_ascendancy.isChecked() and self.last_ascendancy_result) else None
+            asc_result = roll_ascendancy(self.classes, locked_class=locked_class, locked_ascendancy=locked_asc)
+            self.last_ascendancy_result = asc_result
+            if "error" in asc_result:
+                self.ascendancy_result_lbl.setText(asc_result["error"])
+            else:
+                asc_text = asc_result["class"]
+                if asc_result.get("ascendancy"):
+                    asc_text += f"  →  {asc_result['ascendancy']}"
+                self.ascendancy_result_lbl.setText(asc_text)
+                if asc_result.get("warning"):
+                    self.warning_lbl.setText(asc_result["warning"])
+
+    def _clear(self):
+        self.last_skill_result = None
+        self.last_ascendancy_result = None
+        self.lock_skill.setChecked(False)
+        self.lock_class.setChecked(False)
+        self.lock_ascendancy.setChecked(False)
+        self.ascendancy_result_lbl.setText("")
+        self.warning_lbl.setText("")
+        self.slot_machine.start_idle(self._idle_pool_entries)
+
+    def _manage_skills(self):
+        result = open_skills_editor(self, self.skills)
+        if result is not None:
+            self.skills = result
+            save_skills(self.config_dir / "skills.yaml", self.skills)
+            self._refresh_idle_pool()
+
+    def _manage_classes(self):
+        result = open_classes_editor(self, self.classes)
+        if result is not None:
+            self.classes = result
+            save_classes(self.config_dir / "classes.yaml", self.classes)
+
+    def _persist_settings(self, *_args):
+        self.settings = {
+            "allow_vaal_skills": self.allow_vaal_cb.isChecked(),
+            "allow_item_skills": self.allow_item_cb.isChecked(),
+            "allow_ascendancy_skills": self.allow_ascendancy_skill_cb.isChecked(),
+            "ascendancy_roll_enabled": self.ascendancy_roll_cb.isChecked(),
+        }
+        save_settings(self.config_dir / "settings.yaml", self.settings)
+
+    def _open_config_folder(self):
+        path = str(self.config_dir)
+        system = platform.system()
+        if system == "Windows":
+            os.startfile(path)  # noqa: S606 -- Windows-only call, deliberate
+        elif system == "Darwin":
+            subprocess.run(["open", path])
+        else:
+            subprocess.run(["xdg-open", path])

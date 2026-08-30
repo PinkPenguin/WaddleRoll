@@ -1,0 +1,64 @@
+classes:
+  - name: "Marauder"
+    excluded: false
+    ascendancies:
+      - name: "Juggernaut"
+        excluded: false
+      - name: "Berserker"
+        excluded: false
+      - name: "Chieftain"
+        excluded: false
+  - name: "Duelist"
+    excluded: false
+    ascendancies:
+      - name: "Slayer"
+        excluded: false
+      - name: "Gladiator"
+        excluded: false
+      - name: "Champion"
+        excluded: false
+  - name: "Ranger"
+    excluded: false
+    ascendancies:
+      - name: "Deadeye"
+        excluded: false
+      - name: "Warden"
+        excluded: false
+      - name: "Pathfinder"
+        excluded: false
+  - name: "Shadow"
+    excluded: false
+    ascendancies:
+      - name: "Assassin"
+        excluded: false
+      - name: "Saboteur"
+        excluded: false
+      - name: "Trickster"
+        excluded: false
+  - name: "Witch"
+    excluded: false
+    ascendancies:
+      - name: "Necromancer"
+        excluded: false
+      - name: "Occultist"
+        excluded: false
+      - name: "Elementalist"
+        excluded: false
+  - name: "Templar"
+    excluded: false
+    ascendancies:
+      - name: "Inquisitor"
+        excluded: false
+      - name: "Hierophant"
+        excluded: false
+      - name: "Guardian"
+        excluded: false
+  - name: "Scion"
+    excluded: false
+    ascendancies:
+      - name: "Ascendant"
+        excluded: false
+      - name: "Reliquarian"
+        excluded: false
+      - name: "Luminary"
+        excluded: false

@@ -1,6 +1,76 @@
 # modules/poe2/config/classes.yaml
 # PLACEHOLDER. PoE2 is still in active development and its class/
-# ascendancy roster has changed during early access, so nothing real is
+# ascendancies roster has changed during early access, so nothing real is
 # pre-filled here -- fill in via Manage Classes -> Edit Ascendancies...,
 # or by hand, once you've confirmed the current roster.
-classes: []
+classes:
+  - name: "Warrior"
+    excluded: false
+    ascendancies:
+      - name: "Titan"
+        excluded: false
+      - name: "Warbringer"
+        excluded: false
+      - name: "Smith of Kitava"
+        excluded: false
+  - name: "Sorceress"
+    excluded: false
+    ascendancies:
+      - name: "Stormweaver"
+        excluded: false
+      - name: "Chronomancer"
+        excluded: false
+      - name: "Disciple of Varashta"
+        excluded: false
+  - name: "Witch"
+    excluded: false
+    ascendancies:
+      - name: "Infernalist"
+        excluded: false
+      - name: "Blood Mage"
+        excluded: false
+      - name: "Lich"
+        excluded: false
+      - name: "Abyssal Lich"
+        excluded: true
+  - name: "Ranger"
+    excluded: false
+    ascendancies:
+      - name: "Deadeye"
+        excluded: false
+      - name: "Pathfinder"
+        excluded: false
+  - name: "Huntress"
+    excluded: false
+    ascendancies:
+      - name: "Amazon"
+        excluded: false
+      - name: "Ritualist"
+        excluded: false
+      - name: "Spirit Walker"
+        excluded: false
+  - name: "Mercenary"
+    excluded: false
+    ascendancies:
+      - name: "Witchhunter"
+        excluded: false
+      - name: "Gemling Legionnaire"
+        excluded: false
+      - name: "Tactician"
+        excluded: false
+  - name: "Monk"
+    excluded: false
+    ascendancies:
+      - name: "Invoker"
+        excluded: false
+      - name: "Acolyte of Chayula"
+        excluded: false
+      - name: "Martial Artist"
+        excluded: false
+  - name: "Druid"
+    excluded: false
+    ascendancies:
+      - name: "Oracle"
+        excluded: false
+      - name: "Shaman"
+        excluded: false
