@@ -27,8 +27,9 @@ what the color *means* -- color is opaque here.
 
 import random
 
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QGraphicsDropShadowEffect
 from PySide6.QtCore import Qt, QTimer, Signal
+from PySide6.QtGui import QColor
 
 IDLE_INTERVAL_MS = 35  # constant, fastest tick while idling
 
@@ -71,6 +72,17 @@ class SlotMachine(QWidget):
 
         self.setMinimumHeight(150)
 
+        # Soft glow on the center label, only while genuinely landed --
+        # a clearer "this is the result" cue than the arrow markers used
+        # before. One effect object, toggled via setEnabled rather than
+        # attached/detached repeatedly (cheaper, avoids any flicker from
+        # swapping graphics effects in and out).
+        self._glow = QGraphicsDropShadowEffect()
+        self._glow.setBlurRadius(28)
+        self._glow.setOffset(0, 0)
+        self._glow.setEnabled(False)
+        self.current_lbl.setGraphicsEffect(self._glow)
+
         self._timer = QTimer(self)
         self._timer.timeout.connect(self._tick)
         self._ring = []
@@ -103,6 +115,13 @@ class SlotMachine(QWidget):
         bold = lbl.property("_base_bold")
         self._apply_label_style(lbl, color, size, bold)
 
+    def _apply_landed_glow(self, color):
+        self._glow.setColor(QColor(color))
+        self._glow.setEnabled(True)
+
+    def _clear_landed_glow(self):
+        self._glow.setEnabled(False)
+
     def start_idle(self, pool):
         """Begin continuous fast spinning with no landing -- the default
         state whenever nothing's been rolled/committed yet.
@@ -119,6 +138,7 @@ class SlotMachine(QWidget):
         self._ring = ring
         self._index = 0
         self._mode = "idle"
+        self._clear_landed_glow()
         self._update_labels()
         self._timer.start(IDLE_INTERVAL_MS)
 
@@ -166,6 +186,11 @@ class SlotMachine(QWidget):
         self._step = 0
         landing_index = len(self._schedule)
 
+        # Ring length is driven by how many ticks the schedule actually
+        # needs, not a fixed pad -- otherwise a small pool caps the tick
+        # count (via a short ring) and the animation undershoots the
+        # requested duration regardless of how long the schedule wants
+        # to run.
         ring = []
         while len(ring) < landing_index + 4:
             ring += others
@@ -177,6 +202,7 @@ class SlotMachine(QWidget):
         self._index = 0
         self._result = result_name
         self._mode = "spinning"
+        self._clear_landed_glow()
 
         self._update_labels()
         if self._schedule:
@@ -185,6 +211,7 @@ class SlotMachine(QWidget):
             self._mode = "stopped"
             self._index = landing_index
             self._update_labels()
+            self._apply_landed_glow(result_color or self._text_color)
             self.finished.emit(result_name)
 
     def _build_schedule(self, duration_ms: int, max_interval: int = 220,
@@ -196,11 +223,14 @@ class SlotMachine(QWidget):
              stays close to the target regardless of pool size.
           2. Fizzle tail: a handful of extra ticks continuing to slow
              down past max_interval, up to fizzle_max_interval, before
-             landing -- the actual wind-down feel. Additive on top of
-             duration_ms; pass fizzle_ticks=0 for the old hard-stop.
+             landing -- the actual wind-down feel. This is additive on
+             top of duration_ms (a real spin now runs ~1s longer than
+             duration_ms alone would suggest); tune fizzle_ticks /
+             fizzle_max_interval to taste, or pass fizzle_ticks=0 to get
+             the old hard-stop behavior back.
         """
         base = IDLE_INTERVAL_MS
-        avg_interval = base + (max_interval - base) / 3
+        avg_interval = base + (max_interval - base) / 3  # mean of a t^2 ease-out over [0,1]
         steps = max(1, round(duration_ms / avg_interval))
 
         schedule = []
@@ -231,6 +261,8 @@ class SlotMachine(QWidget):
             self._mode = "stopped"
             self._index = self._landing_index
             self._update_labels()
+            _, landed_color = self._ring[self._landing_index % len(self._ring)]
+            self._apply_landed_glow(landed_color or self._text_color)
             self.finished.emit(self._result)
             return
 
@@ -246,6 +278,12 @@ class SlotMachine(QWidget):
         cur_name, cur_color = self._ring[i]
         next_name, next_color = self._ring[next_i]
 
+        # Reversed roll direction: the entry "coming up next" (next_i)
+        # renders in the prev_lbl slot, and the one that just passed
+        # through center (prev_i) renders in next_lbl. This flips which
+        # way the reel visually appears to scroll without changing the
+        # index/landing math at all -- it still lands on ring[landing_index]
+        # in the center label exactly as before.
         self.prev_lbl.setText(next_name)
         self.current_lbl.setText(cur_name)
         self.next_lbl.setText(prev_name)
@@ -264,3 +302,4 @@ class SlotMachine(QWidget):
         self.current_lbl.setText(text)
         self.next_lbl.setText("")
         self._set_label_color(self.current_lbl, color or self._text_color)
+        self._apply_landed_glow(color or self._text_color)

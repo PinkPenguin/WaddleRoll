@@ -27,8 +27,8 @@ class Module(GameModule):
     # measured size as a starting guess. Still needs its own real
     # sizeHint() measurement once there's actual skill/class data loaded
     # -- don't trust this number as final.
-    default_size = (480, 640)
-    min_size = (480, 640)
+    default_size = (480, 660)
+    min_size = (480, 660)
 
     def get_widget(self, parent=None):
         return PoE1Widget(config_dir=CONFIG_DIR, parent=parent)
