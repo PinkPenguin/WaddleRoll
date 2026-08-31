@@ -6,9 +6,6 @@ tag-matched relic instead. Includes buttons to open the in-app data
 editors and to open the config folder directly in the OS file browser.
 """
 
-import os
-import platform
-import subprocess
 from pathlib import Path
 
 from PySide6.QtWidgets import (
@@ -24,6 +21,7 @@ from modules.hero_siege.roller import (
 from ui.last_roll import load_last_roll, save_last_roll
 from modules.hero_siege.editor import open_classes_editor, open_relics_editor
 from ui.version_badge import VersionBadge
+from ui.config_folder import open_config_folder
 
 # ── Palette (distinct from FO4 -- own identity per the plan) ────────────
 BG        = "#150c08"
@@ -372,11 +370,4 @@ class HeroSiegeWidget(QWidget):
         save_settings(self.config_dir / "settings.yaml", self.settings)
 
     def _open_config_folder(self):
-        path = str(self.config_dir)
-        system = platform.system()
-        if system == "Windows":
-            os.startfile(path)  # noqa: S606 -- Windows-only call, deliberate
-        elif system == "Darwin":
-            subprocess.run(["open", path])
-        else:
-            subprocess.run(["xdg-open", path])
+        open_config_folder(self.config_dir)

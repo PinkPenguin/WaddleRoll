@@ -9,9 +9,6 @@ Palette is intentionally desaturated/muted rather than neon, per feedback
 on Hero Siege's first pass -- worth carrying into future modules too.
 """
 
-import os
-import platform
-import subprocess
 from pathlib import Path
 
 from PySide6.QtWidgets import (
@@ -19,9 +16,11 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 
-from modules.grim_dawn.roller import load_masteries, save_masteries, roll
+from modules.grim_dawn.roller import load_masteries, save_masteries, load_settings, save_settings, roll
 from modules.grim_dawn.editor import open_masteries_editor
 from ui.version_badge import VersionBadge
+from ui.config_folder import open_config_folder
+from ui.last_roll import load_last_roll, save_last_roll
 # ── Palette: muted iron/bronze, not neon ─────────────────────────────────
 BG        = "#14150f"
 BG_PANEL  = "#1e2018"
@@ -89,9 +88,11 @@ class GrimDawnWidget(QWidget):
         self.setStyleSheet(f"background-color: {BG};")
 
         self.masteries = load_masteries(self.config_dir / "masteries.yaml")
+        self.settings = load_settings(self.config_dir / "settings.yaml")
         self.last_result = None
 
         self._build_ui()
+        self._restore_last_roll()
 
     # ── UI construction ───────────────────────────────────────────────
 
@@ -185,6 +186,20 @@ class GrimDawnWidget(QWidget):
 
     # ── Actions ──────────────────────────────────────────────────────
 
+    def _restore_last_roll(self):
+        if not self.settings.get("remember_last_roll", True):
+            return
+        saved = load_last_roll(self.config_dir / "last_roll.yaml")
+        if not saved:
+            return
+        self.last_result = saved
+        self._update_display(saved)
+
+    def _save_last_roll(self):
+        if not self.settings.get("remember_last_roll", True):
+            return
+        save_last_roll(self.config_dir / "last_roll.yaml", self.last_result)
+
     def _do_roll(self):
         locked_a = self.last_result.get("mastery_a") if (self.lock_mastery_a.isChecked() and self.last_result) else None
         locked_skill = self.last_result.get("skill") if (self.lock_skill.isChecked() and self.last_result) else None
@@ -193,6 +208,7 @@ class GrimDawnWidget(QWidget):
         result = roll(self.masteries, locked_mastery_a=locked_a, locked_skill=locked_skill, locked_mastery_b=locked_b)
         self.last_result = result
         self._update_display(result)
+        self._save_last_roll()
 
     def _update_display(self, result: dict):
         if "error" in result:
@@ -216,6 +232,13 @@ class GrimDawnWidget(QWidget):
         self.skill_lbl.setText("—")
         self.mastery_b_lbl.setText("—")
         self.warning_lbl.setText("")
+        save_last_roll(self.config_dir / "last_roll.yaml", None)
+
+    def _persist_settings(self, *_args):
+        self.settings = {
+            "remember_last_roll": self.settings.get("remember_last_roll", True),
+        }
+        save_settings(self.config_dir / "settings.yaml", self.settings)
 
     def _manage_masteries(self):
         result = open_masteries_editor(self, self.masteries)
@@ -224,11 +247,4 @@ class GrimDawnWidget(QWidget):
             save_masteries(self.config_dir / "masteries.yaml", self.masteries)
 
     def _open_config_folder(self):
-        path = str(self.config_dir)
-        system = platform.system()
-        if system == "Windows":
-            os.startfile(path)  # noqa: S606 -- Windows-only call, deliberate
-        elif system == "Darwin":
-            subprocess.run(["open", path])
-        else:
-            subprocess.run(["xdg-open", path])
+        open_config_folder(self.config_dir)

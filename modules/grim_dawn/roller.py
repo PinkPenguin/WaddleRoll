@@ -34,6 +34,25 @@ def save_masteries(path: Path, masteries: list[dict]) -> None:
         yaml.safe_dump({"masteries": masteries}, f, sort_keys=False, allow_unicode=True)
 
 
+def load_settings(path: Path) -> dict:
+    """Grim Dawn had no persisted settings before this -- every toggle
+    just reset on launch. This introduces the file for remember_last_roll
+    specifically; nothing else got retrofitted to persist."""
+    if Path(path).exists():
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+    else:
+        data = {}
+    return {
+        "remember_last_roll": data.get("remember_last_roll", True),
+    }
+
+
+def save_settings(path: Path, settings: dict) -> None:
+    with open(path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(settings, f, sort_keys=False)
+
+
 # ── Roll logic ───────────────────────────────────────────────────────────
 
 def _roll_skill(mastery: dict) -> str | None:

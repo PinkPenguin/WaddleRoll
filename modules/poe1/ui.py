@@ -18,9 +18,6 @@ Trebuchet MS -- not used by any other module (others are
 Cambria/Georgia/Segoe UI/Courier New).
 """
 
-import os
-import platform
-import subprocess
 from pathlib import Path
 from urllib.parse import quote_plus
 
@@ -39,6 +36,7 @@ from ui.last_roll import load_last_roll, save_last_roll
 from modules.poe1.editor import open_skills_editor, open_classes_editor
 from ui.slot_machine import SlotMachine
 from ui.version_badge import VersionBadge
+from ui.config_folder import open_config_folder
 
 # ── Palette: ash + iron (deliberately desaturated) ────────────────────
 BG          = "#0b0b0c"
@@ -437,11 +435,4 @@ class PoE1Widget(QWidget):
         QDesktopServices.openUrl(QUrl(url))
 
     def _open_config_folder(self):
-        path = str(self.config_dir)
-        system = platform.system()
-        if system == "Windows":
-            os.startfile(path)  # noqa: S606 -- Windows-only call, deliberate
-        elif system == "Darwin":
-            subprocess.run(["open", path])
-        else:
-            subprocess.run(["xdg-open", path])
+        open_config_folder(self.config_dir)

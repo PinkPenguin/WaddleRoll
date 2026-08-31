@@ -16,9 +16,6 @@ sidesteps Qt's default checkmark rendering, which needs extra work to
 show correctly once you override its box styling.
 """
 
-import os
-import platform
-import subprocess
 from pathlib import Path
 
 from PySide6.QtWidgets import (
@@ -40,6 +37,7 @@ from modules.fallout4.editor import (
     open_utility_perks_editor, open_weapon_tags_editor,
 )
 from ui.version_badge import VersionBadge
+from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
 
 # ── Pip-Boy palette ──────────────────────────────────────────────────────
@@ -515,14 +513,7 @@ class FO4Widget(QWidget):
             save_weapon_tags(self.config_dir / "weapon_tags.yaml", self.weapon_tags)
 
     def _open_config_folder(self):
-        path = str(self.config_dir)
-        system = platform.system()
-        if system == "Windows":
-            os.startfile(path)  # noqa: S606 -- Windows-only call, deliberate
-        elif system == "Darwin":
-            subprocess.run(["open", path])
-        else:
-            subprocess.run(["xdg-open", path])
+        open_config_folder(self.config_dir)
 
     def _restore_last_roll(self):
         """Bundles the three separate state pieces (special/roll/perks)

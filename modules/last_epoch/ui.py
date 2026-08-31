@@ -11,9 +11,6 @@ by Hero Siege/Grim Dawn, and bordered/rounded panels rather than flat
 rectangles -- without going overboard on structural differences yet.
 """
 
-import os
-import platform
-import subprocess
 from pathlib import Path
 
 from PySide6.QtWidgets import (
@@ -24,6 +21,7 @@ from PySide6.QtCore import Qt
 from modules.last_epoch.roller import load_classes, save_classes, load_settings, save_settings, roll
 from modules.last_epoch.editor import open_classes_editor
 from ui.version_badge import VersionBadge
+from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
 
 # ── Palette: purple/pink + bronze, matching the game's own UI ───────────
@@ -273,11 +271,4 @@ class LastEpochWidget(QWidget):
         save_settings(self.config_dir / "settings.yaml", self.settings)
 
     def _open_config_folder(self):
-        path = str(self.config_dir)
-        system = platform.system()
-        if system == "Windows":
-            os.startfile(path)  # noqa: S606 -- Windows-only call, deliberate
-        elif system == "Darwin":
-            subprocess.run(["open", path])
-        else:
-            subprocess.run(["xdg-open", path])
+        open_config_folder(self.config_dir)
