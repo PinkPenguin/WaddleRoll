@@ -21,6 +21,7 @@ from modules.hero_siege.roller import (
     load_classes, save_classes, load_relics, save_relics,
     load_settings, save_settings, roll,
 )
+from ui.last_roll import load_last_roll, save_last_roll
 from modules.hero_siege.editor import open_classes_editor, open_relics_editor
 from ui.version_badge import VersionBadge
 
@@ -98,6 +99,7 @@ class HeroSiegeWidget(QWidget):
         self.last_result = None
 
         self._build_ui()
+        self._restore_last_roll()
 
     # ── UI construction ───────────────────────────────────────────────
 
@@ -228,6 +230,23 @@ class HeroSiegeWidget(QWidget):
 
     # ── Actions ──────────────────────────────────────────────────────
 
+    def _restore_last_roll(self):
+        """Called once after the UI is built. Reuses _update_display --
+        a restored result should look exactly like a freshly rolled one,
+        no separate rendering path to keep in sync."""
+        if not self.settings.get("remember_last_roll", True):
+            return
+        saved = load_last_roll(self.config_dir / "last_roll.yaml")
+        if not saved:
+            return
+        self.last_result = saved
+        self._update_display(saved)
+
+    def _save_last_roll(self):
+        if not self.settings.get("remember_last_roll", True):
+            return
+        save_last_roll(self.config_dir / "last_roll.yaml", self.last_result)
+
     def _do_roll(self):
         wildcard_enabled = self.wildcard_cb.isChecked()
         wildcard_chance = self.wildcard_chance_pct / 100.0
@@ -240,6 +259,7 @@ class HeroSiegeWidget(QWidget):
         result = roll(classes, self.relics, wildcard_enabled, wildcard_chance, self.ignore_exclusions_cb.isChecked())
         self.last_result = result
         self._update_display(result)
+        self._save_last_roll()
 
     def _update_display(self, result: dict):
         if "error" in result:
@@ -276,6 +296,7 @@ class HeroSiegeWidget(QWidget):
         self.debug_lbl.setText("")
         self.exclude_btn.setText("Exclude This Skill")
         self.exclude_btn.setEnabled(False)
+        save_last_roll(self.config_dir / "last_roll.yaml", None)
 
     def _manage_classes(self):
         result = open_classes_editor(self, self.classes)
@@ -346,6 +367,7 @@ class HeroSiegeWidget(QWidget):
             "wildcard_enabled": self.wildcard_cb.isChecked(),
             "wildcard_chance": self.wildcard_chance_pct / 100.0,
             "ignore_exclusions": self.ignore_exclusions_cb.isChecked(),
+            "remember_last_roll": self.settings.get("remember_last_roll", True),
         }
         save_settings(self.config_dir / "settings.yaml", self.settings)
 

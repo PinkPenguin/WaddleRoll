@@ -84,6 +84,35 @@ def save_weapon_tags(path: Path, tags: list[dict]) -> None:
         yaml.safe_dump({"weapon_tags": tags}, f, sort_keys=False, allow_unicode=True)
 
 
+def load_settings(path: Path) -> dict:
+    """FO4 had no persisted settings before remember_last_roll was added
+    -- every other toggle (varied stats, allow special, DLC, weapon
+    groups, perk count) reset on every launch too. This now covers all
+    of them. active_group_names is None until saved once -- meaning
+    "every group active," matching the original hardcoded default -- a
+    saved list means exactly those groups were checked last time."""
+    if Path(path).exists():
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+    else:
+        data = {}
+    return {
+        "remember_last_roll": data.get("remember_last_roll", True),
+        "varied_stats": data.get("varied_stats", True),
+        "allow_special": data.get("allow_special", True),
+        "dlc_far_harbor": data.get("dlc_far_harbor", True),
+        "dlc_nuka_world": data.get("dlc_nuka_world", True),
+        "dlc_automatron": data.get("dlc_automatron", True),
+        "num_perks": data.get("num_perks", 1),
+        "active_group_names": data.get("active_group_names", None),
+    }
+
+
+def save_settings(path: Path, settings: dict) -> None:
+    with open(path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(settings, f, sort_keys=False)
+
+
 # ── SPECIAL roll ─────────────────────────────────────────────────────────
 
 def generate_special(skew=False):

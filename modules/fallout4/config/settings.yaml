@@ -1,0 +1,13 @@
+remember_last_roll: true
+varied_stats: true
+allow_special: true
+dlc_far_harbor: true
+dlc_nuka_world: true
+dlc_automatron: true
+num_perks: 1
+active_group_names:
+- Ballistic
+- Energy
+- Explosives
+- Heavy
+- Melee

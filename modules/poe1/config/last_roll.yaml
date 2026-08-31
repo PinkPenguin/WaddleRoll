@@ -1,0 +1,261 @@
+skill_result:
+  skill: Heavy Strike
+  pool_names:
+  - Abyssal Cry
+  - Animate Guardian
+  - Animate Weapon
+  - Arc
+  - Arctic Breath
+  - Armageddon Brand
+  - Ball Lightning
+  - Bane
+  - Barrage
+  - Bear Trap
+  - Blade Flurry
+  - Blade Vortex
+  - Bladefall
+  - Bladestorm
+  - Blast Rain
+  - Blight
+  - Blink Arrow
+  - Bodyswap
+  - Burning Arrow
+  - Caustic Arrow
+  - Chain Hook
+  - Charged Dash
+  - Cleave
+  - Cobra Lash
+  - Cold Snap
+  - Consecrated Path
+  - Contagion
+  - Conversion Trap
+  - Cremation
+  - Cyclone
+  - Dark Pact
+  - Detonate Dead
+  - Discharge
+  - Divine Ire
+  - Dominating Blow
+  - Double Strike
+  - Dual Strike
+  - Earthquake
+  - Elemental Hit
+  - Essence Drain
+  - Ethereal Knives
+  - Explosive Arrow
+  - Explosive Trap
+  - Fire Trap
+  - Fireball
+  - Firestorm
+  - Flame Dash
+  - Flame Surge
+  - Flameblast
+  - Flamethrower Trap
+  - Flicker Strike
+  - Freezing Pulse
+  - Frenzy
+  - Frost Blades
+  - Frost Bomb
+  - Frostblink
+  - Frostbolt
+  - Glacial Cascade
+  - Glacial Hammer
+  - Ground Slam
+  - Heavy Strike
+  - Herald of Agony
+  - Herald of Ash
+  - Herald of Ice
+  - Herald of Purity
+  - Herald of Thunder
+  - Holy Flame Totem
+  - Ice Crash
+  - Ice Nova
+  - Ice Shot
+  - Ice Spear
+  - Ice Trap
+  - Icicle Mine
+  - Incinerate
+  - Infernal Blow
+  - Kinetic Blast
+  - Lacerate
+  - Lancing Steel
+  - Leap Slam
+  - Lightning Arrow
+  - Lightning Spire Trap
+  - Lightning Strike
+  - Lightning Tendrils
+  - Lightning Trap
+  - Lightning Warp
+  - Magma Orb
+  - Mirror Arrow
+  - Molten Strike
+  - Orb of Storms
+  - Perforate
+  - Pestilent Strike
+  - Plague Bearer
+  - Power Siphon
+  - Puncture
+  - Purifying Flame
+  - Pyroclast Mine
+  - Rain of Arrows
+  - Raise Spectre
+  - Raise Zombie
+  - Reave
+  - Righteous Fire
+  - Scorching Ray
+  - Scourge Arrow
+  - Searing Bond
+  - Seismic Trap
+  - Shattering Steel
+  - Shield Charge
+  - Shock Nova
+  - Shockwave Totem
+  - Galvanic Arrow
+  - Siege Ballista
+  - Siphoning Trap
+  - Smite
+  - Soulrend
+  - Spark
+  - Spectral Shield Throw
+  - Spectral Throw
+  - Split Arrow
+  - Static Strike
+  - Storm Brand
+  - Storm Burst
+  - Storm Call
+  - Stormblast Mine
+  - Summon Carrion Golem
+  - Summon Chaos Golem
+  - Summon Flame Golem
+  - Summon Ice Golem
+  - Summon Lightning Golem
+  - Summon Raging Spirit
+  - Summon Skeletons
+  - Summon Skitterbots
+  - Summon Stone Golem
+  - Sunder
+  - Holy Sweep
+  - Tectonic Slam
+  - Tempest Shield
+  - Tornado Shot
+  - Toxic Rain
+  - Unearth
+  - Venom Gyre
+  - Vigilant Strike
+  - Viper Strike
+  - Volatile Dead
+  - Vortex
+  - Wave of Conviction
+  - Whirling Blades
+  - Wild Strike
+  - Winter Orb
+  - Ensnaring Arrow
+  - Shrapnel Ballista
+  - Artillery Ballista
+  - Vaal Arc
+  - Vaal Blight
+  - Vaal Cold Snap
+  - Vaal Fireball
+  - Vaal Flameblast
+  - Vaal Ice Nova
+  - Vaal Lightning Trap
+  - Vaal Power Siphon
+  - Vaal Righteous Fire
+  - Vaal Spark
+  - Vaal Storm Call
+  - Vaal Summon Skeletons
+  - Vaal Earthquake
+  - Vaal Glacial Hammer
+  - Vaal Ground Slam
+  - Vaal Blade Vortex
+  - Vaal Burning Arrow
+  - Vaal Cyclone
+  - Vaal Detonate Dead
+  - Vaal Double Strike
+  - Vaal Lightning Strike
+  - Vaal Rain of Arrows
+  - Vaal Reave
+  - Vaal Spectral Throw
+  - Summon Holy Relic
+  - Blade Blast
+  - Kinetic Bolt
+  - Stormbind
+  - Icestorm
+  - Spellslinger
+  - General's Cry
+  - Ancestral Cry
+  - Arcanist Brand
+  - Earthshatter
+  - The Dancing Dervish
+  - Death's Oath
+  - Doryani's Fist
+  - Blazing Salvo
+  - Void Sphere
+  - Crackling Lance
+  - Splitting Steel
+  - Flame Wall
+  - Hexblast
+  - Impending Doom
+  - Hydrosphere
+  - Corrupting Fever
+  - Exsanguinate
+  - Reap
+  - Absolution
+  - Ambush
+  - Battlemage's Cry
+  - Blade Trap
+  - Boneshatter
+  - Explosive Concoction
+  - Eye of Winter
+  - Forbidden Rite
+  - Rage Vortex
+  - Shield Crush
+  - Storm Rain
+  - Summon Reaper
+  - Voltaxic Burst
+  - Energy Blade
+  - Poisonous Concoction
+  - Tornado
+  - Galvanic Field
+  - Lightning Conduit
+  - Alchemist's Mark
+  - Frozen Legion
+  - Volcanic Fissure
+  - Vaal Flicker Strike
+  - Vaal Cleave
+  - Vaal Blade Flurry
+  - Vaal Venom Gyre
+  - Vaal Molten Strike
+  - Vaal Caustic Arrow
+  - Vaal Volcanic Fissure
+  - Vaal Smite
+  - Vaal Absolution
+  - Vaal Lightning Arrow
+  - Vaal Reap
+  - Vaal Animate Weapon
+  - Vaal Domination
+  - Vaal Ice Shot
+  - Vaal Firestorm
+  - '#Prismatic Burst'
+  - '#Frigid Bond'
+  - '#Decay'
+  - '#Corrupting Cry'
+  - Crushing Fist
+  - Eviscerate
+  - Swordstorm
+  - Glacial Shield Swipe
+  - Divine Retribution
+  - Conflagration
+  - Thunderstorm
+  - Somatic Shell
+  - Kinetic Fusillade
+  - Kinetic Rain
+  - '#Windburst'
+  - '#Living Lightning'
+  - Holy Hammers
+  - Holy Strike
+  - Shield of Light
+  - Divine Blast
+  - Mana-Infused Staff
+  warning: null
+ascendancy_result: null

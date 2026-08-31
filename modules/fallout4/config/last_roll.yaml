@@ -1,0 +1,20 @@
+special:
+  STR: 1
+  PER: 7
+  END: 1
+  CHA: 4
+  INT: 1
+  AGI: 10
+  LCK: 4
+roll:
+  category: Normal
+  group: Energy
+  weapon:
+    name: Automatic Energy Rifle
+    min_stats:
+      PER: 3
+      INT: 2
+    excluded: false
+    type: Automatic Energy Rifle
+perks:
+- Sneak

@@ -50,12 +50,16 @@ def save_relics(path: Path, relics: list[dict]) -> None:
 
 
 def load_settings(path: Path) -> dict:
-    with open(path, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f) or {}
+    if Path(path).exists():
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+    else:
+        data = {}
     return {
         "wildcard_enabled": data.get("wildcard_enabled", True),
         "wildcard_chance": data.get("wildcard_chance", 0.12),
         "ignore_exclusions": data.get("ignore_exclusions", False),
+        "remember_last_roll": data.get("remember_last_roll", True),
     }
 
 

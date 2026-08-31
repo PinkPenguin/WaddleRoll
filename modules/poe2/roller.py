@@ -43,20 +43,17 @@ def save_classes(path: Path, classes: list[dict]) -> None:
 
 
 def load_settings(path: Path) -> dict:
-    if not Path(path).exists():
-        return {
-            "allow_vaal_skills": True,
-            "allow_item_skills": True,
-            "allow_ascendancy_skills": True,
-            "ascendancy_roll_enabled": False,
-        }
-    with open(path, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f) or {}
+    if Path(path).exists():
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+    else:
+        data = {}
     return {
         "allow_vaal_skills": data.get("allow_vaal_skills", True),
         "allow_item_skills": data.get("allow_item_skills", True),
         "allow_ascendancy_skills": data.get("allow_ascendancy_skills", True),
         "ascendancy_roll_enabled": data.get("ascendancy_roll_enabled", False),
+        "remember_last_roll": data.get("remember_last_roll", True),
     }
 
 

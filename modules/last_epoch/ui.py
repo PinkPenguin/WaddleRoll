@@ -24,6 +24,7 @@ from PySide6.QtCore import Qt
 from modules.last_epoch.roller import load_classes, save_classes, load_settings, save_settings, roll
 from modules.last_epoch.editor import open_classes_editor
 from ui.version_badge import VersionBadge
+from ui.last_roll import load_last_roll, save_last_roll
 
 # ── Palette: purple/pink + bronze, matching the game's own UI ───────────
 BG        = "#160b1a"
@@ -98,6 +99,7 @@ class LastEpochWidget(QWidget):
         self.last_result = None
 
         self._build_ui()
+        self._restore_last_roll()
 
     # ── UI construction ───────────────────────────────────────────────
 
@@ -203,6 +205,20 @@ class LastEpochWidget(QWidget):
 
     # ── Actions ──────────────────────────────────────────────────────
 
+    def _restore_last_roll(self):
+        if not self.settings.get("remember_last_roll", True):
+            return
+        saved = load_last_roll(self.config_dir / "last_roll.yaml")
+        if not saved:
+            return
+        self.last_result = saved
+        self._update_display(saved)
+
+    def _save_last_roll(self):
+        if not self.settings.get("remember_last_roll", True):
+            return
+        save_last_roll(self.config_dir / "last_roll.yaml", self.last_result)
+
     def _do_roll(self):
         locked_class = self.last_result.get("class") if (self.lock_class.isChecked() and self.last_result) else None
         locked_skill = self.last_result.get("skill") if (self.lock_skill.isChecked() and self.last_result) else None
@@ -217,6 +233,7 @@ class LastEpochWidget(QWidget):
         )
         self.last_result = result
         self._update_display(result)
+        self._save_last_roll()
 
     def _update_display(self, result: dict):
         if "error" in result:
@@ -240,6 +257,7 @@ class LastEpochWidget(QWidget):
         self.skill_lbl.setText("—")
         self.notable_lbl.setText("—")
         self.warning_lbl.setText("")
+        save_last_roll(self.config_dir / "last_roll.yaml", None)
 
     def _manage_classes(self):
         result = open_classes_editor(self, self.classes)
@@ -248,7 +266,10 @@ class LastEpochWidget(QWidget):
             save_classes(self.config_dir / "classes.yaml", self.classes)
 
     def _persist_settings(self, *_args):
-        self.settings = {"notables_enabled": self.notable_cb.isChecked()}
+        self.settings = {
+            "notables_enabled": self.notable_cb.isChecked(),
+            "remember_last_roll": self.settings.get("remember_last_roll", True),
+        }
         save_settings(self.config_dir / "settings.yaml", self.settings)
 
     def _open_config_folder(self):

@@ -33,12 +33,14 @@ from modules.fallout4.roller import (
     load_named_weapons, save_named_weapons,
     load_utility_perks, save_utility_perks,
     load_weapon_tags, save_weapon_tags,
+    load_settings, save_settings,
 )
 from modules.fallout4.editor import (
     open_weapon_groups_editor, open_named_weapons_editor,
     open_utility_perks_editor, open_weapon_tags_editor,
 )
 from ui.version_badge import VersionBadge
+from ui.last_roll import load_last_roll, save_last_roll
 
 # ── Pip-Boy palette ──────────────────────────────────────────────────────
 BG         = "#0a0f0a"
@@ -135,14 +137,16 @@ class FO4Widget(QWidget):
         self.named_weapons = load_named_weapons(self.config_dir / "named_weapons.yaml")
         self.utility_perks = load_utility_perks(self.config_dir / "utility_perks.yaml")
         self.weapon_tags = load_weapon_tags(self.config_dir / "weapon_tags.yaml")
+        self.settings = load_settings(self.config_dir / "settings.yaml")
 
         # ── State ──────────────────────────────────────────────────────
-        self.num_perks = 1
+        self.num_perks = self.settings.get("num_perks", 1)
         self.current_special = None
         self.current_roll = None
         self.current_perks = []
 
         self._build_ui()
+        self._restore_last_roll()
 
     # ── UI construction ───────────────────────────────────────────────
 
@@ -234,8 +238,10 @@ class FO4Widget(QWidget):
         opts_col.setSpacing(6)
         opts_col.addWidget(_section_label("OPTIONS"))
         opts_widget, opts_layout = _panel()
-        self.varied_stats = TermCheckbox("Varied SPECIAL stats", True)
-        self.allow_special = TermCheckbox("Allow special weapons", True)
+        self.varied_stats = TermCheckbox("Varied SPECIAL stats", self.settings.get("varied_stats", True))
+        self.varied_stats.toggled.connect(self._persist_settings)
+        self.allow_special = TermCheckbox("Allow special weapons", self.settings.get("allow_special", True))
+        self.allow_special.toggled.connect(self._persist_settings)
         opts_layout.addWidget(self.varied_stats)
         opts_layout.addWidget(self.allow_special)
 
@@ -248,7 +254,7 @@ class FO4Widget(QWidget):
         minus_btn = _pip_button("−", GREEN, compact=True)
         minus_btn.setFixedWidth(32)
         minus_btn.clicked.connect(self._dec_perks)
-        self.perk_count_lbl = QLabel("1")
+        self.perk_count_lbl = QLabel(str(self.num_perks))
         self.perk_count_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.perk_count_lbl.setFixedWidth(20)
         self.perk_count_lbl.setStyleSheet(f"color: {GREEN}; font-family: '{FONT_FAMILY}'; font-size: 14px; font-weight: bold;")
@@ -267,9 +273,12 @@ class FO4Widget(QWidget):
         dlc_col.setSpacing(6)
         dlc_col.addWidget(_section_label("DLC"))
         dlc_widget, dlc_layout = _panel()
-        self.dlc_far_harbor = TermCheckbox("Far Harbor", True)
-        self.dlc_nuka_world = TermCheckbox("Nuka-World", True)
-        self.dlc_automatron = TermCheckbox("Automatron", True)
+        self.dlc_far_harbor = TermCheckbox("Far Harbor", self.settings.get("dlc_far_harbor", True))
+        self.dlc_far_harbor.toggled.connect(self._persist_settings)
+        self.dlc_nuka_world = TermCheckbox("Nuka-World", self.settings.get("dlc_nuka_world", True))
+        self.dlc_nuka_world.toggled.connect(self._persist_settings)
+        self.dlc_automatron = TermCheckbox("Automatron", self.settings.get("dlc_automatron", True))
+        self.dlc_automatron.toggled.connect(self._persist_settings)
         dlc_layout.addWidget(self.dlc_far_harbor)
         dlc_layout.addWidget(self.dlc_nuka_world)
         dlc_layout.addWidget(self.dlc_automatron)
@@ -278,14 +287,19 @@ class FO4Widget(QWidget):
 
         # Weapon groups -- now sourced from loaded config, not a hardcoded dict,
         # so adding/removing a group via Manage Weapon Groups shows up here
-        # automatically on next open.
+        # automatically on next open. Checked state comes from the saved
+        # active_group_names list; None (nothing saved yet) means every
+        # group starts active, matching the original hardcoded default.
         grp_col = QVBoxLayout()
         grp_col.setSpacing(6)
         grp_col.addWidget(_section_label("GROUPS"))
         grp_widget, grp_layout = _panel()
+        saved_active_groups = self.settings.get("active_group_names")
         self.group_toggles = {}
         for group in self.weapon_groups:
-            cb = TermCheckbox(group["name"], True)
+            is_checked = True if saved_active_groups is None else (group["name"] in saved_active_groups)
+            cb = TermCheckbox(group["name"], is_checked)
+            cb.toggled.connect(self._persist_settings)
             self.group_toggles[group["name"]] = cb
             grp_layout.addWidget(cb)
         grp_col.addWidget(grp_widget)
@@ -375,11 +389,13 @@ class FO4Widget(QWidget):
         if self.num_perks < 5:
             self.num_perks += 1
             self.perk_count_lbl.setText(str(self.num_perks))
+            self._persist_settings()
 
     def _dec_perks(self):
         if self.num_perks > 1:
             self.num_perks -= 1
             self.perk_count_lbl.setText(str(self.num_perks))
+            self._persist_settings()
 
     def _active_group_names(self) -> set:
         return {name for name, cb in self.group_toggles.items() if cb.isChecked()}
@@ -431,6 +447,7 @@ class FO4Widget(QWidget):
 
         self._update_display()
         self._set_status("> ROLL COMPLETE — GOOD LUCK, VAULT DWELLER", GREEN)
+        self._save_last_roll()
 
     def _do_clear(self):
         self.current_special = None
@@ -446,6 +463,7 @@ class FO4Widget(QWidget):
         for lbl in self.perk_labels:
             lbl.setText("")
         self._set_status("> TERMINAL CLEARED", GREEN_DIM)
+        save_last_roll(self.config_dir / "last_roll.yaml", None)
 
     def _update_display(self):
         if self.current_special:
@@ -505,3 +523,42 @@ class FO4Widget(QWidget):
             subprocess.run(["open", path])
         else:
             subprocess.run(["xdg-open", path])
+
+    def _restore_last_roll(self):
+        """Bundles the three separate state pieces (special/roll/perks)
+        into one saved unit, since together they're what "the last roll"
+        actually means here -- unlike every other module, FO4 doesn't
+        have a single last_result dict to begin with."""
+        if not self.settings.get("remember_last_roll", True):
+            return
+        saved = load_last_roll(self.config_dir / "last_roll.yaml")
+        if not saved:
+            return
+        self.current_special = saved.get("special")
+        self.current_roll = saved.get("roll")
+        self.current_perks = saved.get("perks") or []
+        self._update_display()
+        self._set_status("> RESTORED LAST ROLL", GREEN_DIM)
+
+    def _save_last_roll(self):
+        if not self.settings.get("remember_last_roll", True):
+            return
+        data = {
+            "special": self.current_special,
+            "roll": self.current_roll,
+            "perks": self.current_perks,
+        }
+        save_last_roll(self.config_dir / "last_roll.yaml", data)
+
+    def _persist_settings(self, *_args):
+        self.settings = {
+            "remember_last_roll": self.settings.get("remember_last_roll", True),
+            "varied_stats": self.varied_stats.isChecked(),
+            "allow_special": self.allow_special.isChecked(),
+            "dlc_far_harbor": self.dlc_far_harbor.isChecked(),
+            "dlc_nuka_world": self.dlc_nuka_world.isChecked(),
+            "dlc_automatron": self.dlc_automatron.isChecked(),
+            "num_perks": self.num_perks,
+            "active_group_names": sorted(self._active_group_names()),
+        }
+        save_settings(self.config_dir / "settings.yaml", self.settings)

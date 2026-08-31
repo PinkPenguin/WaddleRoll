@@ -35,6 +35,7 @@ from modules.poe1.roller import (
     load_settings, save_settings, roll_skill, roll_ascendancy,
     eligible_skill_pool,
 )
+from ui.last_roll import load_last_roll, save_last_roll
 from modules.poe1.editor import open_skills_editor, open_classes_editor
 from ui.slot_machine import SlotMachine
 from ui.version_badge import VersionBadge
@@ -121,6 +122,7 @@ class PoE1Widget(QWidget):
         self.last_ascendancy_result = None
 
         self._build_ui()
+        self._restore_last_roll()
 
     # ── UI construction ───────────────────────────────────────────────
 
@@ -220,6 +222,7 @@ class PoE1Widget(QWidget):
         self.ascendancy_roll_cb.toggled.connect(self._persist_settings)
         self.ascendancy_roll_cb.toggled.connect(self._update_ascendancy_visibility)
         asc_row.addWidget(self.ascendancy_roll_cb)
+
         asc_row.addStretch(1)
         root.addLayout(asc_row)
 
@@ -314,6 +317,40 @@ class PoE1Widget(QWidget):
 
     # ── Actions ──────────────────────────────────────────────────────
 
+    def _restore_last_roll(self):
+        """Called once after the UI is built. Shows whatever was saved as
+        a static result (not an animated spin -- this is a restore, not a
+        new roll) if the setting's on and something's actually there."""
+        if not self.settings.get("remember_last_roll", True):
+            return
+        saved = load_last_roll(self.config_dir / "last_roll.yaml")
+        if not saved:
+            return
+
+        skill_result = saved.get("skill_result")
+        if skill_result and skill_result.get("skill"):
+            self.last_skill_result = skill_result
+            self.warning_lbl.setText(skill_result.get("warning") or "")
+            color = self._skill_color_by_name(skill_result["skill"])
+            self.slot_machine.set_static(skill_result["skill"], color)
+
+        asc_result = saved.get("ascendancy_result")
+        if asc_result and "error" not in asc_result:
+            self.last_ascendancy_result = asc_result
+            asc_text = asc_result["class"]
+            if asc_result.get("ascendancy"):
+                asc_text += f"  →  {asc_result['ascendancy']}"
+            self.ascendancy_result_lbl.setText(asc_text)
+
+    def _save_last_roll(self):
+        if not self.settings.get("remember_last_roll", True):
+            return
+        data = {
+            "skill_result": self.last_skill_result,
+            "ascendancy_result": self.last_ascendancy_result,
+        }
+        save_last_roll(self.config_dir / "last_roll.yaml", data)
+
     def _do_roll(self):
         locked_skill = self.last_skill_result.get("skill") if (self.lock_skill.isChecked() and self.last_skill_result) else None
 
@@ -359,6 +396,8 @@ class PoE1Widget(QWidget):
                 if asc_result.get("warning"):
                     self.warning_lbl.setText(asc_result["warning"])
 
+        self._save_last_roll()
+
     def _clear(self):
         self.last_skill_result = None
         self.last_ascendancy_result = None
@@ -368,6 +407,7 @@ class PoE1Widget(QWidget):
         self.ascendancy_result_lbl.setText("")
         self.warning_lbl.setText("")
         self.slot_machine.start_idle(self._idle_pool_entries)
+        save_last_roll(self.config_dir / "last_roll.yaml", None)
 
     def _manage_skills(self):
         result = open_skills_editor(self, self.skills)
@@ -388,6 +428,7 @@ class PoE1Widget(QWidget):
             "allow_item_skills": self.allow_item_cb.isChecked(),
             "allow_ascendancy_skills": self.allow_ascendancy_skill_cb.isChecked(),
             "ascendancy_roll_enabled": self.ascendancy_roll_cb.isChecked(),
+            "remember_last_roll": self.settings.get("remember_last_roll", True),
         }
         save_settings(self.config_dir / "settings.yaml", self.settings)
 
