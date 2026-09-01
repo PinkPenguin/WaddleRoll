@@ -1,0 +1,6 @@
+notes:
+- hero: Batrider
+  builds:
+  - name: Test
+    general_notes: Test1
+    item_notes: Test2
