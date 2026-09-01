@@ -1,0 +1,1731 @@
+# Torchlight Infinite skills -- populate via the in-app "Manage
+# Skills" editor, or by hand following this shape. Paste your skill
+# list into the chat and it can be converted directly into this
+# instead of you hand-filling it.
+#
+# skills:
+#   - name: "Example Skill"
+#     excluded: false
+skills:
+  - name: "Leap Attack"
+    excluded: false
+    tags:
+      - "Mobility"
+      - "Attack"
+      - "Melee"
+      - "Physical"
+      - "Demolisher"
+      - "Area"
+      - "Strength"
+  - name: "Ice Shot"
+    excluded: false
+    tags:
+      - "Cold"
+      - "Projectile"
+      - "Attack"
+      - "Ranged"
+      - "Area"
+      - "Horizontal"
+      - "Dexterity"
+  - name: "Hammer of Ash"
+    excluded: false
+    tags:
+      - "Area"
+      - "Fire"
+      - "Attack"
+      - "Projectile"
+      - "Melee"
+      - "Demolisher"
+      - "Horizontal"
+      - "Strength"
+  - name: "Chromatic Shot"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Projectile"
+      - "Area"
+      - "Physical"
+      - "Horizontal"
+      - "Strength"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Resurrection Warcry"
+    excluded: false
+    tags:
+      - "Warcry"
+      - "Area"
+      - "Persistent"
+      - "Restoration"
+  - name: "Whirlwind"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Channeled"
+      - "Physical"
+      - "Slash-Strike"
+      - "Strength"
+      - "Dexterity"
+  - name: "Focused Slash"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Physical"
+      - "Slash-Strike"
+      - "Strength"
+      - "Dexterity"
+  - name: "Stoneskin"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Defensive"
+      - "Spell"
+  - name: "Thundercloud"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Lightning"
+      - "Channeled"
+      - "Area"
+      - "Chain"
+      - "Intelligence"
+  - name: "Blink"
+    excluded: false
+    tags:
+      - "Mobility"
+      - "Spell"
+  - name: "Bombard"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Projectile"
+      - "Area"
+      - "Fire"
+      - "Ranged"
+      - "Parabolic"
+      - "Strength"
+  - name: "Shadow Shot"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Projectile"
+      - "Horizontal"
+      - "Intelligence"
+  - name: "Shadow Swamp"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Persistent"
+      - "Terra"
+      - "Intelligence"
+  - name: "Marked Rain of Arrows"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Fire"
+      - "Area"
+      - "Persistent"
+      - "Ranged"
+      - "Projectile"
+      - "Horizontal"
+      - "Vertical"
+      - "Dexterity"
+  - name: "Bull's Rage"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Spell"
+      - "Empower"
+  - name: "Shadow Dash"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Mobility"
+      - "Persistent"
+      - "Erosion"
+  - name: "Frost Shield"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Cold"
+      - "Defensive"
+  - name: "Rocket Jump"
+    excluded: false
+    tags:
+      - "Mobility"
+      - "Ranged"
+      - "Attack"
+      - "Area"
+      - "Fire"
+      - "Strength"
+  - name: "Split Firebolt"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Projectile"
+      - "Fire"
+      - "Area"
+      - "Horizontal"
+      - "Intelligence"
+  - name: "Blizzard"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Cold"
+      - "Area"
+      - "Barrage"
+      - "Intelligence"
+  - name: "Obscure"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Defensive"
+      - "Spell"
+  - name: "Mana Boil"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Empower"
+  - name: "Frost Impact"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Cold"
+      - "Demolisher"
+      - "Strength"
+      - "Intelligence"
+  - name: "Path of Flames"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Fire"
+      - "Channeled"
+      - "Persistent"
+      - "Area"
+      - "Intelligence"
+  - name: "Berserking Blade"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Physical"
+      - "Slash-Strike"
+      - "Persistent"
+      - "Strength"
+      - "Dexterity"
+  - name: "Charged Pummel"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Channeled"
+      - "Lightning"
+      - "Demolisher"
+      - "Persistent"
+      - "Strength"
+  - name: "Chain Lightning"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Lightning"
+      - "Chain"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Double Thrusts"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Physical"
+      - "Shadow Strike"
+      - "Area"
+      - "Dexterity"
+  - name: "Mind Control"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Channeled"
+      - "Persistent"
+      - "Intelligence"
+  - name: "Ring of Ice"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Cold"
+      - "Area"
+      - "Intelligence"
+  - name: "Split Shot"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Projectile"
+      - "Physical"
+      - "Ranged"
+      - "Horizontal"
+      - "Dexterity"
+  - name: "Flame Slash"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Fire"
+      - "Slash-Strike"
+      - "Strength"
+  - name: "Icy Blade"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Cold"
+      - "Slash-Strike"
+      - "Strength"
+      - "Intelligence"
+  - name: "Frost Spike"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Projectile"
+      - "Shadow Strike"
+      - "Cold"
+      - "Area"
+      - "Horizontal"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Wilt Spike"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Shadow Strike"
+      - "Erosion"
+      - "Area"
+      - "Persistent"
+      - "Dexterity"
+  - name: "Lightning Shot"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Ranged"
+      - "Projectile"
+      - "Lightning"
+      - "Chain"
+      - "Horizontal"
+      - "Dexterity"
+  - name: "Corrosive Shot"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Erosion"
+      - "Area"
+      - "Persistent"
+      - "Ranged"
+      - "Projectile"
+      - "Parabolic"
+      - "Terra"
+      - "Dexterity"
+  - name: "Burning Shot"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Ranged"
+      - "Area"
+      - "Projectile"
+      - "Fire"
+      - "Horizontal"
+      - "Dexterity"
+  - name: "Electrifying Shot"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Ranged"
+      - "Projectile"
+      - "Lightning"
+      - "Horizontal"
+      - "Dexterity"
+  - name: "Corrosive Throw"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Ranged"
+      - "Projectile"
+      - "Erosion"
+      - "Horizontal"
+      - "Dexterity"
+  - name: "Inexhaustible Barrage"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Projectile"
+      - "Physical"
+      - "Channeled"
+      - "Area"
+      - "Persistent"
+      - "Vertical"
+      - "Ranged"
+      - "Barrage"
+      - "Dexterity"
+  - name: "Rain of Arrows"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Ranged"
+      - "Physical"
+      - "Area"
+      - "Projectile"
+      - "Vertical"
+      - "Dexterity"
+  - name: "Savage Charge"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Physical"
+      - "Demolisher"
+      - "Channeled"
+      - "Area"
+      - "Strength"
+      - "Dexterity"
+  - name: "Ice Lances"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Projectile"
+      - "Cold"
+      - "Horizontal"
+      - "Intelligence"
+  - name: "Sparkle"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Projectile"
+      - "Lightning"
+      - "Area"
+      - "Horizontal"
+      - "Intelligence"
+  - name: "Ring of Blades"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Channeled"
+      - "Physical"
+      - "Area"
+      - "Persistent"
+      - "Projectile"
+      - "Horizontal"
+      - "Intelligence"
+  - name: "Flame Core"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Fire"
+      - "Persistent"
+      - "Sentry"
+      - "Intelligence"
+  - name: "Lightning Storm"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Lightning"
+      - "Area"
+      - "Persistent"
+      - "Intelligence"
+  - name: "Flame Jet"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Fire"
+      - "Area"
+      - "Persistent"
+      - "Projectile"
+      - "Parabolic"
+      - "Terra"
+      - "Intelligence"
+  - name: "Frost Terra"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Cold"
+      - "Area"
+      - "Persistent"
+      - "Terra"
+      - "Intelligence"
+  - name: "Scorching Beam"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Fire"
+      - "Channeled"
+      - "Area"
+      - "Beam"
+      - "Intelligence"
+  - name: "Wilting Beam"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Channeled"
+      - "Erosion"
+      - "Persistent"
+      - "Area"
+      - "Beam"
+      - "Intelligence"
+  - name: "Frigid Transmission"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Cold"
+      - "Area"
+      - "Mobility"
+      - "Intelligence"
+  - name: "Forced Start"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Defensive"
+  - name: "Aegis of Fire"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Fire"
+      - "Defensive"
+  - name: "Delayed Pain"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Defensive"
+  - name: "Defensive Buffer"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Defensive"
+  - name: "Brisk Wind"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Defensive"
+  - name: "Burst of Anger"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Empower"
+  - name: "Scorching Pulse"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Fire"
+      - "Intelligence"
+  - name: "Fixate"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Empower"
+  - name: "Secret Origin Unleash"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Empower"
+  - name: "Aim"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Empower"
+  - name: "Swiftness Dew"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Groundshaker"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Physical"
+      - "Demolisher"
+      - "Strength"
+  - name: "Focused Shot"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Ranged"
+      - "Physical"
+      - "Projectile"
+      - "Horizontal"
+      - "Dexterity"
+  - name: "Fire Burst"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Fire"
+      - "Strength"
+      - "Intelligence"
+  - name: "Thunderbolt Overload"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Lightning"
+      - "Projectile"
+      - "Parabolic"
+      - "Physical"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Fearless Warcry"
+    excluded: false
+    tags:
+      - "Warcry"
+      - "Area"
+      - "Persistent"
+  - name: "Raging Warcry"
+    excluded: false
+    tags:
+      - "Warcry"
+      - "Area"
+      - "Persistent"
+  - name: "Charging Warcry"
+    excluded: false
+    tags:
+      - "Warcry"
+      - "Area"
+      - "Persistent"
+  - name: "Black Hole"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Erosion"
+      - "Empower"
+  - name: "Summon Machine Guard"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Summon"
+      - "Persistent"
+      - "Physical"
+      - "Synthetic Troop"
+      - "Strength"
+      - "Intelligence"
+  - name: "Summon Spider Tank"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Summon"
+      - "Persistent"
+      - "Physical"
+      - "Synthetic Troop"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Timid"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Curse"
+  - name: "Electrocute"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Lightning"
+      - "Curse"
+  - name: "Vulnerability"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Physical"
+      - "Curse"
+  - name: "Scorch"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Fire"
+      - "Curse"
+  - name: "Entangled Pain"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Curse"
+  - name: "Biting Cold"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Cold"
+      - "Curse"
+  - name: "Corruption"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Erosion"
+      - "Curse"
+  - name: "Life Tonic"
+    excluded: false
+    tags:
+      - "Restoration"
+      - "Elixir"
+  - name: "Mana Tonic"
+    excluded: false
+    tags:
+      - "Restoration"
+      - "Elixir"
+  - name: "Elemental Shock"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Summon"
+      - "Empower"
+  - name: "Machine Army"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Summon"
+      - "Empower"
+  - name: "Prayer"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Summon"
+      - "Defensive"
+  - name: "Dark Gate"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Summon"
+      - "Empower"
+  - name: "Thunderlight Bond"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Lightning"
+      - "Empower"
+      - "Area"
+      - "Sentry"
+  - name: "Arcane Circle"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Area"
+      - "Empower"
+  - name: "Ice Bond"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Cold"
+      - "Empower"
+      - "Sentry"
+      - "Area"
+      - "Beam"
+  - name: "Thirst Dew"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Reform"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Defensive"
+  - name: "Centralized Loading"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Ranged"
+      - "Mobility"
+      - "Persistent"
+  - name: "Blink Arrow"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Ranged"
+      - "Projectile"
+      - "Horizontal"
+      - "Mobility"
+      - "Dexterity"
+  - name: "Swift Shadow Raid"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Area"
+      - "Physical"
+      - "Mobility"
+      - "Dexterity"
+  - name: "Safeguard Ring"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Sentry"
+      - "Defensive"
+  - name: "Icebound Beam"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Channeled"
+      - "Cold"
+      - "Projectile"
+      - "Horizontal"
+      - "Beam"
+      - "Intelligence"
+  - name: "Spiral Strike"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Erosion"
+      - "Area"
+      - "Melee"
+      - "Mobility"
+      - "Dexterity"
+  - name: "Compound Tonic"
+    excluded: false
+    tags:
+      - "Restoration"
+      - "Elixir"
+  - name: "Moon Strike"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Area"
+      - "Physical"
+      - "Melee"
+      - "Slash-Strike"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Howling Gale"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Channeled"
+      - "Physical"
+      - "Area"
+      - "Persistent"
+      - "Intelligence"
+  - name: "Blazing Bullet"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Fire"
+      - "Area"
+      - "Ranged"
+      - "Projectile"
+      - "Horizontal"
+      - "Strength"
+      - "Dexterity"
+  - name: "Thunder Slash"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Lightning"
+      - "Area"
+      - "Melee"
+      - "Slash-Strike"
+      - "Dexterity"
+  - name: "Thunder Spike"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Lightning"
+      - "Area"
+      - "Melee"
+      - "Shadow Strike"
+      - "Dexterity"
+  - name: "Haunting Abomination"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Persistent"
+      - "Terra"
+      - "Intelligence"
+  - name: "Frost Core"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Cold"
+      - "Persistent"
+      - "Projectile"
+      - "Horizontal"
+      - "Sentry"
+      - "Intelligence"
+  - name: "Thunder Core"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Lightning"
+      - "Persistent"
+      - "Sentry"
+      - "Chain"
+      - "Area"
+      - "Intelligence"
+  - name: "Ghost Blade Einherjar"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Ranged"
+      - "Erosion"
+      - "Persistent"
+      - "Sentry"
+      - "Projectile"
+      - "Horizontal"
+      - "Area"
+      - "Dexterity"
+  - name: "Arrow Einherjar"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Persistent"
+      - "Sentry"
+      - "Projectile"
+      - "Vertical"
+      - "Ranged"
+      - "Area"
+      - "Dexterity"
+  - name: "Summon Grim Phantom"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Lightning"
+      - "Summon"
+      - "Synthetic Troop"
+      - "Intelligence"
+  - name: "Overpower"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Onslaught Punch"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Aimed Shot"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Projectile"
+      - "Ranged"
+      - "Horizontal"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Blazing Dance"
+    excluded: false
+    tags:
+      - "Base Skill"
+      - "Spell"
+      - "Fire"
+      - "Area"
+      - "Strength"
+      - "Intelligence"
+  - name: "Blazing Spin"
+    excluded: false
+    tags:
+      - "Empower"
+      - "Spell"
+      - "Fire"
+      - "Area"
+      - "Persistent"
+      - "Strength"
+      - "Intelligence"
+  - name: "Blazing Incineration"
+    excluded: false
+    tags:
+      - "Enhanced Skill"
+      - "Spell"
+      - "Fire"
+      - "Area"
+      - "Strength"
+      - "Intelligence"
+  - name: "Molten Rising"
+    excluded: false
+    tags:
+      - "Ultimate"
+      - "Spell"
+      - "Fire"
+      - "Area"
+      - "Strength"
+      - "Intelligence"
+  - name: "Glacier Ripples"
+    excluded: false
+    tags:
+      - "Base Skill"
+      - "Spell"
+      - "Cold"
+      - "Area"
+      - "Intelligence"
+  - name: "Frost Release"
+    excluded: false
+    tags:
+      - "Empower"
+      - "Spell"
+      - "Cold"
+      - "Area"
+      - "Persistent"
+      - "Intelligence"
+  - name: "Permafrost Cast"
+    excluded: false
+    tags:
+      - "Enhanced Skill"
+      - "Spell"
+      - "Cold"
+      - "Area"
+      - "Intelligence"
+  - name: "Ice Earthshaker"
+    excluded: false
+    tags:
+      - "Ultimate"
+      - "Spell"
+      - "Cold"
+      - "Area"
+      - "Intelligence"
+  - name: "Lightning Star"
+    excluded: false
+    tags:
+      - "Base Skill"
+      - "Attack"
+      - "Lightning"
+      - "Projectile"
+      - "Ranged"
+      - "Horizontal"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Thunderlight Arrow"
+    excluded: false
+    tags:
+      - "Enhanced Skill"
+      - "Attack"
+      - "Lightning"
+      - "Projectile"
+      - "Ranged"
+      - "Horizontal"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Thundercloud Surge"
+    excluded: false
+    tags:
+      - "Empower"
+      - "Attack"
+      - "Lightning"
+      - "Persistent"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Lightning Surge"
+    excluded: false
+    tags:
+      - "Ultimate"
+      - "Attack"
+      - "Lightning"
+      - "Projectile"
+      - "Ranged"
+      - "Chain"
+      - "Horizontal"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "High Energy Beam"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Lightning"
+      - "Area"
+      - "Beam"
+      - "Intelligence"
+  - name: "Destructive Light Cannon"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Lightning"
+      - "Area"
+      - "Beam"
+      - "Intelligence"
+  - name: "Whirlwind Blade"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Physical"
+      - "Persistent"
+      - "Area"
+      - "Projectile"
+      - "Horizontal"
+      - "Intelligence"
+  - name: "Lightning Beam"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Lightning"
+      - "Area"
+      - "Persistent"
+      - "Beam"
+      - "Intelligence"
+  - name: "Speed Phantom"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Physical"
+      - "Area"
+      - "Persistent"
+      - "Empower"
+      - "Mobility"
+  - name: "Archery Bond"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Sentry"
+      - "Empower"
+  - name: "Nourishment of Life"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Area"
+      - "Summon"
+      - "Empower"
+  - name: "Dazzling Bloom"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Summon"
+      - "Empower"
+  - name: "Star Stalker"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Projectile"
+      - "Area"
+      - "Persistent"
+      - "Empower"
+  - name: "Harmonious Field"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Channeled"
+      - "Area"
+      - "Persistent"
+      - "Empower"
+  - name: "Shackles of Malice"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Chain"
+      - "Area"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Shattered Stone"
+    excluded: false
+    tags:
+      - "Base Skill"
+      - "Attack"
+      - "Melee"
+      - "Physical"
+      - "Area"
+      - "Strength"
+      - "Intelligence"
+  - name: "Gold Rush"
+    excluded: false
+    tags:
+      - "Empower"
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Persistent"
+      - "Strength"
+      - "Intelligence"
+  - name: "Rock Blast"
+    excluded: false
+    tags:
+      - "Enhanced Skill"
+      - "Attack"
+      - "Melee"
+      - "Physical"
+      - "Area"
+      - "Strength"
+      - "Intelligence"
+  - name: "Towering Mountains"
+    excluded: false
+    tags:
+      - "Ultimate"
+      - "Attack"
+      - "Melee"
+      - "Physical"
+      - "Area"
+      - "Strength"
+      - "Intelligence"
+  - name: "Scattered Mud"
+    excluded: false
+    tags:
+      - "Base Skill"
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Intelligence"
+  - name: "Withering Payback"
+    excluded: false
+    tags:
+      - "Empower"
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Persistent"
+      - "Intelligence"
+  - name: "Bleak Grass"
+    excluded: false
+    tags:
+      - "Enhanced Skill"
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Intelligence"
+  - name: "World of Thorns"
+    excluded: false
+    tags:
+      - "Ultimate"
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Intelligence"
+  - name: "Rising Edge"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Summon"
+      - "Empower"
+  - name: "Crescent Slash"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Physical"
+      - "Combo"
+      - "Dexterity"
+      - "Persistent"
+  - name: "Serpent Beam"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Physical"
+      - "Fire"
+      - "Beam"
+      - "Combo"
+      - "Strength"
+      - "Intelligence"
+      - "Persistent"
+  - name: "Gale Slash"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Physical"
+      - "Combo"
+      - "Strength"
+      - "Dexterity"
+      - "Persistent"
+  - name: "Spectral Slash"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+      - "Physical"
+      - "Combo"
+      - "Strength"
+      - "Persistent"
+  - name: "Vendetta"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+  - name: "Shockwave Warcry"
+    excluded: false
+    tags:
+      - "Warcry"
+      - "Area"
+      - "Persistent"
+  - name: "Endless Vendetta"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Melee"
+      - "Area"
+  - name: "Frostclaw"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Cold"
+      - "Fire"
+      - "Area"
+      - "Strength"
+      - "Intelligence"
+  - name: "Firebird"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Cold"
+      - "Fire"
+      - "Horizontal"
+      - "Projectile"
+      - "Strength"
+      - "Intelligence"
+  - name: "Earthshatter"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Aember Rain"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Intelligence"
+  - name: "Molten Barrage"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Fire"
+      - "Ranged"
+      - "Horizontal"
+      - "Projectile"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "All-Out Volley"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Fire"
+      - "Ranged"
+      - "Horizontal"
+      - "Projectile"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Rockfall"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Physical"
+      - "Area"
+      - "Barrage"
+      - "Intelligence"
+  - name: "Thunderfall"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Lightning"
+      - "Persistent"
+      - "Area"
+  - name: "Kinetic Thrust"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Groundslam"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Overstrike"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Fire"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Searing Crush"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Fire"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Sweep"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Intelligence"
+  - name: "Rootsurge"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Persistent"
+      - "Area"
+      - "Horizontal"
+      - "Projectile"
+      - "Intelligence"
+  - name: "Blitz Strike"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Fire"
+      - "Projectile"
+      - "Horizontal"
+      - "Strength"
+      - "Intelligence"
+  - name: "Burst Hammer"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Fire"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Firebomb"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Fire"
+      - "Area"
+      - "Intelligence"
+  - name: "Pyromania"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Fire"
+      - "Persistent"
+      - "Area"
+      - "Intelligence"
+  - name: "Flickering Shadow"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Erosion"
+      - "Area"
+      - "Melee"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Sin of the Fallen"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Erosion"
+      - "Area"
+      - "Melee"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Blade of Glory"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "High Court Covenant"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Ravaging Slash"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Auric Shot"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Projectile"
+      - "Horizontal"
+      - "Ranged"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Gravelshot"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Projectile"
+      - "Parabolic"
+      - "Strength"
+      - "Intelligence"
+  - name: "Divine Judgment"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Lightning"
+      - "Area"
+      - "Intelligence"
+  - name: "Javelin of Judgment"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Lightning"
+      - "Projectile"
+      - "Horizontal"
+      - "Intelligence"
+  - name: "Spikeburst"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Cold"
+      - "Area"
+      - "Projectile"
+      - "Horizontal"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Tailsweep"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Cold"
+      - "Area"
+      - "Melee"
+      - "Dexterity"
+      - "Intelligence"
+  - name: "Impaling Thrust"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Twinstrike"
+    excluded: false
+    tags:
+      - "Attack"
+      - "Physical"
+      - "Area"
+      - "Melee"
+      - "Strength"
+      - "Intelligence"
+  - name: "Undercurrent"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Intelligence"
+  - name: "Resistance Dew"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Steadfast Dew"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Nimbleness Dew"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Tenacity Dew"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Tortoise Shell Distillate"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Scorpion Stinger Distillate"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Putrid Toad Distillate"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Saltpeter Mushroom Distillate"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Fire Lizard Distillate"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "White Rhino Distillate"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Thunder Wood Distillate"
+    excluded: false
+    tags:
+      - "Persistent"
+      - "Elixir"
+  - name: "Ominous"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Area"
+      - "Persistent"
+      - "Curse"
+  - name: "Thornfield"
+    excluded: false
+    tags:
+      - "Physical"
+      - "Spell"
+      - "Persistent"
+      - "Area"
+      - "Terra"
+      - "Intelligence"
+  - name: "Tidewell"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Cold"
+      - "Area"
+      - "Terra"
+      - "Intelligence"
+  - name: "Fallen Star"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Physical"
+      - "Area"
+      - "Persistent"
+      - "Terra"
+      - "Intelligence"
+      - "Barrage"
+  - name: "Storm Field"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Persistent"
+      - "Lightning"
+      - "Area"
+      - "Terra"
+      - "Intelligence"
+      - "Dexterity"
+  - name: "Nether Grasp"
+    excluded: false
+    tags:
+      - "Spell"
+      - "Erosion"
+      - "Area"
+      - "Persistent"
+      - "Terra"
+      - "Intelligence"
+  - name: "Commanding Warcry"
+    excluded: false
+    tags:
+      - "Warcry"
+      - "Area"
+      - "Persistent"
+  - name: "Agony Dew"
+    excluded: false
+    tags:
+      - "Elixir"
+      - "Persistent"
+  - name: "Prism Butterfly Distillate"
+    excluded: false
+    tags:
+      - "Elixir"
+      - "Persistent"

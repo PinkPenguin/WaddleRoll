@@ -1,0 +1,222 @@
+# Torchlight Infinite heroes -- populate via the in-app "Manage
+# Heroes" editor, or by hand following this shape. 12 base heroes,
+# each with 2-3 traits. The roll treats every non-excluded trait
+# across every non-excluded hero as one flat pool -- hero grouping is
+# just how the data's organized for editing, not a two-step "pick hero
+# then pick trait" roll.
+#
+# Traits carry tags too (e.g. a trait tagged "Attack" scales
+# Attack-tagged skills) -- same not-used-for-rolling-yet, stored-for-
+# a-future-match status as skill tags.
+#
+# heroes:
+#   - name: "Example Hero"
+#     excluded: false
+#     traits:
+#       - name: "Example Trait"
+#         excluded: false
+#         tags: ["Attack"]
+heroes:
+  - name: "Berserker Rehan"
+    excluded: false
+    traits:
+      - name: "Anger"
+        excluded: false
+        tags:
+          - "Attack"
+          - "Melee"
+          - "Rage"
+          - "Berserk"
+      - name: "Seething Silhouette"
+        excluded: false
+        tags:
+          - "Main Skill"
+          - "Seething Spirit"
+          - "Trigger"
+  - name: "Divineshot Carino"
+    excluded: false
+    traits:
+      - name: "Ranger of Glory"
+        excluded: false
+        tags:
+          - "Projectile"
+          - "Ammo"
+      - name: "Lethal Flash"
+        excluded: false
+        tags:
+          - "Projectile"
+          - "Deflection"
+          - "Range"
+      - name: "Zealot of War"
+        excluded: false
+        tags:
+          - "Projectile"
+          - "Ammo"
+          - "Heat"
+  - name: "Cateye Erika"
+    excluded: false
+    traits:
+      - name: "Wind Stalker"
+        excluded: false
+        tags:
+          - "Attack"
+          - "Multistrike"
+          - "Movement"
+      - name: "Lightning Shadow"
+        excluded: false
+        tags:
+          - "Lightning"
+          - "Numbed"
+          - "Movement"
+      - name: "Vendetta's Sting"
+        excluded: false
+        tags:
+          - "Attack"
+          - "Melee"
+          - "Movement"
+          - "Phantom"
+  - name: "Escapist Bing"
+    excluded: false
+    traits:
+      - name: "Blast Nova"
+        excluded: false
+        tags:
+          - "Attack"
+          - "Projectile"
+          - "Bomb"
+      - name: "Creative Genius"
+        excluded: false
+        tags:
+          - "Spell"
+          - "Spell Burst"
+  - name: "Frostfire Gemma"
+    excluded: false
+    traits:
+      - name: "Flame of Pleasure"
+        excluded: false
+        tags:
+          - "Area"
+          - "Purgatory"
+      - name: "Frostbitten Heart"
+        excluded: false
+        tags:
+          - "Cold"
+          - "Frostbite"
+      - name: "Ice-Fire Fusion"
+        excluded: false
+        tags:
+          - "Cold"
+          - "Fire"
+          - "Elemental"
+  - name: "Oracle Thea"
+    excluded: false
+    traits:
+      - name: "Wisdom of The Gods"
+        excluded: false
+        tags:
+          - "Blessing"
+          - "God's Boon"
+      - name: "Incarnation of The Gods"
+        excluded: false
+        tags:
+          - "Blessing"
+          - "Divine Realm"
+          - "Agility Blessing"
+          - "Tenacity Blessing"
+      - name: "Blasphemer"
+        excluded: false
+        tags:
+          - "Erosion"
+          - "Area"
+          - "Blessing"
+  - name: "Spacetime Witness Youga"
+    excluded: false
+    traits:
+      - name: "Spacetime Illusion"
+        excluded: false
+        tags:
+          - "Spell"
+          - "Main Skill"
+          - "Spacetime Illusion"
+          - "Trigger"
+      - name: "Spacetime Elapse"
+        excluded: false
+        tags:
+          - "Damage Over Time"
+          - "Persistent"
+          - "Spacetime"
+  - name: "Commander Moto"
+    excluded: false
+    traits:
+      - name: "Order Calling"
+        excluded: false
+        tags:
+          - "Summon"
+          - "Minion"
+          - "Synthetic Troop"
+          - "Overload"
+      - name: "Charge Calling"
+        excluded: false
+        tags:
+          - "Summon"
+          - "Minion"
+          - "Synthetic Troop"
+          - "Overload"
+          - "Explosion"
+  - name: "Lightbringer Rosa"
+    excluded: false
+    traits:
+      - name: "High Court Chariot"
+        excluded: false
+        tags:
+          - "Area"
+          - "Defensive"
+          - "Block"
+          - "Holy Domain"
+      - name: "Unsullied Blade"
+        excluded: false
+        tags:
+          - "Attack"
+          - "Elemental"
+          - "Mana"
+          - "Realm of Mercury"
+  - name: "The Forsaken Iris"
+    excluded: false
+    traits:
+      - name: "Growing Breeze"
+        excluded: false
+        tags:
+          - "Summon"
+          - "Minion"
+          - "Spirit Magus"
+      - name: "Vigilant Breeze"
+        excluded: false
+        tags:
+          - "Summon"
+          - "Minion"
+          - "Spirit Magus"
+          - "Transformation"
+  - name: "Tide Whisper Selena"
+    excluded: false
+    traits:
+      - name: "Sing with the Tide"
+        excluded: false
+        tags:
+          - "Main Skill"
+          - "Channeled"
+          - "Tide"
+      - name: "Dance of the Deep"
+        excluded: false
+        tags:
+          - "Terra"
+          - "Main Skill"
+          - "Movement"
+  - name: "Scent Weaver Sage"
+    excluded: false
+    traits:
+      - name: "Licorice Note"
+        excluded: false
+        tags:
+          - "Elixir"
+          - "Restoration"
+          - "Support"
