@@ -1,0 +1,10956 @@
+# Pokemon roster -- populate via the in-app "Manage Pokémon" grid
+# editor, or by hand following this shape. Paste your list into the
+# chat and it can be converted directly into this instead of you
+# hand-filling it.
+#
+# next_evolution is how "fully evolved" is derived -- null/omitted
+# means nothing further to evolve into, so it's eligible to roll.
+# Anything with a next_evolution is filtered out automatically, no
+# separate flag needed. previous_evolution is deliberately not
+# modeled -- nothing here needs it.
+#
+# dex_id is purely for sorting/display in the grid editor -- it's
+# never used as a lookup key (name is), so alternate forms sharing a
+# dex number with their base species is fine, not a conflict.
+#
+# types: not used for anything yet (no filtering, no logic reads this
+# today) -- stored for a future team type-effectiveness display. Use
+# current/latest typing per Bulbapedia for now. Typing has genuinely
+# changed across generations historically (Fairy type didn't exist
+# before Gen 6 and retroactively applied to some existing Pokemon,
+# Steel didn't exist before Gen 2, etc.) -- if that ever actually
+# matters here, it'll likely mean splitting this into a per-generation
+# config down the line, not something to solve preemptively now.
+#
+pokemon:
+- name: Bulbasaur
+  dex_id: 1
+  generation: 1
+  types:
+  - Grass
+  - Poison
+  next_evolution:
+  - Ivysaur
+  excluded: false
+  tags: []
+- name: Ivysaur
+  dex_id: 2
+  generation: 1
+  types:
+  - Grass
+  - Poison
+  next_evolution:
+  - Venusaur
+  excluded: false
+  tags: []
+- name: Venusaur
+  dex_id: 3
+  generation: 1
+  types:
+  - Grass
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Charmander
+  dex_id: 4
+  generation: 1
+  types:
+  - Fire
+  next_evolution:
+  - Charmeleon
+  excluded: false
+  tags: []
+- name: Charmeleon
+  dex_id: 5
+  generation: 1
+  types:
+  - Fire
+  next_evolution:
+  - Charizard
+  excluded: false
+  tags: []
+- name: Charizard
+  dex_id: 6
+  generation: 1
+  types:
+  - Fire
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Squirtle
+  dex_id: 7
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Wartortle
+  excluded: false
+  tags: []
+- name: Wartortle
+  dex_id: 8
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Blastoise
+  excluded: false
+  tags: []
+- name: Blastoise
+  dex_id: 9
+  generation: 1
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Caterpie
+  dex_id: 10
+  generation: 1
+  types:
+  - Bug
+  next_evolution:
+  - Metapod
+  excluded: false
+  tags: []
+- name: Metapod
+  dex_id: 11
+  generation: 1
+  types:
+  - Bug
+  next_evolution:
+  - Butterfree
+  excluded: false
+  tags: []
+- name: Butterfree
+  dex_id: 12
+  generation: 1
+  types:
+  - Bug
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Weedle
+  dex_id: 13
+  generation: 1
+  types:
+  - Bug
+  - Poison
+  next_evolution:
+  - Kakuna
+  excluded: false
+  tags: []
+- name: Kakuna
+  dex_id: 14
+  generation: 1
+  types:
+  - Bug
+  - Poison
+  next_evolution:
+  - Beedrill
+  excluded: false
+  tags: []
+- name: Beedrill
+  dex_id: 15
+  generation: 1
+  types:
+  - Bug
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pidgey
+  dex_id: 16
+  generation: 1
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Pidgeotto
+  excluded: false
+  tags: []
+- name: Pidgeotto
+  dex_id: 17
+  generation: 1
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Pidgeot
+  excluded: false
+  tags: []
+- name: Pidgeot
+  dex_id: 18
+  generation: 1
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rattata
+  dex_id: 19
+  generation: 1
+  types:
+  - Normal
+  next_evolution:
+  - Raticate
+  excluded: false
+  tags: []
+- name: Raticate
+  dex_id: 20
+  generation: 1
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Spearow
+  dex_id: 21
+  generation: 1
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Fearow
+  excluded: false
+  tags: []
+- name: Fearow
+  dex_id: 22
+  generation: 1
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ekans
+  dex_id: 23
+  generation: 1
+  types:
+  - Poison
+  next_evolution:
+  - Arbok
+  excluded: false
+  tags: []
+- name: Arbok
+  dex_id: 24
+  generation: 1
+  types:
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pikachu
+  dex_id: 25
+  generation: 1
+  types:
+  - Electric
+  next_evolution:
+  - Raichu
+  excluded: false
+  tags: []
+- name: Raichu
+  dex_id: 26
+  generation: 1
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sandshrew
+  dex_id: 27
+  generation: 1
+  types:
+  - Ground
+  next_evolution:
+  - Sandslash
+  excluded: false
+  tags: []
+- name: Sandslash
+  dex_id: 28
+  generation: 1
+  types:
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Nidoran♀
+  dex_id: 29
+  generation: 1
+  types:
+  - Poison
+  next_evolution:
+  - Nidorina
+  excluded: false
+  tags: []
+- name: Nidorina
+  dex_id: 30
+  generation: 1
+  types:
+  - Poison
+  next_evolution:
+  - Nidoqueen
+  excluded: false
+  tags: []
+- name: Nidoqueen
+  dex_id: 31
+  generation: 1
+  types:
+  - Poison
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Nidoran♂
+  dex_id: 32
+  generation: 1
+  types:
+  - Poison
+  next_evolution:
+  - Nidorino
+  excluded: false
+  tags: []
+- name: Nidorino
+  dex_id: 33
+  generation: 1
+  types:
+  - Poison
+  next_evolution:
+  - Nidoking
+  excluded: false
+  tags: []
+- name: Nidoking
+  dex_id: 34
+  generation: 1
+  types:
+  - Poison
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Clefairy
+  dex_id: 35
+  generation: 1
+  types:
+  - Fairy
+  next_evolution:
+  - Clefable
+  excluded: false
+  tags: []
+- name: Clefable
+  dex_id: 36
+  generation: 1
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Vulpix
+  dex_id: 37
+  generation: 1
+  types:
+  - Fire
+  next_evolution:
+  - Ninetales
+  excluded: false
+  tags: []
+- name: Ninetales
+  dex_id: 38
+  generation: 1
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Jigglypuff
+  dex_id: 39
+  generation: 1
+  types:
+  - Normal
+  - Fairy
+  next_evolution:
+  - Wigglytuff
+  excluded: false
+  tags: []
+- name: Wigglytuff
+  dex_id: 40
+  generation: 1
+  types:
+  - Normal
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zubat
+  dex_id: 41
+  generation: 1
+  types:
+  - Poison
+  - Flying
+  next_evolution:
+  - Golbat
+  excluded: false
+  tags: []
+- name: Golbat
+  dex_id: 42
+  generation: 1
+  types:
+  - Poison
+  - Flying
+  next_evolution:
+  - Crobat
+  excluded: false
+  tags: []
+- name: Oddish
+  dex_id: 43
+  generation: 1
+  types:
+  - Grass
+  - Poison
+  next_evolution:
+  - Gloom
+  excluded: false
+  tags: []
+- name: Gloom
+  dex_id: 44
+  generation: 1
+  types:
+  - Grass
+  - Poison
+  next_evolution:
+  - Vileplume
+  - Bellossom
+  excluded: false
+  tags: []
+- name: Vileplume
+  dex_id: 45
+  generation: 1
+  types:
+  - Grass
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Paras
+  dex_id: 46
+  generation: 1
+  types:
+  - Bug
+  - Grass
+  next_evolution:
+  - Parasect
+  excluded: false
+  tags: []
+- name: Parasect
+  dex_id: 47
+  generation: 1
+  types:
+  - Bug
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Venonat
+  dex_id: 48
+  generation: 1
+  types:
+  - Bug
+  - Poison
+  next_evolution:
+  - Venomoth
+  excluded: false
+  tags: []
+- name: Venomoth
+  dex_id: 49
+  generation: 1
+  types:
+  - Bug
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Diglett
+  dex_id: 50
+  generation: 1
+  types:
+  - Ground
+  next_evolution:
+  - Dugtrio
+  excluded: false
+  tags: []
+- name: Dugtrio
+  dex_id: 51
+  generation: 1
+  types:
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Meowth
+  dex_id: 52
+  generation: 1
+  types:
+  - Normal
+  next_evolution:
+  - Persian
+  - Perrserker
+  excluded: false
+  tags: []
+- name: Persian
+  dex_id: 53
+  generation: 1
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Psyduck
+  dex_id: 54
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Golduck
+  excluded: false
+  tags: []
+- name: Golduck
+  dex_id: 55
+  generation: 1
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mankey
+  dex_id: 56
+  generation: 1
+  types:
+  - Fighting
+  next_evolution:
+  - Primeape
+  excluded: false
+  tags: []
+- name: Primeape
+  dex_id: 57
+  generation: 1
+  types:
+  - Fighting
+  next_evolution:
+  - Annihilape
+  excluded: false
+  tags: []
+- name: Growlithe
+  dex_id: 58
+  generation: 1
+  types:
+  - Fire
+  next_evolution:
+  - Arcanine
+  excluded: false
+  tags: []
+- name: Arcanine
+  dex_id: 59
+  generation: 1
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Poliwag
+  dex_id: 60
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Poliwhirl
+  excluded: false
+  tags: []
+- name: Poliwhirl
+  dex_id: 61
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Poliwrath
+  - Politoed
+  excluded: false
+  tags: []
+- name: Poliwrath
+  dex_id: 62
+  generation: 1
+  types:
+  - Water
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Abra
+  dex_id: 63
+  generation: 1
+  types:
+  - Psychic
+  next_evolution:
+  - Kadabra
+  excluded: false
+  tags: []
+- name: Kadabra
+  dex_id: 64
+  generation: 1
+  types:
+  - Psychic
+  next_evolution:
+  - Alakazam
+  excluded: false
+  tags: []
+- name: Alakazam
+  dex_id: 65
+  generation: 1
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Machop
+  dex_id: 66
+  generation: 1
+  types:
+  - Fighting
+  next_evolution:
+  - Machoke
+  excluded: false
+  tags: []
+- name: Machoke
+  dex_id: 67
+  generation: 1
+  types:
+  - Fighting
+  next_evolution:
+  - Machamp
+  excluded: false
+  tags: []
+- name: Machamp
+  dex_id: 68
+  generation: 1
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bellsprout
+  dex_id: 69
+  generation: 1
+  types:
+  - Grass
+  - Poison
+  next_evolution:
+  - Weepinbell
+  excluded: false
+  tags: []
+- name: Weepinbell
+  dex_id: 70
+  generation: 1
+  types:
+  - Grass
+  - Poison
+  next_evolution:
+  - Victreebel
+  excluded: false
+  tags: []
+- name: Victreebel
+  dex_id: 71
+  generation: 1
+  types:
+  - Grass
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tentacool
+  dex_id: 72
+  generation: 1
+  types:
+  - Water
+  - Poison
+  next_evolution:
+  - Tentacruel
+  excluded: false
+  tags: []
+- name: Tentacruel
+  dex_id: 73
+  generation: 1
+  types:
+  - Water
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Geodude
+  dex_id: 74
+  generation: 1
+  types:
+  - Rock
+  - Ground
+  next_evolution:
+  - Graveler
+  excluded: false
+  tags: []
+- name: Graveler
+  dex_id: 75
+  generation: 1
+  types:
+  - Rock
+  - Ground
+  next_evolution:
+  - Golem
+  excluded: false
+  tags: []
+- name: Golem
+  dex_id: 76
+  generation: 1
+  types:
+  - Rock
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ponyta
+  dex_id: 77
+  generation: 1
+  types:
+  - Fire
+  next_evolution:
+  - Rapidash
+  excluded: false
+  tags: []
+- name: Rapidash
+  dex_id: 78
+  generation: 1
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Slowpoke
+  dex_id: 79
+  generation: 1
+  types:
+  - Water
+  - Psychic
+  next_evolution:
+  - Slowbro
+  - Slowking
+  excluded: false
+  tags: []
+- name: Slowbro
+  dex_id: 80
+  generation: 1
+  types:
+  - Water
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Magnemite
+  dex_id: 81
+  generation: 1
+  types:
+  - Electric
+  - Steel
+  next_evolution:
+  - Magneton
+  excluded: false
+  tags: []
+- name: Magneton
+  dex_id: 82
+  generation: 1
+  types:
+  - Electric
+  - Steel
+  next_evolution:
+  - Magnezone
+  excluded: false
+  tags: []
+- name: Farfetch'd
+  dex_id: 83
+  generation: 1
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Sirfetch'd
+  excluded: false
+  tags: []
+- name: Doduo
+  dex_id: 84
+  generation: 1
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Dodrio
+  excluded: false
+  tags: []
+- name: Dodrio
+  dex_id: 85
+  generation: 1
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Seel
+  dex_id: 86
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Dewgong
+  excluded: false
+  tags: []
+- name: Dewgong
+  dex_id: 87
+  generation: 1
+  types:
+  - Water
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Grimer
+  dex_id: 88
+  generation: 1
+  types:
+  - Poison
+  next_evolution:
+  - Muk
+  excluded: false
+  tags: []
+- name: Muk
+  dex_id: 89
+  generation: 1
+  types:
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shellder
+  dex_id: 90
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Cloyster
+  excluded: false
+  tags: []
+- name: Cloyster
+  dex_id: 91
+  generation: 1
+  types:
+  - Water
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Gastly
+  dex_id: 92
+  generation: 1
+  types:
+  - Ghost
+  - Poison
+  next_evolution:
+  - Haunter
+  excluded: false
+  tags: []
+- name: Haunter
+  dex_id: 93
+  generation: 1
+  types:
+  - Ghost
+  - Poison
+  next_evolution:
+  - Gengar
+  excluded: false
+  tags: []
+- name: Gengar
+  dex_id: 94
+  generation: 1
+  types:
+  - Ghost
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Onix
+  dex_id: 95
+  generation: 1
+  types:
+  - Rock
+  - Ground
+  next_evolution:
+  - Steelix
+  excluded: false
+  tags: []
+- name: Drowzee
+  dex_id: 96
+  generation: 1
+  types:
+  - Psychic
+  next_evolution:
+  - Hypno
+  excluded: false
+  tags: []
+- name: Hypno
+  dex_id: 97
+  generation: 1
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Krabby
+  dex_id: 98
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Kingler
+  excluded: false
+  tags: []
+- name: Kingler
+  dex_id: 99
+  generation: 1
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Voltorb
+  dex_id: 100
+  generation: 1
+  types:
+  - Electric
+  next_evolution:
+  - Electrode
+  excluded: false
+  tags: []
+- name: Electrode
+  dex_id: 101
+  generation: 1
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Exeggcute
+  dex_id: 102
+  generation: 1
+  types:
+  - Grass
+  - Psychic
+  next_evolution:
+  - Exeggutor
+  excluded: false
+  tags: []
+- name: Exeggutor
+  dex_id: 103
+  generation: 1
+  types:
+  - Grass
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cubone
+  dex_id: 104
+  generation: 1
+  types:
+  - Ground
+  next_evolution:
+  - Marowak
+  excluded: false
+  tags: []
+- name: Marowak
+  dex_id: 105
+  generation: 1
+  types:
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Hitmonlee
+  dex_id: 106
+  generation: 1
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Hitmonchan
+  dex_id: 107
+  generation: 1
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lickitung
+  dex_id: 108
+  generation: 1
+  types:
+  - Normal
+  next_evolution:
+  - Lickilicky
+  excluded: false
+  tags: []
+- name: Koffing
+  dex_id: 109
+  generation: 1
+  types:
+  - Poison
+  next_evolution:
+  - Weezing
+  excluded: false
+  tags: []
+- name: Weezing
+  dex_id: 110
+  generation: 1
+  types:
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rhyhorn
+  dex_id: 111
+  generation: 1
+  types:
+  - Ground
+  - Rock
+  next_evolution:
+  - Rhydon
+  excluded: false
+  tags: []
+- name: Rhydon
+  dex_id: 112
+  generation: 1
+  types:
+  - Ground
+  - Rock
+  next_evolution:
+  - Rhyperior
+  excluded: false
+  tags: []
+- name: Chansey
+  dex_id: 113
+  generation: 1
+  types:
+  - Normal
+  next_evolution:
+  - Blissey
+  excluded: false
+  tags: []
+- name: Tangela
+  dex_id: 114
+  generation: 1
+  types:
+  - Grass
+  next_evolution:
+  - Tangrowth
+  excluded: false
+  tags: []
+- name: Kangaskhan
+  dex_id: 115
+  generation: 1
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Horsea
+  dex_id: 116
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Seadra
+  excluded: false
+  tags: []
+- name: Seadra
+  dex_id: 117
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Kingdra
+  excluded: false
+  tags: []
+- name: Goldeen
+  dex_id: 118
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Seaking
+  excluded: false
+  tags: []
+- name: Seaking
+  dex_id: 119
+  generation: 1
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Staryu
+  dex_id: 120
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Starmie
+  excluded: false
+  tags: []
+- name: Starmie
+  dex_id: 121
+  generation: 1
+  types:
+  - Water
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mr. Mime
+  dex_id: 122
+  generation: 1
+  types:
+  - Psychic
+  - Fairy
+  next_evolution:
+  - Mr. Rime
+  excluded: false
+  tags: []
+- name: Scyther
+  dex_id: 123
+  generation: 1
+  types:
+  - Bug
+  - Flying
+  next_evolution:
+  - Scizor
+  - Kleavor
+  excluded: false
+  tags: []
+- name: Jynx
+  dex_id: 124
+  generation: 1
+  types:
+  - Ice
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Electabuzz
+  dex_id: 125
+  generation: 1
+  types:
+  - Electric
+  next_evolution:
+  - Electivire
+  excluded: false
+  tags: []
+- name: Magmar
+  dex_id: 126
+  generation: 1
+  types:
+  - Fire
+  next_evolution:
+  - Magmortar
+  excluded: false
+  tags: []
+- name: Pinsir
+  dex_id: 127
+  generation: 1
+  types:
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tauros
+  dex_id: 128
+  generation: 1
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Magikarp
+  dex_id: 129
+  generation: 1
+  types:
+  - Water
+  next_evolution:
+  - Gyarados
+  excluded: false
+  tags: []
+- name: Gyarados
+  dex_id: 130
+  generation: 1
+  types:
+  - Water
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lapras
+  dex_id: 131
+  generation: 1
+  types:
+  - Water
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ditto
+  dex_id: 132
+  generation: 1
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Eevee
+  dex_id: 133
+  generation: 1
+  types:
+  - Normal
+  next_evolution:
+  - Vaporeon
+  - Jolteon
+  - Flareon
+  - Espeon
+  - Umbreon
+  - Leafeon
+  - Glaceon
+  - Sylveon
+  excluded: false
+  tags: []
+- name: Vaporeon
+  dex_id: 134
+  generation: 1
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Jolteon
+  dex_id: 135
+  generation: 1
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Flareon
+  dex_id: 136
+  generation: 1
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Porygon
+  dex_id: 137
+  generation: 1
+  types:
+  - Normal
+  next_evolution:
+  - Porygon2
+  excluded: false
+  tags: []
+- name: Omanyte
+  dex_id: 138
+  generation: 1
+  types:
+  - Rock
+  - Water
+  next_evolution:
+  - Omastar
+  excluded: false
+  tags: []
+- name: Omastar
+  dex_id: 139
+  generation: 1
+  types:
+  - Rock
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kabuto
+  dex_id: 140
+  generation: 1
+  types:
+  - Rock
+  - Water
+  next_evolution:
+  - Kabutops
+  excluded: false
+  tags: []
+- name: Kabutops
+  dex_id: 141
+  generation: 1
+  types:
+  - Rock
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Aerodactyl
+  dex_id: 142
+  generation: 1
+  types:
+  - Rock
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Snorlax
+  dex_id: 143
+  generation: 1
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Articuno
+  dex_id: 144
+  generation: 1
+  types:
+  - Ice
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zapdos
+  dex_id: 145
+  generation: 1
+  types:
+  - Electric
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Moltres
+  dex_id: 146
+  generation: 1
+  types:
+  - Fire
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dratini
+  dex_id: 147
+  generation: 1
+  types:
+  - Dragon
+  next_evolution:
+  - Dragonair
+  excluded: false
+  tags: []
+- name: Dragonair
+  dex_id: 148
+  generation: 1
+  types:
+  - Dragon
+  next_evolution:
+  - Dragonite
+  excluded: false
+  tags: []
+- name: Dragonite
+  dex_id: 149
+  generation: 1
+  types:
+  - Dragon
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mewtwo
+  dex_id: 150
+  generation: 1
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mew
+  dex_id: 151
+  generation: 1
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Chikorita
+  dex_id: 152
+  generation: 2
+  types:
+  - Grass
+  next_evolution:
+  - Bayleef
+  excluded: false
+  tags: []
+- name: Bayleef
+  dex_id: 153
+  generation: 2
+  types:
+  - Grass
+  next_evolution:
+  - Meganium
+  excluded: false
+  tags: []
+- name: Meganium
+  dex_id: 154
+  generation: 2
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cyndaquil
+  dex_id: 155
+  generation: 2
+  types:
+  - Fire
+  next_evolution:
+  - Quilava
+  excluded: false
+  tags: []
+- name: Quilava
+  dex_id: 156
+  generation: 2
+  types:
+  - Fire
+  next_evolution:
+  - Typhlosion
+  excluded: false
+  tags: []
+- name: Typhlosion
+  dex_id: 157
+  generation: 2
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Totodile
+  dex_id: 158
+  generation: 2
+  types:
+  - Water
+  next_evolution:
+  - Croconaw
+  excluded: false
+  tags: []
+- name: Croconaw
+  dex_id: 159
+  generation: 2
+  types:
+  - Water
+  next_evolution:
+  - Feraligatr
+  excluded: false
+  tags: []
+- name: Feraligatr
+  dex_id: 160
+  generation: 2
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sentret
+  dex_id: 161
+  generation: 2
+  types:
+  - Normal
+  next_evolution:
+  - Furret
+  excluded: false
+  tags: []
+- name: Furret
+  dex_id: 162
+  generation: 2
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Hoothoot
+  dex_id: 163
+  generation: 2
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Noctowl
+  excluded: false
+  tags: []
+- name: Noctowl
+  dex_id: 164
+  generation: 2
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ledyba
+  dex_id: 165
+  generation: 2
+  types:
+  - Bug
+  - Flying
+  next_evolution:
+  - Ledian
+  excluded: false
+  tags: []
+- name: Ledian
+  dex_id: 166
+  generation: 2
+  types:
+  - Bug
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Spinarak
+  dex_id: 167
+  generation: 2
+  types:
+  - Bug
+  - Poison
+  next_evolution:
+  - Ariados
+  excluded: false
+  tags: []
+- name: Ariados
+  dex_id: 168
+  generation: 2
+  types:
+  - Bug
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Crobat
+  dex_id: 169
+  generation: 2
+  types:
+  - Poison
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Chinchou
+  dex_id: 170
+  generation: 2
+  types:
+  - Water
+  - Electric
+  next_evolution:
+  - Lanturn
+  excluded: false
+  tags: []
+- name: Lanturn
+  dex_id: 171
+  generation: 2
+  types:
+  - Water
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pichu
+  dex_id: 172
+  generation: 2
+  types:
+  - Electric
+  next_evolution:
+  - Pikachu
+  excluded: false
+  tags: []
+- name: Cleffa
+  dex_id: 173
+  generation: 2
+  types:
+  - Fairy
+  next_evolution:
+  - Clefairy
+  excluded: false
+  tags: []
+- name: Igglybuff
+  dex_id: 174
+  generation: 2
+  types:
+  - Normal
+  - Fairy
+  next_evolution:
+  - Jigglypuff
+  excluded: false
+  tags: []
+- name: Togepi
+  dex_id: 175
+  generation: 2
+  types:
+  - Fairy
+  next_evolution:
+  - Togetic
+  excluded: false
+  tags: []
+- name: Togetic
+  dex_id: 176
+  generation: 2
+  types:
+  - Fairy
+  - Flying
+  next_evolution:
+  - Togekiss
+  excluded: false
+  tags: []
+- name: Natu
+  dex_id: 177
+  generation: 2
+  types:
+  - Psychic
+  - Flying
+  next_evolution:
+  - Xatu
+  excluded: false
+  tags: []
+- name: Xatu
+  dex_id: 178
+  generation: 2
+  types:
+  - Psychic
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mareep
+  dex_id: 179
+  generation: 2
+  types:
+  - Electric
+  next_evolution:
+  - Flaaffy
+  excluded: false
+  tags: []
+- name: Flaaffy
+  dex_id: 180
+  generation: 2
+  types:
+  - Electric
+  next_evolution:
+  - Ampharos
+  excluded: false
+  tags: []
+- name: Ampharos
+  dex_id: 181
+  generation: 2
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bellossom
+  dex_id: 182
+  generation: 2
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Marill
+  dex_id: 183
+  generation: 2
+  types:
+  - Water
+  - Fairy
+  next_evolution:
+  - Azumarill
+  excluded: false
+  tags: []
+- name: Azumarill
+  dex_id: 184
+  generation: 2
+  types:
+  - Water
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sudowoodo
+  dex_id: 185
+  generation: 2
+  types:
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Politoed
+  dex_id: 186
+  generation: 2
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Hoppip
+  dex_id: 187
+  generation: 2
+  types:
+  - Grass
+  - Flying
+  next_evolution:
+  - Skiploom
+  excluded: false
+  tags: []
+- name: Skiploom
+  dex_id: 188
+  generation: 2
+  types:
+  - Grass
+  - Flying
+  next_evolution:
+  - Jumpluff
+  excluded: false
+  tags: []
+- name: Jumpluff
+  dex_id: 189
+  generation: 2
+  types:
+  - Grass
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Aipom
+  dex_id: 190
+  generation: 2
+  types:
+  - Normal
+  next_evolution:
+  - Ambipom
+  excluded: false
+  tags: []
+- name: Sunkern
+  dex_id: 191
+  generation: 2
+  types:
+  - Grass
+  next_evolution:
+  - Sunflora
+  excluded: false
+  tags: []
+- name: Sunflora
+  dex_id: 192
+  generation: 2
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Yanma
+  dex_id: 193
+  generation: 2
+  types:
+  - Bug
+  - Flying
+  next_evolution:
+  - Yanmega
+  excluded: false
+  tags: []
+- name: Wooper
+  dex_id: 194
+  generation: 2
+  types:
+  - Water
+  - Ground
+  next_evolution:
+  - Quagsire
+  - Clodsire
+  excluded: false
+  tags: []
+- name: Quagsire
+  dex_id: 195
+  generation: 2
+  types:
+  - Water
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Espeon
+  dex_id: 196
+  generation: 2
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Umbreon
+  dex_id: 197
+  generation: 2
+  types:
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Murkrow
+  dex_id: 198
+  generation: 2
+  types:
+  - Dark
+  - Flying
+  next_evolution:
+  - Honchkrow
+  excluded: false
+  tags: []
+- name: Slowking
+  dex_id: 199
+  generation: 2
+  types:
+  - Water
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Misdreavus
+  dex_id: 200
+  generation: 2
+  types:
+  - Ghost
+  next_evolution:
+  - Mismagius
+  excluded: false
+  tags: []
+- name: Unown
+  dex_id: 201
+  generation: 2
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wobbuffet
+  dex_id: 202
+  generation: 2
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Girafarig
+  dex_id: 203
+  generation: 2
+  types:
+  - Normal
+  - Psychic
+  next_evolution:
+  - Farigiraf
+  excluded: false
+  tags: []
+- name: Pineco
+  dex_id: 204
+  generation: 2
+  types:
+  - Bug
+  next_evolution:
+  - Forretress
+  excluded: false
+  tags: []
+- name: Forretress
+  dex_id: 205
+  generation: 2
+  types:
+  - Bug
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dunsparce
+  dex_id: 206
+  generation: 2
+  types:
+  - Normal
+  next_evolution:
+  - Dudunsparce
+  excluded: false
+  tags: []
+- name: Gligar
+  dex_id: 207
+  generation: 2
+  types:
+  - Ground
+  - Flying
+  next_evolution:
+  - Gliscor
+  excluded: false
+  tags: []
+- name: Steelix
+  dex_id: 208
+  generation: 2
+  types:
+  - Steel
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Snubbull
+  dex_id: 209
+  generation: 2
+  types:
+  - Fairy
+  next_evolution:
+  - Granbull
+  excluded: false
+  tags: []
+- name: Granbull
+  dex_id: 210
+  generation: 2
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Qwilfish
+  dex_id: 211
+  generation: 2
+  types:
+  - Water
+  - Poison
+  next_evolution:
+  - Overqwil
+  excluded: false
+  tags: []
+- name: Scizor
+  dex_id: 212
+  generation: 2
+  types:
+  - Bug
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shuckle
+  dex_id: 213
+  generation: 2
+  types:
+  - Bug
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Heracross
+  dex_id: 214
+  generation: 2
+  types:
+  - Bug
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sneasel
+  dex_id: 215
+  generation: 2
+  types:
+  - Dark
+  - Ice
+  next_evolution:
+  - Weavile
+  - Sneasler
+  excluded: false
+  tags: []
+- name: Teddiursa
+  dex_id: 216
+  generation: 2
+  types:
+  - Normal
+  next_evolution:
+  - Ursaring
+  excluded: false
+  tags: []
+- name: Ursaring
+  dex_id: 217
+  generation: 2
+  types:
+  - Normal
+  next_evolution:
+  - Ursaluna
+  excluded: false
+  tags: []
+- name: Slugma
+  dex_id: 218
+  generation: 2
+  types:
+  - Fire
+  next_evolution:
+  - Magcargo
+  excluded: false
+  tags: []
+- name: Magcargo
+  dex_id: 219
+  generation: 2
+  types:
+  - Fire
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Swinub
+  dex_id: 220
+  generation: 2
+  types:
+  - Ice
+  - Ground
+  next_evolution:
+  - Piloswine
+  excluded: false
+  tags: []
+- name: Piloswine
+  dex_id: 221
+  generation: 2
+  types:
+  - Ice
+  - Ground
+  next_evolution:
+  - Mamoswine
+  excluded: false
+  tags: []
+- name: Corsola
+  dex_id: 222
+  generation: 2
+  types:
+  - Water
+  - Rock
+  next_evolution:
+  - Cursola
+  excluded: false
+  tags: []
+- name: Remoraid
+  dex_id: 223
+  generation: 2
+  types:
+  - Water
+  next_evolution:
+  - Octillery
+  excluded: false
+  tags: []
+- name: Octillery
+  dex_id: 224
+  generation: 2
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Delibird
+  dex_id: 225
+  generation: 2
+  types:
+  - Ice
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mantine
+  dex_id: 226
+  generation: 2
+  types:
+  - Water
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Skarmory
+  dex_id: 227
+  generation: 2
+  types:
+  - Steel
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Houndour
+  dex_id: 228
+  generation: 2
+  types:
+  - Dark
+  - Fire
+  next_evolution:
+  - Houndoom
+  excluded: false
+  tags: []
+- name: Houndoom
+  dex_id: 229
+  generation: 2
+  types:
+  - Dark
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kingdra
+  dex_id: 230
+  generation: 2
+  types:
+  - Water
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Phanpy
+  dex_id: 231
+  generation: 2
+  types:
+  - Ground
+  next_evolution:
+  - Donphan
+  excluded: false
+  tags: []
+- name: Donphan
+  dex_id: 232
+  generation: 2
+  types:
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Porygon2
+  dex_id: 233
+  generation: 2
+  types:
+  - Normal
+  next_evolution:
+  - Porygon-Z
+  excluded: false
+  tags: []
+- name: Stantler
+  dex_id: 234
+  generation: 2
+  types:
+  - Normal
+  next_evolution:
+  - Wyrdeer
+  excluded: false
+  tags: []
+- name: Smeargle
+  dex_id: 235
+  generation: 2
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tyrogue
+  dex_id: 236
+  generation: 2
+  types:
+  - Fighting
+  next_evolution:
+  - Hitmonlee
+  - Hitmonchan
+  - Hitmontop
+  excluded: false
+  tags: []
+- name: Hitmontop
+  dex_id: 237
+  generation: 2
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Smoochum
+  dex_id: 238
+  generation: 2
+  types:
+  - Ice
+  - Psychic
+  next_evolution:
+  - Jynx
+  excluded: false
+  tags: []
+- name: Elekid
+  dex_id: 239
+  generation: 2
+  types:
+  - Electric
+  next_evolution:
+  - Electabuzz
+  excluded: false
+  tags: []
+- name: Magby
+  dex_id: 240
+  generation: 2
+  types:
+  - Fire
+  next_evolution:
+  - Magmar
+  excluded: false
+  tags: []
+- name: Miltank
+  dex_id: 241
+  generation: 2
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Blissey
+  dex_id: 242
+  generation: 2
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Raikou
+  dex_id: 243
+  generation: 2
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Entei
+  dex_id: 244
+  generation: 2
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Suicune
+  dex_id: 245
+  generation: 2
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Larvitar
+  dex_id: 246
+  generation: 2
+  types:
+  - Rock
+  - Ground
+  next_evolution:
+  - Pupitar
+  excluded: false
+  tags: []
+- name: Pupitar
+  dex_id: 247
+  generation: 2
+  types:
+  - Rock
+  - Ground
+  next_evolution:
+  - Tyranitar
+  excluded: false
+  tags: []
+- name: Tyranitar
+  dex_id: 248
+  generation: 2
+  types:
+  - Rock
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lugia
+  dex_id: 249
+  generation: 2
+  types:
+  - Psychic
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ho-Oh
+  dex_id: 250
+  generation: 2
+  types:
+  - Fire
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Celebi
+  dex_id: 251
+  generation: 2
+  types:
+  - Psychic
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Treecko
+  dex_id: 252
+  generation: 3
+  types:
+  - Grass
+  next_evolution:
+  - Grovyle
+  excluded: false
+  tags: []
+- name: Grovyle
+  dex_id: 253
+  generation: 3
+  types:
+  - Grass
+  next_evolution:
+  - Sceptile
+  excluded: false
+  tags: []
+- name: Sceptile
+  dex_id: 254
+  generation: 3
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Torchic
+  dex_id: 255
+  generation: 3
+  types:
+  - Fire
+  next_evolution:
+  - Combusken
+  excluded: false
+  tags: []
+- name: Combusken
+  dex_id: 256
+  generation: 3
+  types:
+  - Fire
+  - Fighting
+  next_evolution:
+  - Blaziken
+  excluded: false
+  tags: []
+- name: Blaziken
+  dex_id: 257
+  generation: 3
+  types:
+  - Fire
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mudkip
+  dex_id: 258
+  generation: 3
+  types:
+  - Water
+  next_evolution:
+  - Marshtomp
+  excluded: false
+  tags: []
+- name: Marshtomp
+  dex_id: 259
+  generation: 3
+  types:
+  - Water
+  - Ground
+  next_evolution:
+  - Swampert
+  excluded: false
+  tags: []
+- name: Swampert
+  dex_id: 260
+  generation: 3
+  types:
+  - Water
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Poochyena
+  dex_id: 261
+  generation: 3
+  types:
+  - Dark
+  next_evolution:
+  - Mightyena
+  excluded: false
+  tags: []
+- name: Mightyena
+  dex_id: 262
+  generation: 3
+  types:
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zigzagoon
+  dex_id: 263
+  generation: 3
+  types:
+  - Normal
+  next_evolution:
+  - Linoone
+  excluded: false
+  tags: []
+- name: Linoone
+  dex_id: 264
+  generation: 3
+  types:
+  - Normal
+  next_evolution:
+  - Obstagoon
+  excluded: false
+  tags: []
+- name: Wurmple
+  dex_id: 265
+  generation: 3
+  types:
+  - Bug
+  next_evolution:
+  - Silcoon
+  - Cascoon
+  excluded: false
+  tags: []
+- name: Silcoon
+  dex_id: 266
+  generation: 3
+  types:
+  - Bug
+  next_evolution:
+  - Beautifly
+  excluded: false
+  tags: []
+- name: Beautifly
+  dex_id: 267
+  generation: 3
+  types:
+  - Bug
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cascoon
+  dex_id: 268
+  generation: 3
+  types:
+  - Bug
+  next_evolution:
+  - Dustox
+  excluded: false
+  tags: []
+- name: Dustox
+  dex_id: 269
+  generation: 3
+  types:
+  - Bug
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lotad
+  dex_id: 270
+  generation: 3
+  types:
+  - Water
+  - Grass
+  next_evolution:
+  - Lombre
+  excluded: false
+  tags: []
+- name: Lombre
+  dex_id: 271
+  generation: 3
+  types:
+  - Water
+  - Grass
+  next_evolution:
+  - Ludicolo
+  excluded: false
+  tags: []
+- name: Ludicolo
+  dex_id: 272
+  generation: 3
+  types:
+  - Water
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Seedot
+  dex_id: 273
+  generation: 3
+  types:
+  - Grass
+  next_evolution:
+  - Nuzleaf
+  excluded: false
+  tags: []
+- name: Nuzleaf
+  dex_id: 274
+  generation: 3
+  types:
+  - Grass
+  - Dark
+  next_evolution:
+  - Shiftry
+  excluded: false
+  tags: []
+- name: Shiftry
+  dex_id: 275
+  generation: 3
+  types:
+  - Grass
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Taillow
+  dex_id: 276
+  generation: 3
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Swellow
+  excluded: false
+  tags: []
+- name: Swellow
+  dex_id: 277
+  generation: 3
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wingull
+  dex_id: 278
+  generation: 3
+  types:
+  - Water
+  - Flying
+  next_evolution:
+  - Pelipper
+  excluded: false
+  tags: []
+- name: Pelipper
+  dex_id: 279
+  generation: 3
+  types:
+  - Water
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ralts
+  dex_id: 280
+  generation: 3
+  types:
+  - Psychic
+  - Fairy
+  next_evolution:
+  - Kirlia
+  excluded: false
+  tags: []
+- name: Kirlia
+  dex_id: 281
+  generation: 3
+  types:
+  - Psychic
+  - Fairy
+  next_evolution:
+  - Gardevoir
+  - Gallade
+  excluded: false
+  tags: []
+- name: Gardevoir
+  dex_id: 282
+  generation: 3
+  types:
+  - Psychic
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Surskit
+  dex_id: 283
+  generation: 3
+  types:
+  - Bug
+  - Water
+  next_evolution:
+  - Masquerain
+  excluded: false
+  tags: []
+- name: Masquerain
+  dex_id: 284
+  generation: 3
+  types:
+  - Bug
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shroomish
+  dex_id: 285
+  generation: 3
+  types:
+  - Grass
+  next_evolution:
+  - Breloom
+  excluded: false
+  tags: []
+- name: Breloom
+  dex_id: 286
+  generation: 3
+  types:
+  - Grass
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Slakoth
+  dex_id: 287
+  generation: 3
+  types:
+  - Normal
+  next_evolution:
+  - Vigoroth
+  excluded: false
+  tags: []
+- name: Vigoroth
+  dex_id: 288
+  generation: 3
+  types:
+  - Normal
+  next_evolution:
+  - Slaking
+  excluded: false
+  tags: []
+- name: Slaking
+  dex_id: 289
+  generation: 3
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Nincada
+  dex_id: 290
+  generation: 3
+  types:
+  - Bug
+  - Ground
+  next_evolution:
+  - Ninjask
+  - Shedinja
+  excluded: false
+  tags: []
+- name: Ninjask
+  dex_id: 291
+  generation: 3
+  types:
+  - Bug
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shedinja
+  dex_id: 292
+  generation: 3
+  types:
+  - Bug
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Whismur
+  dex_id: 293
+  generation: 3
+  types:
+  - Normal
+  next_evolution:
+  - Loudred
+  excluded: false
+  tags: []
+- name: Loudred
+  dex_id: 294
+  generation: 3
+  types:
+  - Normal
+  next_evolution:
+  - Exploud
+  excluded: false
+  tags: []
+- name: Exploud
+  dex_id: 295
+  generation: 3
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Makuhita
+  dex_id: 296
+  generation: 3
+  types:
+  - Fighting
+  next_evolution:
+  - Hariyama
+  excluded: false
+  tags: []
+- name: Hariyama
+  dex_id: 297
+  generation: 3
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Azurill
+  dex_id: 298
+  generation: 3
+  types:
+  - Normal
+  - Fairy
+  next_evolution:
+  - Marill
+  excluded: false
+  tags: []
+- name: Nosepass
+  dex_id: 299
+  generation: 3
+  types:
+  - Rock
+  next_evolution:
+  - Probopass
+  excluded: false
+  tags: []
+- name: Skitty
+  dex_id: 300
+  generation: 3
+  types:
+  - Normal
+  next_evolution:
+  - Delcatty
+  excluded: false
+  tags: []
+- name: Delcatty
+  dex_id: 301
+  generation: 3
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sableye
+  dex_id: 302
+  generation: 3
+  types:
+  - Dark
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mawile
+  dex_id: 303
+  generation: 3
+  types:
+  - Steel
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Aron
+  dex_id: 304
+  generation: 3
+  types:
+  - Steel
+  - Rock
+  next_evolution:
+  - Lairon
+  excluded: false
+  tags: []
+- name: Lairon
+  dex_id: 305
+  generation: 3
+  types:
+  - Steel
+  - Rock
+  next_evolution:
+  - Aggron
+  excluded: false
+  tags: []
+- name: Aggron
+  dex_id: 306
+  generation: 3
+  types:
+  - Steel
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Meditite
+  dex_id: 307
+  generation: 3
+  types:
+  - Fighting
+  - Psychic
+  next_evolution:
+  - Medicham
+  excluded: false
+  tags: []
+- name: Medicham
+  dex_id: 308
+  generation: 3
+  types:
+  - Fighting
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Electrike
+  dex_id: 309
+  generation: 3
+  types:
+  - Electric
+  next_evolution:
+  - Manectric
+  excluded: false
+  tags: []
+- name: Manectric
+  dex_id: 310
+  generation: 3
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Plusle
+  dex_id: 311
+  generation: 3
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Minun
+  dex_id: 312
+  generation: 3
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Volbeat
+  dex_id: 313
+  generation: 3
+  types:
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Illumise
+  dex_id: 314
+  generation: 3
+  types:
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Roselia
+  dex_id: 315
+  generation: 3
+  types:
+  - Grass
+  - Poison
+  next_evolution:
+  - Roserade
+  excluded: false
+  tags: []
+- name: Gulpin
+  dex_id: 316
+  generation: 3
+  types:
+  - Poison
+  next_evolution:
+  - Swalot
+  excluded: false
+  tags: []
+- name: Swalot
+  dex_id: 317
+  generation: 3
+  types:
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Carvanha
+  dex_id: 318
+  generation: 3
+  types:
+  - Water
+  - Dark
+  next_evolution:
+  - Sharpedo
+  excluded: false
+  tags: []
+- name: Sharpedo
+  dex_id: 319
+  generation: 3
+  types:
+  - Water
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wailmer
+  dex_id: 320
+  generation: 3
+  types:
+  - Water
+  next_evolution:
+  - Wailord
+  excluded: false
+  tags: []
+- name: Wailord
+  dex_id: 321
+  generation: 3
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Numel
+  dex_id: 322
+  generation: 3
+  types:
+  - Fire
+  - Ground
+  next_evolution:
+  - Camerupt
+  excluded: false
+  tags: []
+- name: Camerupt
+  dex_id: 323
+  generation: 3
+  types:
+  - Fire
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Torkoal
+  dex_id: 324
+  generation: 3
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Spoink
+  dex_id: 325
+  generation: 3
+  types:
+  - Psychic
+  next_evolution:
+  - Grumpig
+  excluded: false
+  tags: []
+- name: Grumpig
+  dex_id: 326
+  generation: 3
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Spinda
+  dex_id: 327
+  generation: 3
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Trapinch
+  dex_id: 328
+  generation: 3
+  types:
+  - Ground
+  next_evolution:
+  - Vibrava
+  excluded: false
+  tags: []
+- name: Vibrava
+  dex_id: 329
+  generation: 3
+  types:
+  - Ground
+  - Dragon
+  next_evolution:
+  - Flygon
+  excluded: false
+  tags: []
+- name: Flygon
+  dex_id: 330
+  generation: 3
+  types:
+  - Ground
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cacnea
+  dex_id: 331
+  generation: 3
+  types:
+  - Grass
+  next_evolution:
+  - Cacturne
+  excluded: false
+  tags: []
+- name: Cacturne
+  dex_id: 332
+  generation: 3
+  types:
+  - Grass
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Swablu
+  dex_id: 333
+  generation: 3
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Altaria
+  excluded: false
+  tags: []
+- name: Altaria
+  dex_id: 334
+  generation: 3
+  types:
+  - Dragon
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zangoose
+  dex_id: 335
+  generation: 3
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Seviper
+  dex_id: 336
+  generation: 3
+  types:
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lunatone
+  dex_id: 337
+  generation: 3
+  types:
+  - Rock
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Solrock
+  dex_id: 338
+  generation: 3
+  types:
+  - Rock
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Barboach
+  dex_id: 339
+  generation: 3
+  types:
+  - Water
+  - Ground
+  next_evolution:
+  - Whiscash
+  excluded: false
+  tags: []
+- name: Whiscash
+  dex_id: 340
+  generation: 3
+  types:
+  - Water
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Corphish
+  dex_id: 341
+  generation: 3
+  types:
+  - Water
+  next_evolution:
+  - Crawdaunt
+  excluded: false
+  tags: []
+- name: Crawdaunt
+  dex_id: 342
+  generation: 3
+  types:
+  - Water
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Baltoy
+  dex_id: 343
+  generation: 3
+  types:
+  - Ground
+  - Psychic
+  next_evolution:
+  - Claydol
+  excluded: false
+  tags: []
+- name: Claydol
+  dex_id: 344
+  generation: 3
+  types:
+  - Ground
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lileep
+  dex_id: 345
+  generation: 3
+  types:
+  - Rock
+  - Grass
+  next_evolution:
+  - Cradily
+  excluded: false
+  tags: []
+- name: Cradily
+  dex_id: 346
+  generation: 3
+  types:
+  - Rock
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Anorith
+  dex_id: 347
+  generation: 3
+  types:
+  - Rock
+  - Bug
+  next_evolution:
+  - Armaldo
+  excluded: false
+  tags: []
+- name: Armaldo
+  dex_id: 348
+  generation: 3
+  types:
+  - Rock
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Feebas
+  dex_id: 349
+  generation: 3
+  types:
+  - Water
+  next_evolution:
+  - Milotic
+  excluded: false
+  tags: []
+- name: Milotic
+  dex_id: 350
+  generation: 3
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Castform
+  dex_id: 351
+  generation: 3
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kecleon
+  dex_id: 352
+  generation: 3
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shuppet
+  dex_id: 353
+  generation: 3
+  types:
+  - Ghost
+  next_evolution:
+  - Banette
+  excluded: false
+  tags: []
+- name: Banette
+  dex_id: 354
+  generation: 3
+  types:
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Duskull
+  dex_id: 355
+  generation: 3
+  types:
+  - Ghost
+  next_evolution:
+  - Dusclops
+  excluded: false
+  tags: []
+- name: Dusclops
+  dex_id: 356
+  generation: 3
+  types:
+  - Ghost
+  next_evolution:
+  - Dusknoir
+  excluded: false
+  tags: []
+- name: Tropius
+  dex_id: 357
+  generation: 3
+  types:
+  - Grass
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Chimecho
+  dex_id: 358
+  generation: 3
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Absol
+  dex_id: 359
+  generation: 3
+  types:
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wynaut
+  dex_id: 360
+  generation: 3
+  types:
+  - Psychic
+  next_evolution:
+  - Wobbuffet
+  excluded: false
+  tags: []
+- name: Snorunt
+  dex_id: 361
+  generation: 3
+  types:
+  - Ice
+  next_evolution:
+  - Glalie
+  - Froslass
+  excluded: false
+  tags: []
+- name: Glalie
+  dex_id: 362
+  generation: 3
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Spheal
+  dex_id: 363
+  generation: 3
+  types:
+  - Ice
+  - Water
+  next_evolution:
+  - Sealeo
+  excluded: false
+  tags: []
+- name: Sealeo
+  dex_id: 364
+  generation: 3
+  types:
+  - Ice
+  - Water
+  next_evolution:
+  - Walrein
+  excluded: false
+  tags: []
+- name: Walrein
+  dex_id: 365
+  generation: 3
+  types:
+  - Ice
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Clamperl
+  dex_id: 366
+  generation: 3
+  types:
+  - Water
+  next_evolution:
+  - Huntail
+  - Gorebyss
+  excluded: false
+  tags: []
+- name: Huntail
+  dex_id: 367
+  generation: 3
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Gorebyss
+  dex_id: 368
+  generation: 3
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Relicanth
+  dex_id: 369
+  generation: 3
+  types:
+  - Water
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Luvdisc
+  dex_id: 370
+  generation: 3
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bagon
+  dex_id: 371
+  generation: 3
+  types:
+  - Dragon
+  next_evolution:
+  - Shelgon
+  excluded: false
+  tags: []
+- name: Shelgon
+  dex_id: 372
+  generation: 3
+  types:
+  - Dragon
+  next_evolution:
+  - Salamence
+  excluded: false
+  tags: []
+- name: Salamence
+  dex_id: 373
+  generation: 3
+  types:
+  - Dragon
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Beldum
+  dex_id: 374
+  generation: 3
+  types:
+  - Steel
+  - Psychic
+  next_evolution:
+  - Metang
+  excluded: false
+  tags: []
+- name: Metang
+  dex_id: 375
+  generation: 3
+  types:
+  - Steel
+  - Psychic
+  next_evolution:
+  - Metagross
+  excluded: false
+  tags: []
+- name: Metagross
+  dex_id: 376
+  generation: 3
+  types:
+  - Steel
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Regirock
+  dex_id: 377
+  generation: 3
+  types:
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Regice
+  dex_id: 378
+  generation: 3
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Registeel
+  dex_id: 379
+  generation: 3
+  types:
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Latias
+  dex_id: 380
+  generation: 3
+  types:
+  - Dragon
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Latios
+  dex_id: 381
+  generation: 3
+  types:
+  - Dragon
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kyogre
+  dex_id: 382
+  generation: 3
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Groudon
+  dex_id: 383
+  generation: 3
+  types:
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rayquaza
+  dex_id: 384
+  generation: 3
+  types:
+  - Dragon
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Jirachi
+  dex_id: 385
+  generation: 3
+  types:
+  - Steel
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Deoxys
+  dex_id: 386
+  generation: 3
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Turtwig
+  dex_id: 387
+  generation: 4
+  types:
+  - Grass
+  next_evolution:
+  - Grotle
+  excluded: false
+  tags: []
+- name: Grotle
+  dex_id: 388
+  generation: 4
+  types:
+  - Grass
+  next_evolution:
+  - Torterra
+  excluded: false
+  tags: []
+- name: Torterra
+  dex_id: 389
+  generation: 4
+  types:
+  - Grass
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Chimchar
+  dex_id: 390
+  generation: 4
+  types:
+  - Fire
+  next_evolution:
+  - Monferno
+  excluded: false
+  tags: []
+- name: Monferno
+  dex_id: 391
+  generation: 4
+  types:
+  - Fire
+  - Fighting
+  next_evolution:
+  - Infernape
+  excluded: false
+  tags: []
+- name: Infernape
+  dex_id: 392
+  generation: 4
+  types:
+  - Fire
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Piplup
+  dex_id: 393
+  generation: 4
+  types:
+  - Water
+  next_evolution:
+  - Prinplup
+  excluded: false
+  tags: []
+- name: Prinplup
+  dex_id: 394
+  generation: 4
+  types:
+  - Water
+  next_evolution:
+  - Empoleon
+  excluded: false
+  tags: []
+- name: Empoleon
+  dex_id: 395
+  generation: 4
+  types:
+  - Water
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Starly
+  dex_id: 396
+  generation: 4
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Staravia
+  excluded: false
+  tags: []
+- name: Staravia
+  dex_id: 397
+  generation: 4
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Staraptor
+  excluded: false
+  tags: []
+- name: Staraptor
+  dex_id: 398
+  generation: 4
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bidoof
+  dex_id: 399
+  generation: 4
+  types:
+  - Normal
+  next_evolution:
+  - Bibarel
+  excluded: false
+  tags: []
+- name: Bibarel
+  dex_id: 400
+  generation: 4
+  types:
+  - Normal
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kricketot
+  dex_id: 401
+  generation: 4
+  types:
+  - Bug
+  next_evolution:
+  - Kricketune
+  excluded: false
+  tags: []
+- name: Kricketune
+  dex_id: 402
+  generation: 4
+  types:
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shinx
+  dex_id: 403
+  generation: 4
+  types:
+  - Electric
+  next_evolution:
+  - Luxio
+  excluded: false
+  tags: []
+- name: Luxio
+  dex_id: 404
+  generation: 4
+  types:
+  - Electric
+  next_evolution:
+  - Luxray
+  excluded: false
+  tags: []
+- name: Luxray
+  dex_id: 405
+  generation: 4
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Budew
+  dex_id: 406
+  generation: 4
+  types:
+  - Grass
+  - Poison
+  next_evolution:
+  - Roselia
+  excluded: false
+  tags: []
+- name: Roserade
+  dex_id: 407
+  generation: 4
+  types:
+  - Grass
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cranidos
+  dex_id: 408
+  generation: 4
+  types:
+  - Rock
+  next_evolution:
+  - Rampardos
+  excluded: false
+  tags: []
+- name: Rampardos
+  dex_id: 409
+  generation: 4
+  types:
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shieldon
+  dex_id: 410
+  generation: 4
+  types:
+  - Rock
+  - Steel
+  next_evolution:
+  - Bastiodon
+  excluded: false
+  tags: []
+- name: Bastiodon
+  dex_id: 411
+  generation: 4
+  types:
+  - Rock
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Burmy
+  dex_id: 412
+  generation: 4
+  types:
+  - Bug
+  next_evolution:
+  - Wormadam
+  - Mothim
+  excluded: false
+  tags: []
+- name: Wormadam
+  dex_id: 413
+  generation: 4
+  types:
+  - Bug
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mothim
+  dex_id: 414
+  generation: 4
+  types:
+  - Bug
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Combee
+  dex_id: 415
+  generation: 4
+  types:
+  - Bug
+  - Flying
+  next_evolution:
+  - Vespiquen
+  excluded: false
+  tags: []
+- name: Vespiquen
+  dex_id: 416
+  generation: 4
+  types:
+  - Bug
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pachirisu
+  dex_id: 417
+  generation: 4
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Buizel
+  dex_id: 418
+  generation: 4
+  types:
+  - Water
+  next_evolution:
+  - Floatzel
+  excluded: false
+  tags: []
+- name: Floatzel
+  dex_id: 419
+  generation: 4
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cherubi
+  dex_id: 420
+  generation: 4
+  types:
+  - Grass
+  next_evolution:
+  - Cherrim
+  excluded: false
+  tags: []
+- name: Cherrim
+  dex_id: 421
+  generation: 4
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shellos
+  dex_id: 422
+  generation: 4
+  types:
+  - Water
+  next_evolution:
+  - Gastrodon
+  excluded: false
+  tags: []
+- name: Gastrodon
+  dex_id: 423
+  generation: 4
+  types:
+  - Water
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ambipom
+  dex_id: 424
+  generation: 4
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Drifloon
+  dex_id: 425
+  generation: 4
+  types:
+  - Ghost
+  - Flying
+  next_evolution:
+  - Drifblim
+  excluded: false
+  tags: []
+- name: Drifblim
+  dex_id: 426
+  generation: 4
+  types:
+  - Ghost
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Buneary
+  dex_id: 427
+  generation: 4
+  types:
+  - Normal
+  next_evolution:
+  - Lopunny
+  excluded: false
+  tags: []
+- name: Lopunny
+  dex_id: 428
+  generation: 4
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mismagius
+  dex_id: 429
+  generation: 4
+  types:
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Honchkrow
+  dex_id: 430
+  generation: 4
+  types:
+  - Dark
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Glameow
+  dex_id: 431
+  generation: 4
+  types:
+  - Normal
+  next_evolution:
+  - Purugly
+  excluded: false
+  tags: []
+- name: Purugly
+  dex_id: 432
+  generation: 4
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Chingling
+  dex_id: 433
+  generation: 4
+  types:
+  - Psychic
+  next_evolution:
+  - Chimecho
+  excluded: false
+  tags: []
+- name: Stunky
+  dex_id: 434
+  generation: 4
+  types:
+  - Poison
+  - Dark
+  next_evolution:
+  - Skuntank
+  excluded: false
+  tags: []
+- name: Skuntank
+  dex_id: 435
+  generation: 4
+  types:
+  - Poison
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bronzor
+  dex_id: 436
+  generation: 4
+  types:
+  - Steel
+  - Psychic
+  next_evolution:
+  - Bronzong
+  excluded: false
+  tags: []
+- name: Bronzong
+  dex_id: 437
+  generation: 4
+  types:
+  - Steel
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bonsly
+  dex_id: 438
+  generation: 4
+  types:
+  - Rock
+  next_evolution:
+  - Sudowoodo
+  excluded: false
+  tags: []
+- name: Mime Jr.
+  dex_id: 439
+  generation: 4
+  types:
+  - Psychic
+  - Fairy
+  next_evolution:
+  - Mr. Mime
+  excluded: false
+  tags: []
+- name: Happiny
+  dex_id: 440
+  generation: 4
+  types:
+  - Normal
+  next_evolution:
+  - Chansey
+  excluded: false
+  tags: []
+- name: Chatot
+  dex_id: 441
+  generation: 4
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Spiritomb
+  dex_id: 442
+  generation: 4
+  types:
+  - Ghost
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Gible
+  dex_id: 443
+  generation: 4
+  types:
+  - Dragon
+  - Ground
+  next_evolution:
+  - Gabite
+  excluded: false
+  tags: []
+- name: Gabite
+  dex_id: 444
+  generation: 4
+  types:
+  - Dragon
+  - Ground
+  next_evolution:
+  - Garchomp
+  excluded: false
+  tags: []
+- name: Garchomp
+  dex_id: 445
+  generation: 4
+  types:
+  - Dragon
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Munchlax
+  dex_id: 446
+  generation: 4
+  types:
+  - Normal
+  next_evolution:
+  - Snorlax
+  excluded: false
+  tags: []
+- name: Riolu
+  dex_id: 447
+  generation: 4
+  types:
+  - Fighting
+  next_evolution:
+  - Lucario
+  excluded: false
+  tags: []
+- name: Lucario
+  dex_id: 448
+  generation: 4
+  types:
+  - Fighting
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Hippopotas
+  dex_id: 449
+  generation: 4
+  types:
+  - Ground
+  next_evolution:
+  - Hippowdon
+  excluded: false
+  tags: []
+- name: Hippowdon
+  dex_id: 450
+  generation: 4
+  types:
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Skorupi
+  dex_id: 451
+  generation: 4
+  types:
+  - Poison
+  - Bug
+  next_evolution:
+  - Drapion
+  excluded: false
+  tags: []
+- name: Drapion
+  dex_id: 452
+  generation: 4
+  types:
+  - Poison
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Croagunk
+  dex_id: 453
+  generation: 4
+  types:
+  - Poison
+  - Fighting
+  next_evolution:
+  - Toxicroak
+  excluded: false
+  tags: []
+- name: Toxicroak
+  dex_id: 454
+  generation: 4
+  types:
+  - Poison
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Carnivine
+  dex_id: 455
+  generation: 4
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Finneon
+  dex_id: 456
+  generation: 4
+  types:
+  - Water
+  next_evolution:
+  - Lumineon
+  excluded: false
+  tags: []
+- name: Lumineon
+  dex_id: 457
+  generation: 4
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mantyke
+  dex_id: 458
+  generation: 4
+  types:
+  - Water
+  - Flying
+  next_evolution:
+  - Mantine
+  excluded: false
+  tags: []
+- name: Snover
+  dex_id: 459
+  generation: 4
+  types:
+  - Grass
+  - Ice
+  next_evolution:
+  - Abomasnow
+  excluded: false
+  tags: []
+- name: Abomasnow
+  dex_id: 460
+  generation: 4
+  types:
+  - Grass
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Weavile
+  dex_id: 461
+  generation: 4
+  types:
+  - Dark
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Magnezone
+  dex_id: 462
+  generation: 4
+  types:
+  - Electric
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lickilicky
+  dex_id: 463
+  generation: 4
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rhyperior
+  dex_id: 464
+  generation: 4
+  types:
+  - Ground
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tangrowth
+  dex_id: 465
+  generation: 4
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Electivire
+  dex_id: 466
+  generation: 4
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Magmortar
+  dex_id: 467
+  generation: 4
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Togekiss
+  dex_id: 468
+  generation: 4
+  types:
+  - Fairy
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Yanmega
+  dex_id: 469
+  generation: 4
+  types:
+  - Bug
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Leafeon
+  dex_id: 470
+  generation: 4
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Glaceon
+  dex_id: 471
+  generation: 4
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Gliscor
+  dex_id: 472
+  generation: 4
+  types:
+  - Ground
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mamoswine
+  dex_id: 473
+  generation: 4
+  types:
+  - Ice
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Porygon-Z
+  dex_id: 474
+  generation: 4
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Gallade
+  dex_id: 475
+  generation: 4
+  types:
+  - Psychic
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Probopass
+  dex_id: 476
+  generation: 4
+  types:
+  - Rock
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dusknoir
+  dex_id: 477
+  generation: 4
+  types:
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Froslass
+  dex_id: 478
+  generation: 4
+  types:
+  - Ice
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rotom
+  dex_id: 479
+  generation: 4
+  types:
+  - Electric
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Uxie
+  dex_id: 480
+  generation: 4
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mesprit
+  dex_id: 481
+  generation: 4
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Azelf
+  dex_id: 482
+  generation: 4
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dialga
+  dex_id: 483
+  generation: 4
+  types:
+  - Steel
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Palkia
+  dex_id: 484
+  generation: 4
+  types:
+  - Water
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Heatran
+  dex_id: 485
+  generation: 4
+  types:
+  - Fire
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Regigigas
+  dex_id: 486
+  generation: 4
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Giratina
+  dex_id: 487
+  generation: 4
+  types:
+  - Ghost
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cresselia
+  dex_id: 488
+  generation: 4
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Phione
+  dex_id: 489
+  generation: 4
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Manaphy
+  dex_id: 490
+  generation: 4
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Darkrai
+  dex_id: 491
+  generation: 4
+  types:
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shaymin
+  dex_id: 492
+  generation: 4
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Arceus
+  dex_id: 493
+  generation: 4
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Victini
+  dex_id: 494
+  generation: 5
+  types:
+  - Psychic
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Snivy
+  dex_id: 495
+  generation: 5
+  types:
+  - Grass
+  next_evolution:
+  - Servine
+  excluded: false
+  tags: []
+- name: Servine
+  dex_id: 496
+  generation: 5
+  types:
+  - Grass
+  next_evolution:
+  - Serperior
+  excluded: false
+  tags: []
+- name: Serperior
+  dex_id: 497
+  generation: 5
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tepig
+  dex_id: 498
+  generation: 5
+  types:
+  - Fire
+  next_evolution:
+  - Pignite
+  excluded: false
+  tags: []
+- name: Pignite
+  dex_id: 499
+  generation: 5
+  types:
+  - Fire
+  - Fighting
+  next_evolution:
+  - Emboar
+  excluded: false
+  tags: []
+- name: Emboar
+  dex_id: 500
+  generation: 5
+  types:
+  - Fire
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Oshawott
+  dex_id: 501
+  generation: 5
+  types:
+  - Water
+  next_evolution:
+  - Dewott
+  excluded: false
+  tags: []
+- name: Dewott
+  dex_id: 502
+  generation: 5
+  types:
+  - Water
+  next_evolution:
+  - Samurott
+  excluded: false
+  tags: []
+- name: Samurott
+  dex_id: 503
+  generation: 5
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Patrat
+  dex_id: 504
+  generation: 5
+  types:
+  - Normal
+  next_evolution:
+  - Watchog
+  excluded: false
+  tags: []
+- name: Watchog
+  dex_id: 505
+  generation: 5
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lillipup
+  dex_id: 506
+  generation: 5
+  types:
+  - Normal
+  next_evolution:
+  - Herdier
+  excluded: false
+  tags: []
+- name: Herdier
+  dex_id: 507
+  generation: 5
+  types:
+  - Normal
+  next_evolution:
+  - Stoutland
+  excluded: false
+  tags: []
+- name: Stoutland
+  dex_id: 508
+  generation: 5
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Purrloin
+  dex_id: 509
+  generation: 5
+  types:
+  - Dark
+  next_evolution:
+  - Liepard
+  excluded: false
+  tags: []
+- name: Liepard
+  dex_id: 510
+  generation: 5
+  types:
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pansage
+  dex_id: 511
+  generation: 5
+  types:
+  - Grass
+  next_evolution:
+  - Simisage
+  excluded: false
+  tags: []
+- name: Simisage
+  dex_id: 512
+  generation: 5
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pansear
+  dex_id: 513
+  generation: 5
+  types:
+  - Fire
+  next_evolution:
+  - Simisear
+  excluded: false
+  tags: []
+- name: Simisear
+  dex_id: 514
+  generation: 5
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Panpour
+  dex_id: 515
+  generation: 5
+  types:
+  - Water
+  next_evolution:
+  - Simipour
+  excluded: false
+  tags: []
+- name: Simipour
+  dex_id: 516
+  generation: 5
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Munna
+  dex_id: 517
+  generation: 5
+  types:
+  - Psychic
+  next_evolution:
+  - Musharna
+  excluded: false
+  tags: []
+- name: Musharna
+  dex_id: 518
+  generation: 5
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pidove
+  dex_id: 519
+  generation: 5
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Tranquill
+  excluded: false
+  tags: []
+- name: Tranquill
+  dex_id: 520
+  generation: 5
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Unfezant
+  excluded: false
+  tags: []
+- name: Unfezant
+  dex_id: 521
+  generation: 5
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Blitzle
+  dex_id: 522
+  generation: 5
+  types:
+  - Electric
+  next_evolution:
+  - Zebstrika
+  excluded: false
+  tags: []
+- name: Zebstrika
+  dex_id: 523
+  generation: 5
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Roggenrola
+  dex_id: 524
+  generation: 5
+  types:
+  - Rock
+  next_evolution:
+  - Boldore
+  excluded: false
+  tags: []
+- name: Boldore
+  dex_id: 525
+  generation: 5
+  types:
+  - Rock
+  next_evolution:
+  - Gigalith
+  excluded: false
+  tags: []
+- name: Gigalith
+  dex_id: 526
+  generation: 5
+  types:
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Woobat
+  dex_id: 527
+  generation: 5
+  types:
+  - Psychic
+  - Flying
+  next_evolution:
+  - Swoobat
+  excluded: false
+  tags: []
+- name: Swoobat
+  dex_id: 528
+  generation: 5
+  types:
+  - Psychic
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Drilbur
+  dex_id: 529
+  generation: 5
+  types:
+  - Ground
+  next_evolution:
+  - Excadrill
+  excluded: false
+  tags: []
+- name: Excadrill
+  dex_id: 530
+  generation: 5
+  types:
+  - Ground
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Audino
+  dex_id: 531
+  generation: 5
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Timburr
+  dex_id: 532
+  generation: 5
+  types:
+  - Fighting
+  next_evolution:
+  - Gurdurr
+  excluded: false
+  tags: []
+- name: Gurdurr
+  dex_id: 533
+  generation: 5
+  types:
+  - Fighting
+  next_evolution:
+  - Conkeldurr
+  excluded: false
+  tags: []
+- name: Conkeldurr
+  dex_id: 534
+  generation: 5
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tympole
+  dex_id: 535
+  generation: 5
+  types:
+  - Water
+  next_evolution:
+  - Palpitoad
+  excluded: false
+  tags: []
+- name: Palpitoad
+  dex_id: 536
+  generation: 5
+  types:
+  - Water
+  - Ground
+  next_evolution:
+  - Seismitoad
+  excluded: false
+  tags: []
+- name: Seismitoad
+  dex_id: 537
+  generation: 5
+  types:
+  - Water
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Throh
+  dex_id: 538
+  generation: 5
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sawk
+  dex_id: 539
+  generation: 5
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sewaddle
+  dex_id: 540
+  generation: 5
+  types:
+  - Bug
+  - Grass
+  next_evolution:
+  - Swadloon
+  excluded: false
+  tags: []
+- name: Swadloon
+  dex_id: 541
+  generation: 5
+  types:
+  - Bug
+  - Grass
+  next_evolution:
+  - Leavanny
+  excluded: false
+  tags: []
+- name: Leavanny
+  dex_id: 542
+  generation: 5
+  types:
+  - Bug
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Venipede
+  dex_id: 543
+  generation: 5
+  types:
+  - Bug
+  - Poison
+  next_evolution:
+  - Whirlipede
+  excluded: false
+  tags: []
+- name: Whirlipede
+  dex_id: 544
+  generation: 5
+  types:
+  - Bug
+  - Poison
+  next_evolution:
+  - Scolipede
+  excluded: false
+  tags: []
+- name: Scolipede
+  dex_id: 545
+  generation: 5
+  types:
+  - Bug
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cottonee
+  dex_id: 546
+  generation: 5
+  types:
+  - Grass
+  - Fairy
+  next_evolution:
+  - Whimsicott
+  excluded: false
+  tags: []
+- name: Whimsicott
+  dex_id: 547
+  generation: 5
+  types:
+  - Grass
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Petilil
+  dex_id: 548
+  generation: 5
+  types:
+  - Grass
+  next_evolution:
+  - Lilligant
+  excluded: false
+  tags: []
+- name: Lilligant
+  dex_id: 549
+  generation: 5
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Basculin
+  dex_id: 550
+  generation: 5
+  types:
+  - Water
+  next_evolution:
+  - Basculegion
+  excluded: false
+  tags: []
+- name: Sandile
+  dex_id: 551
+  generation: 5
+  types:
+  - Ground
+  - Dark
+  next_evolution:
+  - Krokorok
+  excluded: false
+  tags: []
+- name: Krokorok
+  dex_id: 552
+  generation: 5
+  types:
+  - Ground
+  - Dark
+  next_evolution:
+  - Krookodile
+  excluded: false
+  tags: []
+- name: Krookodile
+  dex_id: 553
+  generation: 5
+  types:
+  - Ground
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Darumaka
+  dex_id: 554
+  generation: 5
+  types:
+  - Fire
+  next_evolution:
+  - Darmanitan
+  excluded: false
+  tags: []
+- name: Darmanitan
+  dex_id: 555
+  generation: 5
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Maractus
+  dex_id: 556
+  generation: 5
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dwebble
+  dex_id: 557
+  generation: 5
+  types:
+  - Bug
+  - Rock
+  next_evolution:
+  - Crustle
+  excluded: false
+  tags: []
+- name: Crustle
+  dex_id: 558
+  generation: 5
+  types:
+  - Bug
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Scraggy
+  dex_id: 559
+  generation: 5
+  types:
+  - Dark
+  - Fighting
+  next_evolution:
+  - Scrafty
+  excluded: false
+  tags: []
+- name: Scrafty
+  dex_id: 560
+  generation: 5
+  types:
+  - Dark
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sigilyph
+  dex_id: 561
+  generation: 5
+  types:
+  - Psychic
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Yamask
+  dex_id: 562
+  generation: 5
+  types:
+  - Ghost
+  next_evolution:
+  - Cofagrigus
+  - Runerigus
+  excluded: false
+  tags: []
+- name: Cofagrigus
+  dex_id: 563
+  generation: 5
+  types:
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tirtouga
+  dex_id: 564
+  generation: 5
+  types:
+  - Water
+  - Rock
+  next_evolution:
+  - Carracosta
+  excluded: false
+  tags: []
+- name: Carracosta
+  dex_id: 565
+  generation: 5
+  types:
+  - Water
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Archen
+  dex_id: 566
+  generation: 5
+  types:
+  - Rock
+  - Flying
+  next_evolution:
+  - Archeops
+  excluded: false
+  tags: []
+- name: Archeops
+  dex_id: 567
+  generation: 5
+  types:
+  - Rock
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Trubbish
+  dex_id: 568
+  generation: 5
+  types:
+  - Poison
+  next_evolution:
+  - Garbodor
+  excluded: false
+  tags: []
+- name: Garbodor
+  dex_id: 569
+  generation: 5
+  types:
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zorua
+  dex_id: 570
+  generation: 5
+  types:
+  - Dark
+  next_evolution:
+  - Zoroark
+  excluded: false
+  tags: []
+- name: Zoroark
+  dex_id: 571
+  generation: 5
+  types:
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Minccino
+  dex_id: 572
+  generation: 5
+  types:
+  - Normal
+  next_evolution:
+  - Cinccino
+  excluded: false
+  tags: []
+- name: Cinccino
+  dex_id: 573
+  generation: 5
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Gothita
+  dex_id: 574
+  generation: 5
+  types:
+  - Psychic
+  next_evolution:
+  - Gothorita
+  excluded: false
+  tags: []
+- name: Gothorita
+  dex_id: 575
+  generation: 5
+  types:
+  - Psychic
+  next_evolution:
+  - Gothitelle
+  excluded: false
+  tags: []
+- name: Gothitelle
+  dex_id: 576
+  generation: 5
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Solosis
+  dex_id: 577
+  generation: 5
+  types:
+  - Psychic
+  next_evolution:
+  - Duosion
+  excluded: false
+  tags: []
+- name: Duosion
+  dex_id: 578
+  generation: 5
+  types:
+  - Psychic
+  next_evolution:
+  - Reuniclus
+  excluded: false
+  tags: []
+- name: Reuniclus
+  dex_id: 579
+  generation: 5
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ducklett
+  dex_id: 580
+  generation: 5
+  types:
+  - Water
+  - Flying
+  next_evolution:
+  - Swanna
+  excluded: false
+  tags: []
+- name: Swanna
+  dex_id: 581
+  generation: 5
+  types:
+  - Water
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Vanillite
+  dex_id: 582
+  generation: 5
+  types:
+  - Ice
+  next_evolution:
+  - Vanillish
+  excluded: false
+  tags: []
+- name: Vanillish
+  dex_id: 583
+  generation: 5
+  types:
+  - Ice
+  next_evolution:
+  - Vanilluxe
+  excluded: false
+  tags: []
+- name: Vanilluxe
+  dex_id: 584
+  generation: 5
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Deerling
+  dex_id: 585
+  generation: 5
+  types:
+  - Normal
+  - Grass
+  next_evolution:
+  - Sawsbuck
+  excluded: false
+  tags: []
+- name: Sawsbuck
+  dex_id: 586
+  generation: 5
+  types:
+  - Normal
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Emolga
+  dex_id: 587
+  generation: 5
+  types:
+  - Electric
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Karrablast
+  dex_id: 588
+  generation: 5
+  types:
+  - Bug
+  next_evolution:
+  - Escavalier
+  excluded: false
+  tags: []
+- name: Escavalier
+  dex_id: 589
+  generation: 5
+  types:
+  - Bug
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Foongus
+  dex_id: 590
+  generation: 5
+  types:
+  - Grass
+  - Poison
+  next_evolution:
+  - Amoonguss
+  excluded: false
+  tags: []
+- name: Amoonguss
+  dex_id: 591
+  generation: 5
+  types:
+  - Grass
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Frillish
+  dex_id: 592
+  generation: 5
+  types:
+  - Water
+  - Ghost
+  next_evolution:
+  - Jellicent
+  excluded: false
+  tags: []
+- name: Jellicent
+  dex_id: 593
+  generation: 5
+  types:
+  - Water
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Alomomola
+  dex_id: 594
+  generation: 5
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Joltik
+  dex_id: 595
+  generation: 5
+  types:
+  - Bug
+  - Electric
+  next_evolution:
+  - Galvantula
+  excluded: false
+  tags: []
+- name: Galvantula
+  dex_id: 596
+  generation: 5
+  types:
+  - Bug
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ferroseed
+  dex_id: 597
+  generation: 5
+  types:
+  - Grass
+  - Steel
+  next_evolution:
+  - Ferrothorn
+  excluded: false
+  tags: []
+- name: Ferrothorn
+  dex_id: 598
+  generation: 5
+  types:
+  - Grass
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Klink
+  dex_id: 599
+  generation: 5
+  types:
+  - Steel
+  next_evolution:
+  - Klang
+  excluded: false
+  tags: []
+- name: Klang
+  dex_id: 600
+  generation: 5
+  types:
+  - Steel
+  next_evolution:
+  - Klinklang
+  excluded: false
+  tags: []
+- name: Klinklang
+  dex_id: 601
+  generation: 5
+  types:
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tynamo
+  dex_id: 602
+  generation: 5
+  types:
+  - Electric
+  next_evolution:
+  - Eelektrik
+  excluded: false
+  tags: []
+- name: Eelektrik
+  dex_id: 603
+  generation: 5
+  types:
+  - Electric
+  next_evolution:
+  - Eelektross
+  excluded: false
+  tags: []
+- name: Eelektross
+  dex_id: 604
+  generation: 5
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Elgyem
+  dex_id: 605
+  generation: 5
+  types:
+  - Psychic
+  next_evolution:
+  - Beheeyem
+  excluded: false
+  tags: []
+- name: Beheeyem
+  dex_id: 606
+  generation: 5
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Litwick
+  dex_id: 607
+  generation: 5
+  types:
+  - Ghost
+  - Fire
+  next_evolution:
+  - Lampent
+  excluded: false
+  tags: []
+- name: Lampent
+  dex_id: 608
+  generation: 5
+  types:
+  - Ghost
+  - Fire
+  next_evolution:
+  - Chandelure
+  excluded: false
+  tags: []
+- name: Chandelure
+  dex_id: 609
+  generation: 5
+  types:
+  - Ghost
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Axew
+  dex_id: 610
+  generation: 5
+  types:
+  - Dragon
+  next_evolution:
+  - Fraxure
+  excluded: false
+  tags: []
+- name: Fraxure
+  dex_id: 611
+  generation: 5
+  types:
+  - Dragon
+  next_evolution:
+  - Haxorus
+  excluded: false
+  tags: []
+- name: Haxorus
+  dex_id: 612
+  generation: 5
+  types:
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cubchoo
+  dex_id: 613
+  generation: 5
+  types:
+  - Ice
+  next_evolution:
+  - Beartic
+  excluded: false
+  tags: []
+- name: Beartic
+  dex_id: 614
+  generation: 5
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cryogonal
+  dex_id: 615
+  generation: 5
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shelmet
+  dex_id: 616
+  generation: 5
+  types:
+  - Bug
+  next_evolution:
+  - Accelgor
+  excluded: false
+  tags: []
+- name: Accelgor
+  dex_id: 617
+  generation: 5
+  types:
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Stunfisk
+  dex_id: 618
+  generation: 5
+  types:
+  - Ground
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mienfoo
+  dex_id: 619
+  generation: 5
+  types:
+  - Fighting
+  next_evolution:
+  - Mienshao
+  excluded: false
+  tags: []
+- name: Mienshao
+  dex_id: 620
+  generation: 5
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Druddigon
+  dex_id: 621
+  generation: 5
+  types:
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Golett
+  dex_id: 622
+  generation: 5
+  types:
+  - Ground
+  - Ghost
+  next_evolution:
+  - Golurk
+  excluded: false
+  tags: []
+- name: Golurk
+  dex_id: 623
+  generation: 5
+  types:
+  - Ground
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pawniard
+  dex_id: 624
+  generation: 5
+  types:
+  - Dark
+  - Steel
+  next_evolution:
+  - Bisharp
+  excluded: false
+  tags: []
+- name: Bisharp
+  dex_id: 625
+  generation: 5
+  types:
+  - Dark
+  - Steel
+  next_evolution:
+  - Kingambit
+  excluded: false
+  tags: []
+- name: Bouffalant
+  dex_id: 626
+  generation: 5
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rufflet
+  dex_id: 627
+  generation: 5
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Braviary
+  excluded: false
+  tags: []
+- name: Braviary
+  dex_id: 628
+  generation: 5
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Vullaby
+  dex_id: 629
+  generation: 5
+  types:
+  - Dark
+  - Flying
+  next_evolution:
+  - Mandibuzz
+  excluded: false
+  tags: []
+- name: Mandibuzz
+  dex_id: 630
+  generation: 5
+  types:
+  - Dark
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Heatmor
+  dex_id: 631
+  generation: 5
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Durant
+  dex_id: 632
+  generation: 5
+  types:
+  - Bug
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Deino
+  dex_id: 633
+  generation: 5
+  types:
+  - Dark
+  - Dragon
+  next_evolution:
+  - Zweilous
+  excluded: false
+  tags: []
+- name: Zweilous
+  dex_id: 634
+  generation: 5
+  types:
+  - Dark
+  - Dragon
+  next_evolution:
+  - Hydreigon
+  excluded: false
+  tags: []
+- name: Hydreigon
+  dex_id: 635
+  generation: 5
+  types:
+  - Dark
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Larvesta
+  dex_id: 636
+  generation: 5
+  types:
+  - Bug
+  - Fire
+  next_evolution:
+  - Volcarona
+  excluded: false
+  tags: []
+- name: Volcarona
+  dex_id: 637
+  generation: 5
+  types:
+  - Bug
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cobalion
+  dex_id: 638
+  generation: 5
+  types:
+  - Steel
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Terrakion
+  dex_id: 639
+  generation: 5
+  types:
+  - Rock
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Virizion
+  dex_id: 640
+  generation: 5
+  types:
+  - Grass
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tornadus
+  dex_id: 641
+  generation: 5
+  types:
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Thundurus
+  dex_id: 642
+  generation: 5
+  types:
+  - Electric
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Reshiram
+  dex_id: 643
+  generation: 5
+  types:
+  - Dragon
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zekrom
+  dex_id: 644
+  generation: 5
+  types:
+  - Dragon
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Landorus
+  dex_id: 645
+  generation: 5
+  types:
+  - Ground
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kyurem
+  dex_id: 646
+  generation: 5
+  types:
+  - Dragon
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Keldeo
+  dex_id: 647
+  generation: 5
+  types:
+  - Water
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Meloetta
+  dex_id: 648
+  generation: 5
+  types:
+  - Normal
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Genesect
+  dex_id: 649
+  generation: 5
+  types:
+  - Bug
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Chespin
+  dex_id: 650
+  generation: 6
+  types:
+  - Grass
+  next_evolution:
+  - Quilladin
+  excluded: false
+  tags: []
+- name: Quilladin
+  dex_id: 651
+  generation: 6
+  types:
+  - Grass
+  next_evolution:
+  - Chesnaught
+  excluded: false
+  tags: []
+- name: Chesnaught
+  dex_id: 652
+  generation: 6
+  types:
+  - Grass
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Fennekin
+  dex_id: 653
+  generation: 6
+  types:
+  - Fire
+  next_evolution:
+  - Braixen
+  excluded: false
+  tags: []
+- name: Braixen
+  dex_id: 654
+  generation: 6
+  types:
+  - Fire
+  next_evolution:
+  - Delphox
+  excluded: false
+  tags: []
+- name: Delphox
+  dex_id: 655
+  generation: 6
+  types:
+  - Fire
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Froakie
+  dex_id: 656
+  generation: 6
+  types:
+  - Water
+  next_evolution:
+  - Frogadier
+  excluded: false
+  tags: []
+- name: Frogadier
+  dex_id: 657
+  generation: 6
+  types:
+  - Water
+  next_evolution:
+  - Greninja
+  excluded: false
+  tags: []
+- name: Greninja
+  dex_id: 658
+  generation: 6
+  types:
+  - Water
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bunnelby
+  dex_id: 659
+  generation: 6
+  types:
+  - Normal
+  next_evolution:
+  - Diggersby
+  excluded: false
+  tags: []
+- name: Diggersby
+  dex_id: 660
+  generation: 6
+  types:
+  - Normal
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Fletchling
+  dex_id: 661
+  generation: 6
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Fletchinder
+  excluded: false
+  tags: []
+- name: Fletchinder
+  dex_id: 662
+  generation: 6
+  types:
+  - Fire
+  - Flying
+  next_evolution:
+  - Talonflame
+  excluded: false
+  tags: []
+- name: Talonflame
+  dex_id: 663
+  generation: 6
+  types:
+  - Fire
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Scatterbug
+  dex_id: 664
+  generation: 6
+  types:
+  - Bug
+  next_evolution:
+  - Spewpa
+  excluded: false
+  tags: []
+- name: Spewpa
+  dex_id: 665
+  generation: 6
+  types:
+  - Bug
+  next_evolution:
+  - Vivillon
+  excluded: false
+  tags: []
+- name: Vivillon
+  dex_id: 666
+  generation: 6
+  types:
+  - Bug
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Litleo
+  dex_id: 667
+  generation: 6
+  types:
+  - Fire
+  - Normal
+  next_evolution:
+  - Pyroar
+  excluded: false
+  tags: []
+- name: Pyroar
+  dex_id: 668
+  generation: 6
+  types:
+  - Fire
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Flabébé
+  dex_id: 669
+  generation: 6
+  types:
+  - Fairy
+  next_evolution:
+  - Floette
+  excluded: false
+  tags: []
+- name: Floette
+  dex_id: 670
+  generation: 6
+  types:
+  - Fairy
+  next_evolution:
+  - Florges
+  excluded: false
+  tags: []
+- name: Florges
+  dex_id: 671
+  generation: 6
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Skiddo
+  dex_id: 672
+  generation: 6
+  types:
+  - Grass
+  next_evolution:
+  - Gogoat
+  excluded: false
+  tags: []
+- name: Gogoat
+  dex_id: 673
+  generation: 6
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pancham
+  dex_id: 674
+  generation: 6
+  types:
+  - Fighting
+  next_evolution:
+  - Pangoro
+  excluded: false
+  tags: []
+- name: Pangoro
+  dex_id: 675
+  generation: 6
+  types:
+  - Fighting
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Furfrou
+  dex_id: 676
+  generation: 6
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Espurr
+  dex_id: 677
+  generation: 6
+  types:
+  - Psychic
+  next_evolution:
+  - Meowstic
+  excluded: false
+  tags: []
+- name: Meowstic
+  dex_id: 678
+  generation: 6
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Honedge
+  dex_id: 679
+  generation: 6
+  types:
+  - Steel
+  - Ghost
+  next_evolution:
+  - Doublade
+  excluded: false
+  tags: []
+- name: Doublade
+  dex_id: 680
+  generation: 6
+  types:
+  - Steel
+  - Ghost
+  next_evolution:
+  - Aegislash
+  excluded: false
+  tags: []
+- name: Aegislash
+  dex_id: 681
+  generation: 6
+  types:
+  - Steel
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Spritzee
+  dex_id: 682
+  generation: 6
+  types:
+  - Fairy
+  next_evolution:
+  - Aromatisse
+  excluded: false
+  tags: []
+- name: Aromatisse
+  dex_id: 683
+  generation: 6
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Swirlix
+  dex_id: 684
+  generation: 6
+  types:
+  - Fairy
+  next_evolution:
+  - Slurpuff
+  excluded: false
+  tags: []
+- name: Slurpuff
+  dex_id: 685
+  generation: 6
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Inkay
+  dex_id: 686
+  generation: 6
+  types:
+  - Dark
+  - Psychic
+  next_evolution:
+  - Malamar
+  excluded: false
+  tags: []
+- name: Malamar
+  dex_id: 687
+  generation: 6
+  types:
+  - Dark
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Binacle
+  dex_id: 688
+  generation: 6
+  types:
+  - Rock
+  - Water
+  next_evolution:
+  - Barbaracle
+  excluded: false
+  tags: []
+- name: Barbaracle
+  dex_id: 689
+  generation: 6
+  types:
+  - Rock
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Skrelp
+  dex_id: 690
+  generation: 6
+  types:
+  - Poison
+  - Water
+  next_evolution:
+  - Dragalge
+  excluded: false
+  tags: []
+- name: Dragalge
+  dex_id: 691
+  generation: 6
+  types:
+  - Poison
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Clauncher
+  dex_id: 692
+  generation: 6
+  types:
+  - Water
+  next_evolution:
+  - Clawitzer
+  excluded: false
+  tags: []
+- name: Clawitzer
+  dex_id: 693
+  generation: 6
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Helioptile
+  dex_id: 694
+  generation: 6
+  types:
+  - Electric
+  - Normal
+  next_evolution:
+  - Heliolisk
+  excluded: false
+  tags: []
+- name: Heliolisk
+  dex_id: 695
+  generation: 6
+  types:
+  - Electric
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tyrunt
+  dex_id: 696
+  generation: 6
+  types:
+  - Rock
+  - Dragon
+  next_evolution:
+  - Tyrantrum
+  excluded: false
+  tags: []
+- name: Tyrantrum
+  dex_id: 697
+  generation: 6
+  types:
+  - Rock
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Amaura
+  dex_id: 698
+  generation: 6
+  types:
+  - Rock
+  - Ice
+  next_evolution:
+  - Aurorus
+  excluded: false
+  tags: []
+- name: Aurorus
+  dex_id: 699
+  generation: 6
+  types:
+  - Rock
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sylveon
+  dex_id: 700
+  generation: 6
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Hawlucha
+  dex_id: 701
+  generation: 6
+  types:
+  - Fighting
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dedenne
+  dex_id: 702
+  generation: 6
+  types:
+  - Electric
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Carbink
+  dex_id: 703
+  generation: 6
+  types:
+  - Rock
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Goomy
+  dex_id: 704
+  generation: 6
+  types:
+  - Dragon
+  next_evolution:
+  - Sliggoo
+  excluded: false
+  tags: []
+- name: Sliggoo
+  dex_id: 705
+  generation: 6
+  types:
+  - Dragon
+  next_evolution:
+  - Goodra
+  excluded: false
+  tags: []
+- name: Goodra
+  dex_id: 706
+  generation: 6
+  types:
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Klefki
+  dex_id: 707
+  generation: 6
+  types:
+  - Steel
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Phantump
+  dex_id: 708
+  generation: 6
+  types:
+  - Ghost
+  - Grass
+  next_evolution:
+  - Trevenant
+  excluded: false
+  tags: []
+- name: Trevenant
+  dex_id: 709
+  generation: 6
+  types:
+  - Ghost
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pumpkaboo
+  dex_id: 710
+  generation: 6
+  types:
+  - Ghost
+  - Grass
+  next_evolution:
+  - Gourgeist
+  excluded: false
+  tags: []
+- name: Gourgeist
+  dex_id: 711
+  generation: 6
+  types:
+  - Ghost
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bergmite
+  dex_id: 712
+  generation: 6
+  types:
+  - Ice
+  next_evolution:
+  - Avalugg
+  excluded: false
+  tags: []
+- name: Avalugg
+  dex_id: 713
+  generation: 6
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Noibat
+  dex_id: 714
+  generation: 6
+  types:
+  - Flying
+  - Dragon
+  next_evolution:
+  - Noivern
+  excluded: false
+  tags: []
+- name: Noivern
+  dex_id: 715
+  generation: 6
+  types:
+  - Flying
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Xerneas
+  dex_id: 716
+  generation: 6
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Yveltal
+  dex_id: 717
+  generation: 6
+  types:
+  - Dark
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zygarde
+  dex_id: 718
+  generation: 6
+  types:
+  - Dragon
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Diancie
+  dex_id: 719
+  generation: 6
+  types:
+  - Rock
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Hoopa
+  dex_id: 720
+  generation: 6
+  types:
+  - Psychic
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Volcanion
+  dex_id: 721
+  generation: 6
+  types:
+  - Fire
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rowlet
+  dex_id: 722
+  generation: 7
+  types:
+  - Grass
+  - Flying
+  next_evolution:
+  - Dartrix
+  excluded: false
+  tags: []
+- name: Dartrix
+  dex_id: 723
+  generation: 7
+  types:
+  - Grass
+  - Flying
+  next_evolution:
+  - Decidueye
+  excluded: false
+  tags: []
+- name: Decidueye
+  dex_id: 724
+  generation: 7
+  types:
+  - Grass
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Litten
+  dex_id: 725
+  generation: 7
+  types:
+  - Fire
+  next_evolution:
+  - Torracat
+  excluded: false
+  tags: []
+- name: Torracat
+  dex_id: 726
+  generation: 7
+  types:
+  - Fire
+  next_evolution:
+  - Incineroar
+  excluded: false
+  tags: []
+- name: Incineroar
+  dex_id: 727
+  generation: 7
+  types:
+  - Fire
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Popplio
+  dex_id: 728
+  generation: 7
+  types:
+  - Water
+  next_evolution:
+  - Brionne
+  excluded: false
+  tags: []
+- name: Brionne
+  dex_id: 729
+  generation: 7
+  types:
+  - Water
+  next_evolution:
+  - Primarina
+  excluded: false
+  tags: []
+- name: Primarina
+  dex_id: 730
+  generation: 7
+  types:
+  - Water
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pikipek
+  dex_id: 731
+  generation: 7
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Trumbeak
+  excluded: false
+  tags: []
+- name: Trumbeak
+  dex_id: 732
+  generation: 7
+  types:
+  - Normal
+  - Flying
+  next_evolution:
+  - Toucannon
+  excluded: false
+  tags: []
+- name: Toucannon
+  dex_id: 733
+  generation: 7
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Yungoos
+  dex_id: 734
+  generation: 7
+  types:
+  - Normal
+  next_evolution:
+  - Gumshoos
+  excluded: false
+  tags: []
+- name: Gumshoos
+  dex_id: 735
+  generation: 7
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Grubbin
+  dex_id: 736
+  generation: 7
+  types:
+  - Bug
+  next_evolution:
+  - Charjabug
+  excluded: false
+  tags: []
+- name: Charjabug
+  dex_id: 737
+  generation: 7
+  types:
+  - Bug
+  - Electric
+  next_evolution:
+  - Vikavolt
+  excluded: false
+  tags: []
+- name: Vikavolt
+  dex_id: 738
+  generation: 7
+  types:
+  - Bug
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Crabrawler
+  dex_id: 739
+  generation: 7
+  types:
+  - Fighting
+  next_evolution:
+  - Crabominable
+  excluded: false
+  tags: []
+- name: Crabominable
+  dex_id: 740
+  generation: 7
+  types:
+  - Fighting
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Oricorio
+  dex_id: 741
+  generation: 7
+  types:
+  - Fire
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cutiefly
+  dex_id: 742
+  generation: 7
+  types:
+  - Bug
+  - Fairy
+  next_evolution:
+  - Ribombee
+  excluded: false
+  tags: []
+- name: Ribombee
+  dex_id: 743
+  generation: 7
+  types:
+  - Bug
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rockruff
+  dex_id: 744
+  generation: 7
+  types:
+  - Rock
+  next_evolution:
+  - Lycanroc
+  excluded: false
+  tags: []
+- name: Lycanroc
+  dex_id: 745
+  generation: 7
+  types:
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wishiwashi
+  dex_id: 746
+  generation: 7
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mareanie
+  dex_id: 747
+  generation: 7
+  types:
+  - Poison
+  - Water
+  next_evolution:
+  - Toxapex
+  excluded: false
+  tags: []
+- name: Toxapex
+  dex_id: 748
+  generation: 7
+  types:
+  - Poison
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mudbray
+  dex_id: 749
+  generation: 7
+  types:
+  - Ground
+  next_evolution:
+  - Mudsdale
+  excluded: false
+  tags: []
+- name: Mudsdale
+  dex_id: 750
+  generation: 7
+  types:
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dewpider
+  dex_id: 751
+  generation: 7
+  types:
+  - Water
+  - Bug
+  next_evolution:
+  - Araquanid
+  excluded: false
+  tags: []
+- name: Araquanid
+  dex_id: 752
+  generation: 7
+  types:
+  - Water
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Fomantis
+  dex_id: 753
+  generation: 7
+  types:
+  - Grass
+  next_evolution:
+  - Lurantis
+  excluded: false
+  tags: []
+- name: Lurantis
+  dex_id: 754
+  generation: 7
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Morelull
+  dex_id: 755
+  generation: 7
+  types:
+  - Grass
+  - Fairy
+  next_evolution:
+  - Shiinotic
+  excluded: false
+  tags: []
+- name: Shiinotic
+  dex_id: 756
+  generation: 7
+  types:
+  - Grass
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Salandit
+  dex_id: 757
+  generation: 7
+  types:
+  - Poison
+  - Fire
+  next_evolution:
+  - Salazzle
+  excluded: false
+  tags: []
+- name: Salazzle
+  dex_id: 758
+  generation: 7
+  types:
+  - Poison
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Stufful
+  dex_id: 759
+  generation: 7
+  types:
+  - Normal
+  - Fighting
+  next_evolution:
+  - Bewear
+  excluded: false
+  tags: []
+- name: Bewear
+  dex_id: 760
+  generation: 7
+  types:
+  - Normal
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bounsweet
+  dex_id: 761
+  generation: 7
+  types:
+  - Grass
+  next_evolution:
+  - Steenee
+  excluded: false
+  tags: []
+- name: Steenee
+  dex_id: 762
+  generation: 7
+  types:
+  - Grass
+  next_evolution:
+  - Tsareena
+  excluded: false
+  tags: []
+- name: Tsareena
+  dex_id: 763
+  generation: 7
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Comfey
+  dex_id: 764
+  generation: 7
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Oranguru
+  dex_id: 765
+  generation: 7
+  types:
+  - Normal
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Passimian
+  dex_id: 766
+  generation: 7
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wimpod
+  dex_id: 767
+  generation: 7
+  types:
+  - Bug
+  - Water
+  next_evolution:
+  - Golisopod
+  excluded: false
+  tags: []
+- name: Golisopod
+  dex_id: 768
+  generation: 7
+  types:
+  - Bug
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sandygast
+  dex_id: 769
+  generation: 7
+  types:
+  - Ghost
+  - Ground
+  next_evolution:
+  - Palossand
+  excluded: false
+  tags: []
+- name: Palossand
+  dex_id: 770
+  generation: 7
+  types:
+  - Ghost
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pyukumuku
+  dex_id: 771
+  generation: 7
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: 'Type: Null'
+  dex_id: 772
+  generation: 7
+  types:
+  - Normal
+  next_evolution:
+  - Silvally
+  excluded: false
+  tags: []
+- name: Silvally
+  dex_id: 773
+  generation: 7
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Minior
+  dex_id: 774
+  generation: 7
+  types:
+  - Rock
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Komala
+  dex_id: 775
+  generation: 7
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Turtonator
+  dex_id: 776
+  generation: 7
+  types:
+  - Fire
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Togedemaru
+  dex_id: 777
+  generation: 7
+  types:
+  - Electric
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mimikyu
+  dex_id: 778
+  generation: 7
+  types:
+  - Ghost
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bruxish
+  dex_id: 779
+  generation: 7
+  types:
+  - Water
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Drampa
+  dex_id: 780
+  generation: 7
+  types:
+  - Normal
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dhelmise
+  dex_id: 781
+  generation: 7
+  types:
+  - Ghost
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Jangmo-o
+  dex_id: 782
+  generation: 7
+  types:
+  - Dragon
+  next_evolution:
+  - Hakamo-o
+  excluded: false
+  tags: []
+- name: Hakamo-o
+  dex_id: 783
+  generation: 7
+  types:
+  - Dragon
+  - Fighting
+  next_evolution:
+  - Kommo-o
+  excluded: false
+  tags: []
+- name: Kommo-o
+  dex_id: 784
+  generation: 7
+  types:
+  - Dragon
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tapu Koko
+  dex_id: 785
+  generation: 7
+  types:
+  - Electric
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tapu Lele
+  dex_id: 786
+  generation: 7
+  types:
+  - Psychic
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tapu Bulu
+  dex_id: 787
+  generation: 7
+  types:
+  - Grass
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tapu Fini
+  dex_id: 788
+  generation: 7
+  types:
+  - Water
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cosmog
+  dex_id: 789
+  generation: 7
+  types:
+  - Psychic
+  next_evolution:
+  - Cosmoem
+  excluded: false
+  tags: []
+- name: Cosmoem
+  dex_id: 790
+  generation: 7
+  types:
+  - Psychic
+  next_evolution:
+  - Solgaleo
+  - Lunala
+  excluded: false
+  tags: []
+- name: Solgaleo
+  dex_id: 791
+  generation: 7
+  types:
+  - Psychic
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lunala
+  dex_id: 792
+  generation: 7
+  types:
+  - Psychic
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Nihilego
+  dex_id: 793
+  generation: 7
+  types:
+  - Rock
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Buzzwole
+  dex_id: 794
+  generation: 7
+  types:
+  - Bug
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pheromosa
+  dex_id: 795
+  generation: 7
+  types:
+  - Bug
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Xurkitree
+  dex_id: 796
+  generation: 7
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Celesteela
+  dex_id: 797
+  generation: 7
+  types:
+  - Steel
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kartana
+  dex_id: 798
+  generation: 7
+  types:
+  - Grass
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Guzzlord
+  dex_id: 799
+  generation: 7
+  types:
+  - Dark
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Necrozma
+  dex_id: 800
+  generation: 7
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Magearna
+  dex_id: 801
+  generation: 7
+  types:
+  - Steel
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Marshadow
+  dex_id: 802
+  generation: 7
+  types:
+  - Fighting
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Poipole
+  dex_id: 803
+  generation: 7
+  types:
+  - Poison
+  next_evolution:
+  - Naganadel
+  excluded: false
+  tags: []
+- name: Naganadel
+  dex_id: 804
+  generation: 7
+  types:
+  - Poison
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Stakataka
+  dex_id: 805
+  generation: 7
+  types:
+  - Rock
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Blacephalon
+  dex_id: 806
+  generation: 7
+  types:
+  - Fire
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zeraora
+  dex_id: 807
+  generation: 7
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Meltan
+  dex_id: 808
+  generation: 7
+  types:
+  - Steel
+  next_evolution:
+  - Melmetal
+  excluded: false
+  tags: []
+- name: Melmetal
+  dex_id: 809
+  generation: 7
+  types:
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Grookey
+  dex_id: 810
+  generation: 8
+  types:
+  - Grass
+  next_evolution:
+  - Thwackey
+  excluded: false
+  tags: []
+- name: Thwackey
+  dex_id: 811
+  generation: 8
+  types:
+  - Grass
+  next_evolution:
+  - Rillaboom
+  excluded: false
+  tags: []
+- name: Rillaboom
+  dex_id: 812
+  generation: 8
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Scorbunny
+  dex_id: 813
+  generation: 8
+  types:
+  - Fire
+  next_evolution:
+  - Raboot
+  excluded: false
+  tags: []
+- name: Raboot
+  dex_id: 814
+  generation: 8
+  types:
+  - Fire
+  next_evolution:
+  - Cinderace
+  excluded: false
+  tags: []
+- name: Cinderace
+  dex_id: 815
+  generation: 8
+  types:
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sobble
+  dex_id: 816
+  generation: 8
+  types:
+  - Water
+  next_evolution:
+  - Drizzile
+  excluded: false
+  tags: []
+- name: Drizzile
+  dex_id: 817
+  generation: 8
+  types:
+  - Water
+  next_evolution:
+  - Inteleon
+  excluded: false
+  tags: []
+- name: Inteleon
+  dex_id: 818
+  generation: 8
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Skwovet
+  dex_id: 819
+  generation: 8
+  types:
+  - Normal
+  next_evolution:
+  - Greedent
+  excluded: false
+  tags: []
+- name: Greedent
+  dex_id: 820
+  generation: 8
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rookidee
+  dex_id: 821
+  generation: 8
+  types:
+  - Flying
+  next_evolution:
+  - Corvisquire
+  excluded: false
+  tags: []
+- name: Corvisquire
+  dex_id: 822
+  generation: 8
+  types:
+  - Flying
+  next_evolution:
+  - Corviknight
+  excluded: false
+  tags: []
+- name: Corviknight
+  dex_id: 823
+  generation: 8
+  types:
+  - Flying
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Blipbug
+  dex_id: 824
+  generation: 8
+  types:
+  - Bug
+  next_evolution:
+  - Dottler
+  excluded: false
+  tags: []
+- name: Dottler
+  dex_id: 825
+  generation: 8
+  types:
+  - Bug
+  - Psychic
+  next_evolution:
+  - Orbeetle
+  excluded: false
+  tags: []
+- name: Orbeetle
+  dex_id: 826
+  generation: 8
+  types:
+  - Bug
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Nickit
+  dex_id: 827
+  generation: 8
+  types:
+  - Dark
+  next_evolution:
+  - Thievul
+  excluded: false
+  tags: []
+- name: Thievul
+  dex_id: 828
+  generation: 8
+  types:
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Gossifleur
+  dex_id: 829
+  generation: 8
+  types:
+  - Grass
+  next_evolution:
+  - Eldegoss
+  excluded: false
+  tags: []
+- name: Eldegoss
+  dex_id: 830
+  generation: 8
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wooloo
+  dex_id: 831
+  generation: 8
+  types:
+  - Normal
+  next_evolution:
+  - Dubwool
+  excluded: false
+  tags: []
+- name: Dubwool
+  dex_id: 832
+  generation: 8
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Chewtle
+  dex_id: 833
+  generation: 8
+  types:
+  - Water
+  next_evolution:
+  - Drednaw
+  excluded: false
+  tags: []
+- name: Drednaw
+  dex_id: 834
+  generation: 8
+  types:
+  - Water
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Yamper
+  dex_id: 835
+  generation: 8
+  types:
+  - Electric
+  next_evolution:
+  - Boltund
+  excluded: false
+  tags: []
+- name: Boltund
+  dex_id: 836
+  generation: 8
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rolycoly
+  dex_id: 837
+  generation: 8
+  types:
+  - Rock
+  next_evolution:
+  - Carkol
+  excluded: false
+  tags: []
+- name: Carkol
+  dex_id: 838
+  generation: 8
+  types:
+  - Rock
+  - Fire
+  next_evolution:
+  - Coalossal
+  excluded: false
+  tags: []
+- name: Coalossal
+  dex_id: 839
+  generation: 8
+  types:
+  - Rock
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Applin
+  dex_id: 840
+  generation: 8
+  types:
+  - Grass
+  - Dragon
+  next_evolution:
+  - Flapple
+  - Appletun
+  - Dipplin
+  excluded: false
+  tags: []
+- name: Flapple
+  dex_id: 841
+  generation: 8
+  types:
+  - Grass
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Appletun
+  dex_id: 842
+  generation: 8
+  types:
+  - Grass
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Silicobra
+  dex_id: 843
+  generation: 8
+  types:
+  - Ground
+  next_evolution:
+  - Sandaconda
+  excluded: false
+  tags: []
+- name: Sandaconda
+  dex_id: 844
+  generation: 8
+  types:
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cramorant
+  dex_id: 845
+  generation: 8
+  types:
+  - Flying
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Arrokuda
+  dex_id: 846
+  generation: 8
+  types:
+  - Water
+  next_evolution:
+  - Barraskewda
+  excluded: false
+  tags: []
+- name: Barraskewda
+  dex_id: 847
+  generation: 8
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Toxel
+  dex_id: 848
+  generation: 8
+  types:
+  - Electric
+  - Poison
+  next_evolution:
+  - Toxtricity
+  excluded: false
+  tags: []
+- name: Toxtricity
+  dex_id: 849
+  generation: 8
+  types:
+  - Electric
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sizzlipede
+  dex_id: 850
+  generation: 8
+  types:
+  - Fire
+  - Bug
+  next_evolution:
+  - Centiskorch
+  excluded: false
+  tags: []
+- name: Centiskorch
+  dex_id: 851
+  generation: 8
+  types:
+  - Fire
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Clobbopus
+  dex_id: 852
+  generation: 8
+  types:
+  - Fighting
+  next_evolution:
+  - Grapploct
+  excluded: false
+  tags: []
+- name: Grapploct
+  dex_id: 853
+  generation: 8
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sinistea
+  dex_id: 854
+  generation: 8
+  types:
+  - Ghost
+  next_evolution:
+  - Polteageist
+  excluded: false
+  tags: []
+- name: Polteageist
+  dex_id: 855
+  generation: 8
+  types:
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Hatenna
+  dex_id: 856
+  generation: 8
+  types:
+  - Psychic
+  next_evolution:
+  - Hattrem
+  excluded: false
+  tags: []
+- name: Hattrem
+  dex_id: 857
+  generation: 8
+  types:
+  - Psychic
+  next_evolution:
+  - Hatterene
+  excluded: false
+  tags: []
+- name: Hatterene
+  dex_id: 858
+  generation: 8
+  types:
+  - Psychic
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Impidimp
+  dex_id: 859
+  generation: 8
+  types:
+  - Dark
+  - Fairy
+  next_evolution:
+  - Morgrem
+  excluded: false
+  tags: []
+- name: Morgrem
+  dex_id: 860
+  generation: 8
+  types:
+  - Dark
+  - Fairy
+  next_evolution:
+  - Grimmsnarl
+  excluded: false
+  tags: []
+- name: Grimmsnarl
+  dex_id: 861
+  generation: 8
+  types:
+  - Dark
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Obstagoon
+  dex_id: 862
+  generation: 8
+  types:
+  - Dark
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Perrserker
+  dex_id: 863
+  generation: 8
+  types:
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cursola
+  dex_id: 864
+  generation: 8
+  types:
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sirfetch'd
+  dex_id: 865
+  generation: 8
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Mr. Rime
+  dex_id: 866
+  generation: 8
+  types:
+  - Ice
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Runerigus
+  dex_id: 867
+  generation: 8
+  types:
+  - Ground
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Milcery
+  dex_id: 868
+  generation: 8
+  types:
+  - Fairy
+  next_evolution:
+  - Alcremie
+  excluded: false
+  tags: []
+- name: Alcremie
+  dex_id: 869
+  generation: 8
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Falinks
+  dex_id: 870
+  generation: 8
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pincurchin
+  dex_id: 871
+  generation: 8
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Snom
+  dex_id: 872
+  generation: 8
+  types:
+  - Ice
+  - Bug
+  next_evolution:
+  - Frosmoth
+  excluded: false
+  tags: []
+- name: Frosmoth
+  dex_id: 873
+  generation: 8
+  types:
+  - Ice
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Stonjourner
+  dex_id: 874
+  generation: 8
+  types:
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Eiscue
+  dex_id: 875
+  generation: 8
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Indeedee
+  dex_id: 876
+  generation: 8
+  types:
+  - Psychic
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Morpeko
+  dex_id: 877
+  generation: 8
+  types:
+  - Electric
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cufant
+  dex_id: 878
+  generation: 8
+  types:
+  - Steel
+  next_evolution:
+  - Copperajah
+  excluded: false
+  tags: []
+- name: Copperajah
+  dex_id: 879
+  generation: 8
+  types:
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dracozolt
+  dex_id: 880
+  generation: 8
+  types:
+  - Electric
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Arctozolt
+  dex_id: 881
+  generation: 8
+  types:
+  - Electric
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dracovish
+  dex_id: 882
+  generation: 8
+  types:
+  - Water
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Arctovish
+  dex_id: 883
+  generation: 8
+  types:
+  - Water
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Duraludon
+  dex_id: 884
+  generation: 8
+  types:
+  - Steel
+  - Dragon
+  next_evolution:
+  - Archaludon
+  excluded: false
+  tags: []
+- name: Dreepy
+  dex_id: 885
+  generation: 8
+  types:
+  - Dragon
+  - Ghost
+  next_evolution:
+  - Drakloak
+  excluded: false
+  tags: []
+- name: Drakloak
+  dex_id: 886
+  generation: 8
+  types:
+  - Dragon
+  - Ghost
+  next_evolution:
+  - Dragapult
+  excluded: false
+  tags: []
+- name: Dragapult
+  dex_id: 887
+  generation: 8
+  types:
+  - Dragon
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zacian
+  dex_id: 888
+  generation: 8
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zamazenta
+  dex_id: 889
+  generation: 8
+  types:
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Eternatus
+  dex_id: 890
+  generation: 8
+  types:
+  - Poison
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kubfu
+  dex_id: 891
+  generation: 8
+  types:
+  - Fighting
+  next_evolution:
+  - Urshifu
+  excluded: false
+  tags: []
+- name: Urshifu
+  dex_id: 892
+  generation: 8
+  types:
+  - Fighting
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Zarude
+  dex_id: 893
+  generation: 8
+  types:
+  - Dark
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Regieleki
+  dex_id: 894
+  generation: 8
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Regidrago
+  dex_id: 895
+  generation: 8
+  types:
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Glastrier
+  dex_id: 896
+  generation: 8
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Spectrier
+  dex_id: 897
+  generation: 8
+  types:
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Calyrex
+  dex_id: 898
+  generation: 8
+  types:
+  - Psychic
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wyrdeer
+  dex_id: 899
+  generation: 8
+  types:
+  - Normal
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kleavor
+  dex_id: 900
+  generation: 8
+  types:
+  - Bug
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ursaluna
+  dex_id: 901
+  generation: 8
+  types:
+  - Ground
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Basculegion
+  dex_id: 902
+  generation: 8
+  types:
+  - Water
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sneasler
+  dex_id: 903
+  generation: 8
+  types:
+  - Fighting
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Overqwil
+  dex_id: 904
+  generation: 8
+  types:
+  - Dark
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Enamorus
+  dex_id: 905
+  generation: 8
+  types:
+  - Fairy
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sprigatito
+  dex_id: 906
+  generation: 9
+  types:
+  - Grass
+  next_evolution:
+  - Floragato
+  excluded: false
+  tags: []
+- name: Floragato
+  dex_id: 907
+  generation: 9
+  types:
+  - Grass
+  next_evolution:
+  - Meowscarada
+  excluded: false
+  tags: []
+- name: Meowscarada
+  dex_id: 908
+  generation: 9
+  types:
+  - Grass
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Fuecoco
+  dex_id: 909
+  generation: 9
+  types:
+  - Fire
+  next_evolution:
+  - Crocalor
+  excluded: false
+  tags: []
+- name: Crocalor
+  dex_id: 910
+  generation: 9
+  types:
+  - Fire
+  next_evolution:
+  - Skeledirge
+  excluded: false
+  tags: []
+- name: Skeledirge
+  dex_id: 911
+  generation: 9
+  types:
+  - Fire
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Quaxly
+  dex_id: 912
+  generation: 9
+  types:
+  - Water
+  next_evolution:
+  - Quaxwell
+  excluded: false
+  tags: []
+- name: Quaxwell
+  dex_id: 913
+  generation: 9
+  types:
+  - Water
+  next_evolution:
+  - Quaquaval
+  excluded: false
+  tags: []
+- name: Quaquaval
+  dex_id: 914
+  generation: 9
+  types:
+  - Water
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Lechonk
+  dex_id: 915
+  generation: 9
+  types:
+  - Normal
+  next_evolution:
+  - Oinkologne
+  excluded: false
+  tags: []
+- name: Oinkologne
+  dex_id: 916
+  generation: 9
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tarountula
+  dex_id: 917
+  generation: 9
+  types:
+  - Bug
+  next_evolution:
+  - Spidops
+  excluded: false
+  tags: []
+- name: Spidops
+  dex_id: 918
+  generation: 9
+  types:
+  - Bug
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Nymble
+  dex_id: 919
+  generation: 9
+  types:
+  - Bug
+  next_evolution:
+  - Lokix
+  excluded: false
+  tags: []
+- name: Lokix
+  dex_id: 920
+  generation: 9
+  types:
+  - Bug
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pawmi
+  dex_id: 921
+  generation: 9
+  types:
+  - Electric
+  next_evolution:
+  - Pawmo
+  excluded: false
+  tags: []
+- name: Pawmo
+  dex_id: 922
+  generation: 9
+  types:
+  - Electric
+  - Fighting
+  next_evolution:
+  - Pawmot
+  excluded: false
+  tags: []
+- name: Pawmot
+  dex_id: 923
+  generation: 9
+  types:
+  - Electric
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tandemaus
+  dex_id: 924
+  generation: 9
+  types:
+  - Normal
+  next_evolution:
+  - Maushold
+  excluded: false
+  tags: []
+- name: Maushold
+  dex_id: 925
+  generation: 9
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Fidough
+  dex_id: 926
+  generation: 9
+  types:
+  - Fairy
+  next_evolution:
+  - Dachsbun
+  excluded: false
+  tags: []
+- name: Dachsbun
+  dex_id: 927
+  generation: 9
+  types:
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Smoliv
+  dex_id: 928
+  generation: 9
+  types:
+  - Grass
+  - Normal
+  next_evolution:
+  - Dolliv
+  excluded: false
+  tags: []
+- name: Dolliv
+  dex_id: 929
+  generation: 9
+  types:
+  - Grass
+  - Normal
+  next_evolution:
+  - Arboliva
+  excluded: false
+  tags: []
+- name: Arboliva
+  dex_id: 930
+  generation: 9
+  types:
+  - Grass
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Squawkabilly
+  dex_id: 931
+  generation: 9
+  types:
+  - Normal
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Nacli
+  dex_id: 932
+  generation: 9
+  types:
+  - Rock
+  next_evolution:
+  - Naclstack
+  excluded: false
+  tags: []
+- name: Naclstack
+  dex_id: 933
+  generation: 9
+  types:
+  - Rock
+  next_evolution:
+  - Garganacl
+  excluded: false
+  tags: []
+- name: Garganacl
+  dex_id: 934
+  generation: 9
+  types:
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Charcadet
+  dex_id: 935
+  generation: 9
+  types:
+  - Fire
+  next_evolution:
+  - Armarouge
+  - Ceruledge
+  excluded: false
+  tags: []
+- name: Armarouge
+  dex_id: 936
+  generation: 9
+  types:
+  - Fire
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ceruledge
+  dex_id: 937
+  generation: 9
+  types:
+  - Fire
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tadbulb
+  dex_id: 938
+  generation: 9
+  types:
+  - Electric
+  next_evolution:
+  - Bellibolt
+  excluded: false
+  tags: []
+- name: Bellibolt
+  dex_id: 939
+  generation: 9
+  types:
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wattrel
+  dex_id: 940
+  generation: 9
+  types:
+  - Electric
+  - Flying
+  next_evolution:
+  - Kilowattrel
+  excluded: false
+  tags: []
+- name: Kilowattrel
+  dex_id: 941
+  generation: 9
+  types:
+  - Electric
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Maschiff
+  dex_id: 942
+  generation: 9
+  types:
+  - Dark
+  next_evolution:
+  - Mabosstiff
+  excluded: false
+  tags: []
+- name: Mabosstiff
+  dex_id: 943
+  generation: 9
+  types:
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Shroodle
+  dex_id: 944
+  generation: 9
+  types:
+  - Poison
+  - Normal
+  next_evolution:
+  - Grafaiai
+  excluded: false
+  tags: []
+- name: Grafaiai
+  dex_id: 945
+  generation: 9
+  types:
+  - Poison
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bramblin
+  dex_id: 946
+  generation: 9
+  types:
+  - Grass
+  - Ghost
+  next_evolution:
+  - Brambleghast
+  excluded: false
+  tags: []
+- name: Brambleghast
+  dex_id: 947
+  generation: 9
+  types:
+  - Grass
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Toedscool
+  dex_id: 948
+  generation: 9
+  types:
+  - Ground
+  - Grass
+  next_evolution:
+  - Toedscruel
+  excluded: false
+  tags: []
+- name: Toedscruel
+  dex_id: 949
+  generation: 9
+  types:
+  - Ground
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Klawf
+  dex_id: 950
+  generation: 9
+  types:
+  - Rock
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Capsakid
+  dex_id: 951
+  generation: 9
+  types:
+  - Grass
+  next_evolution:
+  - Scovillain
+  excluded: false
+  tags: []
+- name: Scovillain
+  dex_id: 952
+  generation: 9
+  types:
+  - Grass
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rellor
+  dex_id: 953
+  generation: 9
+  types:
+  - Bug
+  next_evolution:
+  - Rabsca
+  excluded: false
+  tags: []
+- name: Rabsca
+  dex_id: 954
+  generation: 9
+  types:
+  - Bug
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Flittle
+  dex_id: 955
+  generation: 9
+  types:
+  - Psychic
+  next_evolution:
+  - Espathra
+  excluded: false
+  tags: []
+- name: Espathra
+  dex_id: 956
+  generation: 9
+  types:
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tinkatink
+  dex_id: 957
+  generation: 9
+  types:
+  - Fairy
+  - Steel
+  next_evolution:
+  - Tinkatuff
+  excluded: false
+  tags: []
+- name: Tinkatuff
+  dex_id: 958
+  generation: 9
+  types:
+  - Fairy
+  - Steel
+  next_evolution:
+  - Tinkaton
+  excluded: false
+  tags: []
+- name: Tinkaton
+  dex_id: 959
+  generation: 9
+  types:
+  - Fairy
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wiglett
+  dex_id: 960
+  generation: 9
+  types:
+  - Water
+  next_evolution:
+  - Wugtrio
+  excluded: false
+  tags: []
+- name: Wugtrio
+  dex_id: 961
+  generation: 9
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Bombirdier
+  dex_id: 962
+  generation: 9
+  types:
+  - Flying
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Finizen
+  dex_id: 963
+  generation: 9
+  types:
+  - Water
+  next_evolution:
+  - Palafin
+  excluded: false
+  tags: []
+- name: Palafin
+  dex_id: 964
+  generation: 9
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Varoom
+  dex_id: 965
+  generation: 9
+  types:
+  - Steel
+  - Poison
+  next_evolution:
+  - Revavroom
+  excluded: false
+  tags: []
+- name: Revavroom
+  dex_id: 966
+  generation: 9
+  types:
+  - Steel
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cyclizar
+  dex_id: 967
+  generation: 9
+  types:
+  - Dragon
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Orthworm
+  dex_id: 968
+  generation: 9
+  types:
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Glimmet
+  dex_id: 969
+  generation: 9
+  types:
+  - Rock
+  - Poison
+  next_evolution:
+  - Glimmora
+  excluded: false
+  tags: []
+- name: Glimmora
+  dex_id: 970
+  generation: 9
+  types:
+  - Rock
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Greavard
+  dex_id: 971
+  generation: 9
+  types:
+  - Ghost
+  next_evolution:
+  - Houndstone
+  excluded: false
+  tags: []
+- name: Houndstone
+  dex_id: 972
+  generation: 9
+  types:
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Flamigo
+  dex_id: 973
+  generation: 9
+  types:
+  - Flying
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Cetoddle
+  dex_id: 974
+  generation: 9
+  types:
+  - Ice
+  next_evolution:
+  - Cetitan
+  excluded: false
+  tags: []
+- name: Cetitan
+  dex_id: 975
+  generation: 9
+  types:
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Veluza
+  dex_id: 976
+  generation: 9
+  types:
+  - Water
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dondozo
+  dex_id: 977
+  generation: 9
+  types:
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Tatsugiri
+  dex_id: 978
+  generation: 9
+  types:
+  - Dragon
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Annihilape
+  dex_id: 979
+  generation: 9
+  types:
+  - Fighting
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Clodsire
+  dex_id: 980
+  generation: 9
+  types:
+  - Poison
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Farigiraf
+  dex_id: 981
+  generation: 9
+  types:
+  - Normal
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dudunsparce
+  dex_id: 982
+  generation: 9
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Kingambit
+  dex_id: 983
+  generation: 9
+  types:
+  - Dark
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Great Tusk
+  dex_id: 984
+  generation: 9
+  types:
+  - Ground
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Scream Tail
+  dex_id: 985
+  generation: 9
+  types:
+  - Fairy
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Brute Bonnet
+  dex_id: 986
+  generation: 9
+  types:
+  - Grass
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Flutter Mane
+  dex_id: 987
+  generation: 9
+  types:
+  - Ghost
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Slither Wing
+  dex_id: 988
+  generation: 9
+  types:
+  - Bug
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Sandy Shocks
+  dex_id: 989
+  generation: 9
+  types:
+  - Electric
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Treads
+  dex_id: 990
+  generation: 9
+  types:
+  - Ground
+  - Steel
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Bundle
+  dex_id: 991
+  generation: 9
+  types:
+  - Ice
+  - Water
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Hands
+  dex_id: 992
+  generation: 9
+  types:
+  - Fighting
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Jugulis
+  dex_id: 993
+  generation: 9
+  types:
+  - Dark
+  - Flying
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Moth
+  dex_id: 994
+  generation: 9
+  types:
+  - Fire
+  - Poison
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Thorns
+  dex_id: 995
+  generation: 9
+  types:
+  - Rock
+  - Electric
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Frigibax
+  dex_id: 996
+  generation: 9
+  types:
+  - Dragon
+  - Ice
+  next_evolution:
+  - Arctibax
+  excluded: false
+  tags: []
+- name: Arctibax
+  dex_id: 997
+  generation: 9
+  types:
+  - Dragon
+  - Ice
+  next_evolution:
+  - Baxcalibur
+  excluded: false
+  tags: []
+- name: Baxcalibur
+  dex_id: 998
+  generation: 9
+  types:
+  - Dragon
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Gimmighoul
+  dex_id: 999
+  generation: 9
+  types:
+  - Ghost
+  next_evolution:
+  - Gholdengo
+  excluded: false
+  tags: []
+- name: Gholdengo
+  dex_id: 1000
+  generation: 9
+  types:
+  - Steel
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Wo-Chien
+  dex_id: 1001
+  generation: 9
+  types:
+  - Dark
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Chien-Pao
+  dex_id: 1002
+  generation: 9
+  types:
+  - Dark
+  - Ice
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ting-Lu
+  dex_id: 1003
+  generation: 9
+  types:
+  - Dark
+  - Ground
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Chi-Yu
+  dex_id: 1004
+  generation: 9
+  types:
+  - Dark
+  - Fire
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Roaring Moon
+  dex_id: 1005
+  generation: 9
+  types:
+  - Dragon
+  - Dark
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Valiant
+  dex_id: 1006
+  generation: 9
+  types:
+  - Fairy
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Koraidon
+  dex_id: 1007
+  generation: 9
+  types:
+  - Fighting
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Miraidon
+  dex_id: 1008
+  generation: 9
+  types:
+  - Electric
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Walking Wake
+  dex_id: 1009
+  generation: 9
+  types:
+  - Water
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Leaves
+  dex_id: 1010
+  generation: 9
+  types:
+  - Grass
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Dipplin
+  dex_id: 1011
+  generation: 9
+  types:
+  - Grass
+  - Dragon
+  next_evolution:
+  - Hydrapple
+  excluded: false
+  tags: []
+- name: Poltchageist
+  dex_id: 1012
+  generation: 9
+  types:
+  - Grass
+  - Ghost
+  next_evolution:
+  - Sinistcha
+  excluded: false
+  tags: []
+- name: Sinistcha
+  dex_id: 1013
+  generation: 9
+  types:
+  - Grass
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Okidogi
+  dex_id: 1014
+  generation: 9
+  types:
+  - Poison
+  - Fighting
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Munkidori
+  dex_id: 1015
+  generation: 9
+  types:
+  - Poison
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Fezandipiti
+  dex_id: 1016
+  generation: 9
+  types:
+  - Poison
+  - Fairy
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Ogerpon
+  dex_id: 1017
+  generation: 9
+  types:
+  - Grass
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Archaludon
+  dex_id: 1018
+  generation: 9
+  types:
+  - Steel
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Hydrapple
+  dex_id: 1019
+  generation: 9
+  types:
+  - Grass
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Gouging Fire
+  dex_id: 1020
+  generation: 9
+  types:
+  - Fire
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Raging Bolt
+  dex_id: 1021
+  generation: 9
+  types:
+  - Electric
+  - Dragon
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Boulder
+  dex_id: 1022
+  generation: 9
+  types:
+  - Rock
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Iron Crown
+  dex_id: 1023
+  generation: 9
+  types:
+  - Steel
+  - Psychic
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Terapagos
+  dex_id: 1024
+  generation: 9
+  types:
+  - Normal
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Pecharunt
+  dex_id: 1025
+  generation: 9
+  types:
+  - Poison
+  - Ghost
+  next_evolution: []
+  excluded: false
+  tags: []
+- name: Rattata (Alolan Form)
+  form: Alolan Form
+  dex_id: 19
+  generation: 7
+  types:
+  - Dark
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution:
+  - Raticate (Alolan Form)
+  excluded: false
+- name: Raticate (Alolan Form)
+  form: Alolan Form
+  dex_id: 20
+  generation: 7
+  types:
+  - Dark
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Raichu (Alolan Form)
+  form: Alolan Form
+  dex_id: 26
+  generation: 7
+  types:
+  - Electric
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Sandshrew (Alolan Form)
+  form: Alolan Form
+  dex_id: 27
+  generation: 7
+  types:
+  - Ice
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution:
+  - Sandslash (Alolan Form)
+  excluded: false
+- name: Sandslash (Alolan Form)
+  form: Alolan Form
+  dex_id: 28
+  generation: 7
+  types:
+  - Ice
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Vulpix (Alolan Form)
+  form: Alolan Form
+  dex_id: 37
+  generation: 7
+  types:
+  - Ice
+  tags:
+  - alternate_form
+  next_evolution:
+  - Ninetales (Alolan Form)
+  excluded: false
+- name: Ninetales (Alolan Form)
+  form: Alolan Form
+  dex_id: 38
+  generation: 7
+  types:
+  - Ice
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Diglett (Alolan Form)
+  form: Alolan Form
+  dex_id: 50
+  generation: 7
+  types:
+  - Ground
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution:
+  - Dugtrio (Alolan Form)
+  excluded: false
+- name: Dugtrio (Alolan Form)
+  form: Alolan Form
+  dex_id: 51
+  generation: 7
+  types:
+  - Ground
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Meowth (Alolan Form)
+  form: Alolan Form
+  dex_id: 52
+  generation: 7
+  types:
+  - Dark
+  tags:
+  - alternate_form
+  next_evolution:
+  - Persian (Alolan Form)
+  excluded: false
+- name: Meowth (Galarian Form)
+  form: Galarian Form
+  dex_id: 52
+  generation: 8
+  types:
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution:
+  - Perrserker
+  excluded: false
+- name: Persian (Alolan Form)
+  form: Alolan Form
+  dex_id: 53
+  generation: 7
+  types:
+  - Dark
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Growlithe (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 58
+  generation: 8
+  types:
+  - Fire
+  - Rock
+  tags:
+  - alternate_form
+  next_evolution:
+  - Arcanine (Hisuian Form)
+  excluded: false
+- name: Arcanine (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 59
+  generation: 8
+  types:
+  - Fire
+  - Rock
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Geodude (Alolan Form)
+  form: Alolan Form
+  dex_id: 74
+  generation: 7
+  types:
+  - Rock
+  - Electric
+  tags:
+  - alternate_form
+  next_evolution:
+  - Graveler (Alolan Form)
+  excluded: false
+- name: Graveler (Alolan Form)
+  form: Alolan Form
+  dex_id: 75
+  generation: 7
+  types:
+  - Rock
+  - Electric
+  tags:
+  - alternate_form
+  next_evolution:
+  - Golem (Alolan Form)
+  excluded: false
+- name: Golem (Alolan Form)
+  form: Alolan Form
+  dex_id: 76
+  generation: 7
+  types:
+  - Rock
+  - Electric
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Ponyta (Galarian Form)
+  form: Galarian Form
+  dex_id: 77
+  generation: 8
+  types:
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution:
+  - Rapidash (Galarian Form)
+  excluded: false
+- name: Rapidash (Galarian Form)
+  form: Galarian Form
+  dex_id: 78
+  generation: 8
+  types:
+  - Psychic
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Slowpoke (Galarian Form)
+  form: Galarian Form
+  dex_id: 79
+  generation: 8
+  types:
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution:
+  - Slowbro (Galarian Form)
+  - Slowking (Galarian Form)
+  excluded: false
+- name: Slowbro (Galarian Form)
+  form: Galarian Form
+  dex_id: 80
+  generation: 8
+  types:
+  - Poison
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Farfetch'd (Galarian Form)
+  form: Galarian Form
+  dex_id: 83
+  generation: 8
+  types:
+  - Fighting
+  tags:
+  - alternate_form
+  next_evolution:
+  - Sirfetch'd
+  excluded: false
+- name: Grimer (Alolan Form)
+  form: Alolan Form
+  dex_id: 88
+  generation: 7
+  types:
+  - Poison
+  - Dark
+  tags:
+  - alternate_form
+  next_evolution:
+  - Muk (Alolan Form)
+  excluded: false
+- name: Muk (Alolan Form)
+  form: Alolan Form
+  dex_id: 89
+  generation: 7
+  types:
+  - Poison
+  - Dark
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Voltorb (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 100
+  generation: 8
+  types:
+  - Electric
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution:
+  - Electrode (Hisuian Form)
+  excluded: false
+- name: Electrode (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 101
+  generation: 8
+  types:
+  - Electric
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Exeggutor (Alolan Form)
+  form: Alolan Form
+  dex_id: 103
+  generation: 7
+  types:
+  - Grass
+  - Dragon
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Marowak (Alolan Form)
+  form: Alolan Form
+  dex_id: 105
+  generation: 7
+  types:
+  - Fire
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Weezing (Galarian Form)
+  form: Galarian Form
+  dex_id: 110
+  generation: 8
+  types:
+  - Poison
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Mr. Mime (Galarian Form)
+  form: Galarian Form
+  dex_id: 122
+  generation: 8
+  types:
+  - Ice
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Tauros (Paldean Form (Combat Breed))
+  form: Paldean Form (Combat Breed)
+  dex_id: 128
+  generation: 9
+  types:
+  - Fighting
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Tauros (Paldean Form (Blaze Breed))
+  form: Paldean Form (Blaze Breed)
+  dex_id: 128
+  generation: 9
+  types:
+  - Fighting
+  - Fire
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Tauros (Paldean Form (Aqua Breed))
+  form: Paldean Form (Aqua Breed)
+  dex_id: 128
+  generation: 9
+  types:
+  - Fighting
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Articuno (Galarian Form)
+  form: Galarian Form
+  dex_id: 144
+  generation: 8
+  types:
+  - Psychic
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Zapdos (Galarian Form)
+  form: Galarian Form
+  dex_id: 145
+  generation: 8
+  types:
+  - Fighting
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Moltres (Galarian Form)
+  form: Galarian Form
+  dex_id: 146
+  generation: 8
+  types:
+  - Dark
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Typhlosion (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 157
+  generation: 8
+  types:
+  - Fire
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Wooper (Paldean Form)
+  form: Paldean Form
+  dex_id: 194
+  generation: 9
+  types:
+  - Poison
+  - Ground
+  tags:
+  - alternate_form
+  next_evolution:
+  - Clodsire
+  excluded: false
+- name: Slowking (Galarian Form)
+  form: Galarian Form
+  dex_id: 199
+  generation: 8
+  types:
+  - Poison
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Qwilfish (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 211
+  generation: 8
+  types:
+  - Dark
+  - Poison
+  tags:
+  - alternate_form
+  next_evolution:
+  - Overqwil
+  excluded: false
+- name: Sneasel (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 215
+  generation: 8
+  types:
+  - Fighting
+  - Poison
+  tags:
+  - alternate_form
+  next_evolution:
+  - Sneasler
+  excluded: false
+- name: Corsola (Galarian Form)
+  form: Galarian Form
+  dex_id: 222
+  generation: 8
+  types:
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution:
+  - Cursola
+  excluded: false
+- name: Zigzagoon (Galarian Form)
+  form: Galarian Form
+  dex_id: 263
+  generation: 8
+  types:
+  - Dark
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution:
+  - Linoone (Galarian Form)
+  excluded: false
+- name: Linoone (Galarian Form)
+  form: Galarian Form
+  dex_id: 264
+  generation: 8
+  types:
+  - Dark
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution:
+  - Obstagoon
+  excluded: false
+- name: Castform (Sunny Form)
+  form: Sunny Form
+  dex_id: 351
+  generation: 3
+  types:
+  - Fire
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Castform (Rainy Form)
+  form: Rainy Form
+  dex_id: 351
+  generation: 3
+  types:
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Castform (Snowy Form)
+  form: Snowy Form
+  dex_id: 351
+  generation: 3
+  types:
+  - Ice
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Deoxys (Attack Forme)
+  form: Attack Forme
+  dex_id: 386
+  generation: 3
+  types:
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Deoxys (Defense Forme)
+  form: Defense Forme
+  dex_id: 386
+  generation: 3
+  types:
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Deoxys (Speed Forme)
+  form: Speed Forme
+  dex_id: 386
+  generation: 3
+  types:
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Burmy (Sandy Cloak)
+  form: Sandy Cloak
+  dex_id: 412
+  generation: 4
+  types:
+  - Bug
+  tags:
+  - alternate_form
+  next_evolution:
+  - Wormadam (Sandy Cloak)
+  - Mothim
+  excluded: false
+- name: Burmy (Trash Cloak)
+  form: Trash Cloak
+  dex_id: 412
+  generation: 4
+  types:
+  - Bug
+  tags:
+  - alternate_form
+  next_evolution:
+  - Wormadam (Trash Cloak)
+  - Mothim
+  excluded: false
+- name: Wormadam (Sandy Cloak)
+  form: Sandy Cloak
+  dex_id: 413
+  generation: 4
+  types:
+  - Bug
+  - Ground
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Wormadam (Trash Cloak)
+  form: Trash Cloak
+  dex_id: 413
+  generation: 4
+  types:
+  - Bug
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Cherrim (Sunshine Form)
+  form: Sunshine Form
+  dex_id: 421
+  generation: 4
+  types:
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Shellos (East Sea)
+  form: East Sea
+  dex_id: 422
+  generation: 4
+  types:
+  - Water
+  tags:
+  - alternate_form
+  next_evolution:
+  - Gastrodon (East Sea)
+  excluded: false
+- name: Gastrodon (East Sea)
+  form: East Sea
+  dex_id: 423
+  generation: 4
+  types:
+  - Water
+  - Ground
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Rotom (Heat Rotom)
+  form: Heat Rotom
+  dex_id: 479
+  generation: 4
+  types:
+  - Electric
+  - Fire
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Rotom (Wash Rotom)
+  form: Wash Rotom
+  dex_id: 479
+  generation: 4
+  types:
+  - Electric
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Rotom (Frost Rotom)
+  form: Frost Rotom
+  dex_id: 479
+  generation: 4
+  types:
+  - Electric
+  - Ice
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Rotom (Fan Rotom)
+  form: Fan Rotom
+  dex_id: 479
+  generation: 4
+  types:
+  - Electric
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Rotom (Mow Rotom)
+  form: Mow Rotom
+  dex_id: 479
+  generation: 4
+  types:
+  - Electric
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Dialga (Origin Forme)
+  form: Origin Forme
+  dex_id: 483
+  generation: 8
+  types:
+  - Steel
+  - Dragon
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Palkia (Origin Forme)
+  form: Origin Forme
+  dex_id: 484
+  generation: 8
+  types:
+  - Water
+  - Dragon
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Giratina (Origin Forme)
+  form: Origin Forme
+  dex_id: 487
+  generation: 4
+  types:
+  - Ghost
+  - Dragon
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Shaymin (Sky Forme)
+  form: Sky Forme
+  dex_id: 492
+  generation: 4
+  types:
+  - Grass
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Samurott (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 503
+  generation: 8
+  types:
+  - Water
+  - Dark
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Lilligant (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 549
+  generation: 8
+  types:
+  - Grass
+  - Fighting
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Basculin (Blue-Striped Form)
+  form: Blue-Striped Form
+  dex_id: 550
+  generation: 5
+  types:
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Basculin (White-Striped Form)
+  form: White-Striped Form
+  dex_id: 550
+  generation: 8
+  types:
+  - Water
+  tags:
+  - alternate_form
+  next_evolution:
+  - Basculegion
+  - Basculegion (Female)
+  excluded: false
+- name: Darumaka (Galarian Form)
+  form: Galarian Form
+  dex_id: 554
+  generation: 8
+  types:
+  - Ice
+  tags:
+  - alternate_form
+  next_evolution:
+  - Darmanitan (Galarian Form)
+  excluded: false
+- name: Darmanitan (Zen Mode)
+  form: Zen Mode
+  dex_id: 555
+  generation: 5
+  types:
+  - Fire
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Darmanitan (Galarian Form)
+  form: Galarian Form
+  dex_id: 555
+  generation: 8
+  types:
+  - Ice
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Darmanitan (Zen Mode (Galarian Form))
+  form: Zen Mode (Galarian Form)
+  dex_id: 555
+  generation: 8
+  types:
+  - Ice
+  - Fire
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Yamask (Galarian Form)
+  form: Galarian Form
+  dex_id: 562
+  generation: 8
+  types:
+  - Ground
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution:
+  - Runerigus
+  excluded: false
+- name: Zorua (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 570
+  generation: 8
+  types:
+  - Normal
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution:
+  - Zoroark (Hisuian Form)
+  excluded: false
+- name: Zoroark (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 571
+  generation: 8
+  types:
+  - Normal
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Deerling (Summer Form)
+  form: Summer Form
+  dex_id: 585
+  generation: 5
+  types:
+  - Normal
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution:
+  - Sawsbuck (Summer Form)
+  excluded: false
+- name: Deerling (Autumn Form)
+  form: Autumn Form
+  dex_id: 585
+  generation: 5
+  types:
+  - Normal
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution:
+  - Sawsbuck (Autumn Form)
+  excluded: false
+- name: Deerling (Winter Form)
+  form: Winter Form
+  dex_id: 585
+  generation: 5
+  types:
+  - Normal
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution:
+  - Sawsbuck (Winter Form)
+  excluded: false
+- name: Sawsbuck (Summer Form)
+  form: Summer Form
+  dex_id: 586
+  generation: 5
+  types:
+  - Normal
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Sawsbuck (Autumn Form)
+  form: Autumn Form
+  dex_id: 586
+  generation: 5
+  types:
+  - Normal
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Sawsbuck (Winter Form)
+  form: Winter Form
+  dex_id: 586
+  generation: 5
+  types:
+  - Normal
+  - Grass
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Stunfisk (Galarian Form)
+  form: Galarian Form
+  dex_id: 618
+  generation: 8
+  types:
+  - Ground
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Braviary (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 628
+  generation: 8
+  types:
+  - Psychic
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Tornadus (Therian Forme)
+  form: Therian Forme
+  dex_id: 641
+  generation: 5
+  types:
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Thundurus (Therian Forme)
+  form: Therian Forme
+  dex_id: 642
+  generation: 5
+  types:
+  - Electric
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Landorus (Therian Forme)
+  form: Therian Forme
+  dex_id: 645
+  generation: 5
+  types:
+  - Ground
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Kyurem (White Kyurem)
+  form: White Kyurem
+  dex_id: 646
+  generation: 5
+  types:
+  - Dragon
+  - Ice
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Kyurem (Black Kyurem)
+  form: Black Kyurem
+  dex_id: 646
+  generation: 5
+  types:
+  - Dragon
+  - Ice
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Keldeo (Resolute Form)
+  form: Resolute Form
+  dex_id: 647
+  generation: 5
+  types:
+  - Water
+  - Fighting
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Meloetta (Pirouette Forme)
+  form: Pirouette Forme
+  dex_id: 648
+  generation: 5
+  types:
+  - Normal
+  - Fighting
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Genesect (Douse Drive)
+  form: Douse Drive
+  dex_id: 649
+  generation: 5
+  types:
+  - Bug
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Genesect (Shock Drive)
+  form: Shock Drive
+  dex_id: 649
+  generation: 5
+  types:
+  - Bug
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Genesect (Burn Drive)
+  form: Burn Drive
+  dex_id: 649
+  generation: 5
+  types:
+  - Bug
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Genesect (Chill Drive)
+  form: Chill Drive
+  dex_id: 649
+  generation: 5
+  types:
+  - Bug
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Flabébé (Yellow Flower)
+  form: Yellow Flower
+  dex_id: 669
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution:
+  - Floette (Yellow Flower)
+  excluded: false
+- name: Flabébé (Orange Flower)
+  form: Orange Flower
+  dex_id: 669
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution:
+  - Floette (Orange Flower)
+  excluded: false
+- name: Flabébé (Blue Flower)
+  form: Blue Flower
+  dex_id: 669
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution:
+  - Floette (Blue Flower)
+  excluded: false
+- name: Flabébé (White Flower)
+  form: White Flower
+  dex_id: 669
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution:
+  - Floette (White Flower)
+  excluded: false
+- name: Floette (Yellow Flower)
+  form: Yellow Flower
+  dex_id: 670
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution:
+  - Florges (Yellow Flower)
+  excluded: false
+- name: Floette (Orange Flower)
+  form: Orange Flower
+  dex_id: 670
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution:
+  - Florges (Orange Flower)
+  excluded: false
+- name: Floette (Blue Flower)
+  form: Blue Flower
+  dex_id: 670
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution:
+  - Florges (Blue Flower)
+  excluded: false
+- name: Floette (White Flower)
+  form: White Flower
+  dex_id: 670
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution:
+  - Florges (White Flower)
+  excluded: false
+- name: Floette (Eternal Flower)
+  form: Eternal Flower
+  dex_id: 670
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Florges (Yellow Flower)
+  form: Yellow Flower
+  dex_id: 671
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Florges (Orange Flower)
+  form: Orange Flower
+  dex_id: 671
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Florges (Blue Flower)
+  form: Blue Flower
+  dex_id: 671
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Florges (White Flower)
+  form: White Flower
+  dex_id: 671
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Meowstic (Female)
+  form: Female
+  dex_id: 678
+  generation: 6
+  types:
+  - Psychic
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Aegislash (Blade Forme)
+  form: Blade Forme
+  dex_id: 681
+  generation: 6
+  types:
+  - Steel
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Sliggoo (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 705
+  generation: 8
+  types:
+  - Steel
+  - Dragon
+  tags:
+  - alternate_form
+  next_evolution:
+  - Goodra (Hisuian Form)
+  excluded: false
+- name: Goodra (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 706
+  generation: 8
+  types:
+  - Steel
+  - Dragon
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Avalugg (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 713
+  generation: 8
+  types:
+  - Ice
+  - Rock
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Xerneas (Active Mode)
+  form: Active Mode
+  dex_id: 716
+  generation: 6
+  types:
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Zygarde (10% Forme)
+  form: 10% Forme
+  dex_id: 718
+  generation: 7
+  types:
+  - Dragon
+  - Ground
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Zygarde (Complete Forme)
+  form: Complete Forme
+  dex_id: 718
+  generation: 7
+  types:
+  - Dragon
+  - Ground
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Hoopa (Hoopa Unbound)
+  form: Hoopa Unbound
+  dex_id: 720
+  generation: 6
+  types:
+  - Psychic
+  - Dark
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Decidueye (Hisuian Form)
+  form: Hisuian Form
+  dex_id: 724
+  generation: 8
+  types:
+  - Grass
+  - Fighting
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Oricorio (Pom-Pom Style)
+  form: Pom-Pom Style
+  dex_id: 741
+  generation: 7
+  types:
+  - Electric
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Oricorio (Pa’u Style)
+  form: Pa’u Style
+  dex_id: 741
+  generation: 7
+  types:
+  - Psychic
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Oricorio (Sensu Style)
+  form: Sensu Style
+  dex_id: 741
+  generation: 7
+  types:
+  - Ghost
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Lycanroc (Midnight Form)
+  form: Midnight Form
+  dex_id: 745
+  generation: 7
+  types:
+  - Rock
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Lycanroc (Dusk Form)
+  form: Dusk Form
+  dex_id: 745
+  generation: 7
+  types:
+  - Rock
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Wishiwashi (School Form)
+  form: School Form
+  dex_id: 746
+  generation: 7
+  types:
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Minior (Red Core)
+  form: Red Core
+  dex_id: 774
+  generation: 7
+  types:
+  - Rock
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Mimikyu (Busted Form)
+  form: Busted Form
+  dex_id: 778
+  generation: 7
+  types:
+  - Ghost
+  - Fairy
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Necrozma (Dusk Mane)
+  form: Dusk Mane
+  dex_id: 800
+  generation: 7
+  types:
+  - Psychic
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Necrozma (Dawn Wings)
+  form: Dawn Wings
+  dex_id: 800
+  generation: 7
+  types:
+  - Psychic
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Cramorant (Gulping Form)
+  form: Gulping Form
+  dex_id: 845
+  generation: 8
+  types:
+  - Flying
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Cramorant (Gorging Form)
+  form: Gorging Form
+  dex_id: 845
+  generation: 8
+  types:
+  - Flying
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Toxtricity (Low Key Form)
+  form: Low Key Form
+  dex_id: 849
+  generation: 8
+  types:
+  - Electric
+  - Poison
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Eiscue (Noice Face)
+  form: Noice Face
+  dex_id: 875
+  generation: 8
+  types:
+  - Ice
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Indeedee (Female)
+  form: Female
+  dex_id: 876
+  generation: 8
+  types:
+  - Psychic
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Morpeko (Hangry Mode)
+  form: Hangry Mode
+  dex_id: 877
+  generation: 8
+  types:
+  - Electric
+  - Dark
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Zacian (Crowned Sword)
+  form: Crowned Sword
+  dex_id: 888
+  generation: 8
+  types:
+  - Fairy
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Zamazenta (Crowned Shield)
+  form: Crowned Shield
+  dex_id: 889
+  generation: 8
+  types:
+  - Fighting
+  - Steel
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Urshifu (Rapid Strike Style)
+  form: Rapid Strike Style
+  dex_id: 892
+  generation: 8
+  types:
+  - Fighting
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Calyrex (Ice Rider)
+  form: Ice Rider
+  dex_id: 898
+  generation: 8
+  types:
+  - Psychic
+  - Ice
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Calyrex (Shadow Rider)
+  form: Shadow Rider
+  dex_id: 898
+  generation: 8
+  types:
+  - Psychic
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Ursaluna (Bloodmoon)
+  form: Bloodmoon
+  dex_id: 901
+  generation: 9
+  types:
+  - Ground
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Basculegion (Female)
+  form: Female
+  dex_id: 902
+  generation: 8
+  types:
+  - Water
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Enamorus (Therian Forme)
+  form: Therian Forme
+  dex_id: 905
+  generation: 8
+  types:
+  - Fairy
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Oinkologne (Female)
+  form: Female
+  dex_id: 916
+  generation: 9
+  types:
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Maushold (Family of Four)
+  form: Family of Four
+  dex_id: 925
+  generation: 9
+  types:
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Squawkabilly (Blue Plumage)
+  form: Blue Plumage
+  dex_id: 931
+  generation: 9
+  types:
+  - Normal
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Squawkabilly (Yellow Plumage)
+  form: Yellow Plumage
+  dex_id: 931
+  generation: 9
+  types:
+  - Normal
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Squawkabilly (White Plumage)
+  form: White Plumage
+  dex_id: 931
+  generation: 9
+  types:
+  - Normal
+  - Flying
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Palafin (Hero Form)
+  form: Hero Form
+  dex_id: 964
+  generation: 9
+  types:
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Tatsugiri (Droopy Form)
+  form: Droopy Form
+  dex_id: 978
+  generation: 9
+  types:
+  - Dragon
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Tatsugiri (Stretchy Form)
+  form: Stretchy Form
+  dex_id: 978
+  generation: 9
+  types:
+  - Dragon
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Dudunsparce (Three-Segment Form)
+  form: Three-Segment Form
+  dex_id: 982
+  generation: 9
+  types:
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Gimmighoul (Roaming Form)
+  form: Roaming Form
+  dex_id: 999
+  generation: 9
+  types:
+  - Ghost
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Ogerpon (Wellspring Mask)
+  form: Wellspring Mask
+  dex_id: 1017
+  generation: 9
+  types:
+  - Grass
+  - Water
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Ogerpon (Hearthflame Mask)
+  form: Hearthflame Mask
+  dex_id: 1017
+  generation: 9
+  types:
+  - Grass
+  - Fire
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Ogerpon (Cornerstone Mask)
+  form: Cornerstone Mask
+  dex_id: 1017
+  generation: 9
+  types:
+  - Grass
+  - Rock
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
+- name: Terapagos (Terastal Form)
+  form: Terastal Form
+  dex_id: 1024
+  generation: 9
+  types:
+  - Normal
+  tags:
+  - alternate_form
+  next_evolution: []
+  excluded: false
