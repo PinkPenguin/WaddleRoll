@@ -1,0 +1,27 @@
+# RimWorld ideology structures -- populate via the in-app "Manage
+# Structures" editor, or by hand following this shape. Official DLC
+# content only, no mods, per your call -- extending later is just
+# adding more rows.
+#
+# structures:
+#   - name: "Example Structure"
+#     excluded: false
+structures:
+- name: Abstract theist
+  excluded: false
+- name: Animist
+  excluded: false
+- name: Archist
+  excluded: false
+- name: Buddhist origin
+  excluded: false
+- name: Christian origin
+  excluded: false
+- name: Embodied theist
+  excluded: false
+- name: Hindu origin
+  excluded: false
+- name: Ideological
+  excluded: false
+- name: Islamic origin
+  excluded: false

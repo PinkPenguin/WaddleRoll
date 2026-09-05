@@ -51,11 +51,35 @@ class SlotMachine(QWidget):
     clicked = Signal(str)  # emitted with the landed result, click only registers while stopped
 
     def __init__(self, text_color="#ffffff", dim_color="#888888",
-                 font_family="Arial", parent=None):
+                 font_family="Arial", parent=None, compact: bool = False,
+                 show_glow: bool = True):
+        """
+        compact: when True, prev/next are still created and still added
+        to the layout (so nothing else in this class needs to
+        special-case their absence, and they're never left as
+        unmanaged children -- an unmanaged child widget still gets
+        shown at a default position when its parent is, which is
+        exactly a bug this class once had), just collapsed to zero
+        height, for a single-line reveal instead of a 3-line reel.
+        Built for RimWorld rolling many quick small results in
+        sequence, where a full reel per result would be needless
+        overhead.
+
+        show_glow: set False to disable the landing glow entirely --
+        also built for RimWorld, where set_static() gets called
+        rapidly in sequence with no pause between reveals, meaning the
+        glow would either never render before being replaced
+        (spin-based landings) or stay permanently on (set_static()
+        never clears it the way spin() does at the start of a new one)
+        -- neither is the intended "flash" effect, so it's better off
+        disabled than half-working.
+        """
         super().__init__(parent)
         self._font_family = font_family
         self._text_color = text_color
         self._dim_color = dim_color
+        self._compact = compact
+        self._show_glow = show_glow
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 10, 0, 10)
@@ -67,11 +91,23 @@ class SlotMachine(QWidget):
         self.current_lbl = self._make_label(text_color, 34, bold=True)
         self.next_lbl = self._make_label(dim_color, 17)
 
+        # Compact mode: always add these to the layout (never leave them
+        # as unmanaged children -- an unmanaged child widget still gets
+        # shown when its parent is, at whatever default 0,0 position and
+        # size it happens to have, which is exactly the "extra roll in
+        # the top-left corner" bug this replaced). Collapsing height to
+        # zero hides them cleanly without touching the visible property
+        # at all, avoiding the separate setVisible-before-first-show
+        # gotcha documented elsewhere in this project.
+        if compact:
+            self.prev_lbl.setFixedHeight(0)
+            self.next_lbl.setFixedHeight(0)
+
         layout.addWidget(self.prev_lbl)
         layout.addWidget(self.current_lbl)
         layout.addWidget(self.next_lbl)
 
-        self.setMinimumHeight(150)
+        self.setMinimumHeight(150 if not compact else 60)
 
         # Soft glow on the center label, only while genuinely landed --
         # a clearer "this is the result" cue than the arrow markers used
@@ -100,7 +136,7 @@ class SlotMachine(QWidget):
         self._mode = "stopped"  # "idle" | "spinning" | "stopped"
 
     def _make_label(self, color, size, bold=False):
-        lbl = QLabel("")
+        lbl = QLabel("", self)
         lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         # Labels themselves don't handle clicks -- let them fall through
         # to the SlotMachine widget underneath, which owns the actual
@@ -126,6 +162,8 @@ class SlotMachine(QWidget):
         self._apply_label_style(lbl, color, size, bold)
 
     def _apply_landed_glow(self, color):
+        if not self._show_glow:
+            return
         self._glow.setColor(QColor(color))
         self._glow.setEnabled(True)
 

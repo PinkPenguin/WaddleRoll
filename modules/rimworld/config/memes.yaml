@@ -1,0 +1,138 @@
+# RimWorld memes -- populate via the in-app "Manage Memes" editor, or
+# by hand following this shape.
+#
+# axis groups mutually exclusive memes together (e.g. Individualist vs
+# Collectivist both under axis: "Structure" -- unrelated to the
+# separate ideology-structure roll above, just a coincidentally
+# overlapping name from the actual game's own terminology). Rolling is
+# axis-fair: an exclusive pair competes as ONE unit against a
+# standalone meme, not two units against one -- see roller.py for why
+# a naive flat pool would double-weight every exclusive pair. Leave
+# axis blank/omit it entirely for a standalone meme with nothing it
+# conflicts with.
+#
+# impact: "low", "medium", or "high" -- matches the real game's own
+# three tiers. Only "high" can't be picked as the starting meme (slot
+# 1) during fluid ideology creation -- it only ever appears in slot 2
+# or 3, gained later through evolution. low/medium impact, or the
+# field omitted entirely (defaults to low), are both fine as a
+# starting pick.
+#
+# memes:
+#   - name: "Individualist"
+#     axis: "Structure"
+#     impact: "low"
+#     excluded: false
+#   - name: "Collectivist"
+#     axis: "Structure"
+#     impact: "low"
+#     excluded: false
+#   - name: "Raider"
+#     axis: null
+#     impact: "medium"
+#     excluded: false
+memes:
+- name: Animal Personhood
+  axis: null
+  impact: high
+  excluded: false
+- name: Blindsight
+  axis: null
+  impact: high
+  excluded: false
+- name: Cannibal
+  axis: null
+  impact: high
+  excluded: false
+- name: Collectivist
+  axis: Structure
+  impact: low
+  excluded: false
+- name: Darkness
+  axis: null
+  impact: high
+  excluded: false
+- name: Female Supremacy
+  axis: Supremacy
+  impact: medium
+  excluded: false
+- name: Flesh Purity
+  axis: null
+  impact: medium
+  excluded: false
+- name: Guilty
+  axis: null
+  impact: low
+  excluded: false
+- name: High Life
+  axis: null
+  impact: medium
+  excluded: false
+- name: Human Primacy
+  axis: Primacy
+  impact: medium
+  excluded: false
+- name: Individualist
+  axis: Structure
+  impact: low
+  excluded: false
+- name: Inhuman
+  axis: null
+  impact: high
+  excluded: false
+- name: Loyalist
+  axis: null
+  impact: low
+  excluded: false
+- name: Male Supremacy
+  axis: Supremacy
+  impact: medium
+  excluded: false
+- name: Nature Primacy
+  axis: Primacy
+  impact: medium
+  excluded: false
+- name: Nudism
+  axis: null
+  impact: high
+  excluded: false
+- name: Pain Is Virtue
+  axis: null
+  impact: high
+  excluded: false
+- name: Proselytizer
+  axis: null
+  impact: medium
+  excluded: false
+- name: Raider
+  axis: null
+  impact: medium
+  excluded: false
+- name: Rancher
+  axis: null
+  impact: medium
+  excluded: false
+- name: Ritualist
+  axis: null
+  impact: medium
+  excluded: false
+- name: Shipborn
+  axis: null
+  impact: medium
+  excluded: false
+- name: Supremacist
+  axis: null
+  impact: low
+  excluded: false
+- name: Transhumanist
+  axis: null
+  impact: medium
+  excluded: false
+- name: Tree Connection
+  axis: null
+  impact: high
+  excluded: false
+- name: Tunneler
+  axis: null
+  impact: high
+  excluded: false

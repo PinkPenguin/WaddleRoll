@@ -1,0 +1,1107 @@
+# RimWorld precepts -- populate via the in-app "Manage Precepts"
+# editor, or by hand following this shape. Grouped internally by
+# `issue` -- every entry sharing the same issue is a candidate for
+# that issue's roll.
+#
+# requirement: every entry must hold against the 3 active memes for
+# this precept to even be eligible. "Not X" means meme X must NOT be
+# active; anything else must be. An empty list means no gate at all --
+# always eligible regardless of memes.
+#
+# associated: memes that make this precept MORE likely to be chosen
+# among whatever's eligible (not a requirement -- just a soft
+# preference), same "gate then weight" shape as FO4's weapon/perk
+# rolls elsewhere in this project.
+#
+# required: true on ANY entry for an issue means the whole issue is
+# treated as required -- always resolves to something if it has any
+# gate-survivors, same as every issue behaved before this existed.
+# Omitted/false (the default) means the issue is optional: it only has
+# a 50% base chance of being addressed by a given ideology at all,
+# rather than always forcing a pick. Fixes "every colony feels the
+# same" -- forcing binary/no-real-positive-option issues to always
+# resolve was drowning out the few issues that actually reflect memes.
+#
+# extreme: true on a SPECIFIC option (not the whole issue) marks it as
+# one of the far ends of that issue's spectrum (e.g. "Research Not
+# Allowed" or "Very Fast" on a research-speed issue). Extreme options
+# participate in a running, WHOLE-IDEOLOGY tally -- each one actually
+# chosen makes every subsequent extreme option (on a different issue)
+# progressively less likely, discouraging an ideology that's extreme
+# on every single axis, not just each issue independently.
+#
+# precepts:
+#   - issue: "Blindness"
+#     precept: "Horrible"
+#     requirement: ["Not Blindsight"]
+#     associated: []
+#     required: true
+#     extreme: false
+#     excluded: false
+#   - issue: "Blindness"
+#     precept: "Respected"
+#     requirement: ["Blindsight"]
+#     associated: ["Blindsight"]
+#     required: true
+#     extreme: false
+#     excluded: false
+precepts:
+- issue: Blindness
+  required: true
+  precept: Horrible
+  requirement:
+  - Not Blindsight
+  associated: []
+- issue: Blindness
+  required: true
+  precept: Respected
+  requirement:
+  - Blindsight
+  associated:
+  - Blindsight
+- issue: Blindness
+  required: true
+  precept: Elevated
+  extreme: true
+  requirement:
+  - Blindsight
+  associated:
+  - Blindsight
+- issue: Blindness
+  required: true
+  precept: Sublime
+  extreme: true
+  requirement:
+  - Blindsight
+  associated:
+  - Blindsight
+- issue: Cannibalism
+  required: true
+  precept: Abhorrent
+  requirement: []
+  associated: []
+- issue: Cannibalism
+  required: true
+  precept: Horrible
+  requirement: []
+  associated: []
+- issue: Cannibalism
+  required: true
+  precept: Disapproved
+  requirement: []
+  associated:
+  - Pain is virtue
+- issue: Cannibalism
+  required: true
+  precept: Acceptable
+  requirement: []
+  associated:
+  - Pain is virtue
+- issue: Cannibalism
+  required: true
+  precept: Preferred
+  requirement: []
+  associated:
+  - Cannibal
+- issue: Cannibalism
+  required: true
+  precept: Required (strong)
+  extreme: true
+  requirement:
+  - Cannibal
+  associated:
+  - Cannibal
+- issue: Cannibalism
+  required: true
+  precept: Required (ravenous)
+  extreme: true
+  requirement:
+  - Cannibal
+  associated:
+  - Cannibal
+- issue: Corpses
+  required: true
+  precept: Ugly
+  requirement: []
+  associated: []
+- issue: Corpses
+  required: true
+  precept: Don't care
+  requirement:
+  - Pain is virtue
+  - Cannibal
+  - Supremacist
+  - Raider
+  associated:
+  - Pain is virtue
+  - Cannibal
+  - Raider
+- issue: Diversity of thought
+  required: true
+  precept: Intense bigotry
+  requirement: []
+  associated:
+  - Loyalist
+  - Proselytizer
+- issue: Diversity of thought
+  required: true
+  precept: Moderate bigotry
+  requirement: []
+  associated:
+  - Loyalist
+  - Proselytizer
+- issue: Diversity of thought
+  required: true
+  precept: Mild bigotry
+  requirement: []
+  associated:
+  - Loyalist
+  - Proselytizer
+- issue: Diversity of thought
+  required: true
+  precept: Neutral
+  requirement: []
+  associated: []
+- issue: Diversity of thought
+  required: true
+  precept: Appreciated
+  requirement: []
+  associated:
+  - Individualist
+- issue: Diversity of thought
+  required: true
+  precept: Highly appreciated
+  requirement:
+  - Individualist
+  associated:
+  - Individualist
+- issue: Diversity of thought
+  required: true
+  precept: Exalted
+  requirement:
+  - Individualist
+  associated:
+  - Individualist
+- issue: Eating nutrient paste
+  required: true
+  precept: Disgusting
+  requirement: []
+  associated: []
+- issue: Eating nutrient paste
+  required: true
+  precept: Don't mind
+  requirement:
+  - Transhumanist
+  - Inhuman
+  associated:
+  - Transhumanist
+- issue: Execution
+  required: true
+  precept: Always abhorrent
+  requirement:
+  - Not Pain is virtue
+  associated:
+  - Individualist
+- issue: Execution
+  required: true
+  precept: Always horrible
+  requirement:
+  - Not Pain is virtue
+  - Not Cannibal
+  associated:
+  - Individualist
+- issue: Execution
+  required: true
+  precept: Horrible if innocent
+  requirement:
+  - Not Cannibal
+  associated: []
+- issue: Execution
+  required: true
+  precept: Don't care
+  requirement: []
+  associated: []
+- issue: Execution
+  required: true
+  precept: Respected if guilty
+  requirement: []
+  associated:
+  - Pain is virtue
+  - Collectivist
+- issue: Execution
+  required: true
+  precept: Required
+  requirement: []
+  associated:
+  - Supremacist
+  - Pain is virtue
+- issue: Fungus
+  required: true
+  precept: Despised
+  requirement:
+  - Not Tunneler
+  associated: []
+- issue: Fungus
+  required: true
+  precept: Preferred
+  requirement:
+  - Tunneler
+  associated:
+  - Tunneler
+- issue: Insect Meat
+  required: true
+  precept: Despised
+  requirement: []
+  associated: []
+- issue: Insect Meat
+  required: true
+  precept: Loved
+  requirement: []
+  associated:
+  - Tunneler
+- issue: Marriage Name
+  required: true
+  precept: Always Man's
+  requirement: []
+  associated:
+  - Male supremacy
+- issue: Marriage Name
+  required: true
+  precept: Usually Man's
+  requirement: []
+  associated: []
+- issue: Marriage Name
+  required: true
+  precept: Random
+  requirement: []
+  associated: []
+- issue: Marriage Name
+  required: true
+  precept: Keep Names
+  requirement:
+  - Not Collectivist
+  associated: []
+- issue: Marriage Name
+  required: true
+  precept: Usually Woman's
+  requirement: []
+  associated: []
+- issue: Marriage Name
+  required: true
+  precept: Always Woman's
+  requirement: []
+  associated:
+  - Female supremacy
+- issue: Female Clothing
+  required: true
+  precept: Fully nude
+  extreme: true
+  requirement: []
+  associated:
+  - Male supremacy
+  - Nudism
+- issue: Female Clothing
+  required: true
+  precept: Pants at most
+  extreme: true
+  requirement: []
+  associated:
+  - Nudism
+- issue: Female Clothing
+  required: true
+  precept: No rules
+  requirement: []
+  associated:
+  - Individualist
+- issue: Female Clothing
+  required: true
+  precept: Pants
+  requirement: []
+  associated: []
+- issue: Female Clothing
+  required: true
+  precept: Pants and shirt
+  requirement: []
+  associated: []
+- issue: Female Clothing
+  required: true
+  precept: Pants, shirt, and hat
+  requirement: []
+  associated:
+  - Male supremacy
+- issue: Female Clothing
+  required: true
+  precept: Fully covered
+  extreme: true
+  requirement: []
+  associated:
+  - Male supremacy
+- issue: Male Clothing
+  required: true
+  precept: Fully nude
+  extreme: true
+  requirement: []
+  associated:
+  - Female supremacy
+  - Nudism
+- issue: Male Clothing
+  required: true
+  precept: Pants at most
+  extreme: true
+  requirement: []
+  associated:
+  - Nudism
+- issue: Male Clothing
+  required: true
+  precept: No rules
+  requirement: []
+  associated:
+  - Individualist
+- issue: Male Clothing
+  required: true
+  precept: Pants
+  requirement: []
+  associated: []
+- issue: Male Clothing
+  required: true
+  precept: Pants and shirt
+  requirement: []
+  associated: []
+- issue: Male Clothing
+  required: true
+  precept: Pants, shirt, and hat
+  requirement: []
+  associated:
+  - Female supremacy
+- issue: Male Clothing
+  required: true
+  precept: Fully covered
+  extreme: true
+  requirement: []
+  associated:
+  - Female supremacy
+- issue: Organ use
+  required: true
+  precept: Totally abhorrent
+  requirement: []
+  associated:
+  - Flesh purity
+- issue: Organ use
+  required: true
+  precept: No harvest or sell
+  requirement: []
+  associated:
+  - Flesh purity
+- issue: Organ use
+  required: true
+  precept: No harvest
+  requirement: []
+  associated:
+  - Cannibal
+  - Raider
+  - Collectivist
+- issue: Organ use
+  required: true
+  precept: Acceptable
+  requirement: []
+  associated:
+  - Cannibal
+  - Raider
+  - Collectivist
+- issue: Physical Love
+  required: true
+  precept: Free
+  requirement: []
+  associated:
+  - Individualist
+- issue: Physical Love
+  required: true
+  precept: Prohibited
+  extreme: true
+  requirement: []
+  associated:
+  - Flesh purity
+  - Pain is virtue
+- issue: Physical Love
+  required: true
+  precept: Horrible
+  extreme: true
+  requirement: []
+  associated:
+  - Flesh purity
+  - Pain is virtue
+- issue: Physical Love
+  required: true
+  precept: Spouse only (strict)
+  requirement: []
+  associated: []
+- issue: Physical Love
+  required: true
+  precept: Spouse only (moderate)
+  requirement: []
+  associated: []
+- issue: Physical Love
+  required: true
+  precept: Spouse only (mild)
+  requirement: []
+  associated: []
+- issue: Physical Love
+  required: true
+  precept: Free and approved
+  requirement:
+  - Not Flesh purity
+  associated:
+  - Individualist
+- issue: Research
+  required: true
+  precept: Not allowed
+  extreme: true
+  requirement: []
+  associated: []
+- issue: Research
+  required: true
+  precept: Extremely slow
+  extreme: true
+  requirement: []
+  associated: []
+- issue: Research
+  required: true
+  precept: Very slow
+  extreme: true
+  requirement: []
+  associated: []
+- issue: Research
+  required: true
+  precept: Slow
+  requirement: []
+  associated: []
+- issue: Research
+  required: true
+  precept: Normal
+  requirement: []
+  associated: []
+- issue: Research
+  required: true
+  precept: Fast
+  requirement: []
+  associated: []
+- issue: Research
+  required: true
+  precept: Very fast
+  requirement: []
+  associated: []
+- issue: Scarification
+  required: true
+  precept: Extreme
+  extreme: true
+  requirement:
+  - Pain is virtue
+  associated: []
+- issue: Scarification
+  required: true
+  precept: Heavy
+  extreme: true
+  requirement:
+  - Pain is virtue
+  associated: []
+- issue: Scarification
+  required: true
+  precept: Minor
+  requirement:
+  - Pain is virtue
+  associated: []
+- issue: Scarification
+  required: true
+  precept: Horrible
+  requirement:
+  - Not Pain is virtue
+  associated: []
+- issue: Skullspike
+  required: true
+  precept: Desired
+  requirement: []
+  associated:
+  - Pain is virtue
+  - Supremacist
+  - Raider
+- issue: Skullspike
+  required: true
+  precept: Disapproved
+  requirement:
+  - Not Pain is virtue
+  - Not Supremacist
+  - Not Raider
+  associated: []
+- issue: Slavery
+  required: true
+  precept: Abhorrent
+  requirement:
+  - Not Raider
+  associated:
+  - Guilty
+  - Individualist
+- issue: Slavery
+  required: true
+  precept: Horrible
+  requirement:
+  - Not Raider
+  associated:
+  - Guilty
+  - Individualist
+- issue: Slavery
+  required: true
+  precept: Disapproved
+  requirement:
+  - Not Raider
+  associated:
+  - Guilty
+  - Individualist
+- issue: Slavery
+  required: true
+  precept: Acceptable
+  requirement: []
+  associated: []
+- issue: Slavery
+  required: true
+  precept: Honorable
+  extreme: true
+  requirement:
+  - Not Guilty
+  - Not Individualist
+  associated:
+  - Supremacist
+  - Collectivist
+  - Pain is virtue
+- issue: Women's spouses
+  required: true
+  precept: One only
+  requirement: []
+  associated: []
+- issue: Women's spouses
+  required: true
+  precept: Two or fewer
+  requirement: []
+  associated:
+  - Female supremacy
+- issue: Women's spouses
+  required: true
+  precept: Three or fewer
+  requirement: []
+  associated:
+  - Female supremacy
+- issue: Women's spouses
+  required: true
+  precept: Four or fewer
+  requirement: []
+  associated:
+  - Female supremacy
+- issue: Women's spouses
+  required: true
+  precept: Unlimited
+  requirement: []
+  associated:
+  - Female supremacy
+- issue: Men's spouses
+  required: true
+  precept: One only
+  requirement: []
+  associated: []
+- issue: Men's spouses
+  required: true
+  precept: Two or fewer
+  requirement: []
+  associated:
+  - Male supremacy
+- issue: Men's spouses
+  required: true
+  precept: Three or fewer
+  requirement: []
+  associated:
+  - Male supremacy
+- issue: Men's spouses
+  required: true
+  precept: Four or fewer
+  requirement: []
+  associated:
+  - Male supremacy
+- issue: Men's spouses
+  required: true
+  precept: Unlimited
+  requirement: []
+  associated:
+  - Male supremacy
+- issue: Slaughtering animals
+  precept: Prohibited
+  extreme: true
+  requirement: []
+  associated:
+  - Animal personhood
+  - Nature primacy
+- issue: Slaughtering animals
+  precept: Horrible
+  requirement: []
+  associated:
+  - Animal personhood
+  - Nature primacy
+- issue: Slaughtering animals
+  precept: Disapproved
+  requirement: []
+  associated:
+  - Animal personhood
+  - Nature primacy
+- issue: Apostasy
+  precept: Abhorrent
+  requirement:
+  - Not Guilty
+  associated:
+  - Loyalist
+  - Proselytizer
+- issue: Apostasy
+  precept: Horrible
+  requirement:
+  - Not Guilty
+  associated:
+  - Loyalist
+  - Proselytizer
+- issue: Apostasy
+  precept: Disapproved
+  requirement:
+  - Not Guilty
+  associated:
+  - Loyalist
+  - Proselytizer
+- issue: Autonomous weapons
+  precept: Prohibited
+  extreme: true
+  requirement: []
+  associated:
+  - Nature primacy
+- issue: Autonomous weapons
+  precept: Horrible
+  extreme: true
+  requirement: []
+  associated:
+  - Nature primacy
+- issue: Autonomous weapons
+  precept: Disapproved
+  requirement: []
+  associated:
+  - Nature primacy
+- issue: Body modification
+  precept: Abhorrent
+  extreme: true
+  requirement:
+  - Not Transhumanist
+  associated:
+  - Flesh purity
+- issue: Body modification
+  precept: Disapproved
+  requirement:
+  - Not Transhumanist
+  - Not Flesh purity
+  associated: []
+- issue: Body modification
+  precept: Approved
+  requirement:
+  - Not Flesh purity
+  associated:
+  - Transhumanist
+- issue: Charity
+  precept: Essential
+  extreme: true
+  requirement:
+  - Not supremacist
+  - Not pain is virtue
+  associated:
+  - Guilty
+- issue: Charity
+  precept: Important
+  requirement:
+  - Not supremacist
+  - Not pain is virtue
+  associated:
+  - Guilty
+- issue: Charity
+  precept: Worthwhile
+  requirement:
+  - Not supremacist
+  - Not pain is virtue
+  associated:
+  - Guilty
+- issue: Drug use
+  precept: Prohibited
+  extreme: true
+  requirement:
+  - Not High life
+  associated:
+  - Flesh purity
+  - Collectivist
+- issue: Drug use
+  precept: Medical only
+  requirement:
+  - Not High life
+  associated:
+  - Collectivist
+- issue: Drug use
+  precept: Medical or social only
+  requirement:
+  - Not High life
+  associated:
+  - Collectivist
+- issue: Drug use
+  precept: Essential
+  extreme: true
+  requirement:
+  - High life
+  associated:
+  - High life
+- issue: Combat in darkness
+  precept: Preferred
+  extreme: true
+  requirement:
+  - Not Blindsight
+  associated:
+  - Darkness
+- issue: Cutting trees
+  precept: Prohibited
+  extreme: true
+  requirement:
+  - Not Human primacy
+  associated:
+  - Nature primacy
+- issue: Cutting trees
+  precept: Horrible
+  extreme: true
+  requirement:
+  - Not Human primacy
+  associated:
+  - Nature primacy
+- issue: Cutting trees
+  precept: Disapproved
+  requirement:
+  - Not Human primacy
+  associated:
+  - Nature primacy
+- issue: Killing innocent animals
+  precept: Abhorrent
+  extreme: true
+  requirement:
+  - Not Human primacy
+  associated:
+  - Nature primacy
+  - Animal personhood
+- issue: Killing innocent animals
+  precept: Horrible
+  extreme: true
+  requirement:
+  - Not Human primacy
+  associated:
+  - Nature primacy
+  - Animal personhood
+- issue: Killing innocent animals
+  precept: Disapproved
+  requirement:
+  - Not Human primacy
+  associated:
+  - Nature primacy
+  - Animal personhood
+- issue: Lighting
+  precept: Darklight preferred
+  extreme: true
+  requirement:
+  - Not Blindsight
+  associated:
+  - Darkness
+- issue: Meat eating
+  precept: Abhorrent
+  extreme: true
+  requirement:
+  - Not Human primacy
+  associated:
+  - Animal personhood
+  - Flesh purity
+- issue: Meat eating
+  precept: Horrible
+  extreme: true
+  requirement:
+  - Not Human primacy
+  associated:
+  - Animal personhood
+  - Flesh purity
+- issue: Meat eating
+  precept: Disapproved
+  requirement:
+  - Not Human primacy
+  associated:
+  - Animal personhood
+  - Flesh purity
+- issue: Meat eating
+  precept: Vegetarian disliked
+  requirement:
+  - Not Human primacy
+  associated:
+  - Animal personhood
+  - Flesh purity
+- issue: Meat eating
+  precept: Vegetarian hated
+  extreme: true
+  requirement:
+  - Not human primacy
+  associated:
+  - Animal personhood
+  - Flesh purity
+- issue: Meat eating
+  precept: Vegetarian abhorrent
+  extreme: true
+  requirement:
+  - Not human primacy
+  associated:
+  - Animal personhood
+  - Flesh purity
+- issue: Mining
+  precept: Prohibited
+  extreme: true
+  requirement:
+  - Not human primacy
+  - Not Tunneler
+  associated:
+  - Nature primacy
+- issue: Mining
+  precept: Horrible
+  extreme: true
+  requirement:
+  - Not human primacy
+  - Not Tunneler
+  associated:
+  - Nature primacy
+- issue: Mining
+  precept: Disapproved
+  requirement:
+  - Not human primacy
+  - Not Tunneler
+  associated:
+  - Nature primacy
+- issue: Raiding
+  precept: Respected
+  extreme: true
+  requirement: []
+  associated: []
+- issue: Raiding
+  precept: Required
+  extreme: true
+  requirement: []
+  associated: []
+- issue: Trees
+  precept: Desired
+  requirement: []
+  associated:
+  - Tree connection
+- issue: Biosculpting
+  precept: Despised
+  requirement:
+  - Not Transhumanist
+  associated: []
+- issue: Biosculpting
+  precept: Accelerated
+  requirement:
+  - Transhumanist
+  associated:
+  - Transhumanist
+- issue: Growth vats
+  precept: Prohibited
+  requirement: []
+  associated: []
+- issue: Growth vats
+  precept: Essential
+  requirement: []
+  associated:
+  - Transhumanist
+- issue: Bloodfeeders
+  precept: Revered
+  requirement: []
+  associated: []
+- issue: Bloodfeeders
+  precept: Reviled
+  requirement: []
+  associated: []
+- issue: Child labor
+  precept: Encouraged
+  requirement: []
+  associated:
+  - Collectivist
+- issue: Child labor
+  precept: Disapproved
+  requirement: []
+  associated:
+  - Individualist
+- issue: Mechanoid labor
+  precept: Enhanced
+  requirement: []
+  associated: []
+- issue: Psychic rituals
+  precept: Abhorrent
+  extreme: true
+  requirement: []
+  associated: []
+- issue: Psychic rituals
+  precept: Disapproved
+  requirement: []
+  associated: []
+- issue: Psychic rituals
+  precept: Exalted
+  requirement: []
+  associated:
+  - Ritualist
+- issue: Void study
+  precept: Very inefficient
+  requirement: []
+  associated: []
+- issue: Void study
+  precept: Inefficient
+  requirement: []
+  associated: []
+- issue: Void study
+  precept: Efficient
+  requirement: []
+  associated: []
+- issue: Void study
+  precept: Very efficient
+  requirement: []
+  associated:
+  - Ritualist
+- issue: Inhumanizing
+  precept: Required
+  extreme: true
+  requirement: []
+  associated:
+  - Inhuman
+- issue: Fishing
+  precept: Prohibited
+  requirement: []
+  associated:
+  - Animal personhood
+- issue: Fishing
+  precept: Disapproved
+  requirement: []
+  associated:
+  - Animal personhood
+- issue: Fishing
+  precept: Sacred
+  requirement: []
+  associated: []
+- issue: Nomadic
+  precept: Desired
+  requirement: []
+  associated: []
+- issue: Age reversal
+  precept: Demanded
+  requirement:
+  - Transhumanist
+  associated: []
+- issue: Animal connection
+  precept: Strong
+  requirement:
+  - Animal personhood
+  associated: []
+- issue: Blind psysense
+  precept: Strong
+  requirement:
+  - Blindsight
+  associated: []
+- issue: Bonding
+  precept: Disapproved
+  requirement:
+  - Human primacy
+  associated: []
+- issue: Comfort
+  precept: Ignored
+  requirement:
+  - Pain Is Virtue
+  associated: []
+- issue: Eclipse
+  precept: Beautiful
+  requirement:
+  - Darkness
+  - Not Blindsight
+  associated: []
+- issue: Gauranlen connection
+  precept: Strong
+  extreme: true
+  requirement:
+  - Tree connection
+  associated: []
+- issue: Mining yield
+  precept: High
+  requirement:
+  - Tunneler
+  associated: []
+- issue: Neural supercharge
+  precept: Preferred
+  requirement:
+  - Transhumanist
+  associated: []
+- issue: Pain
+  precept: Idealized
+  requirement:
+  - Pain is virtue
+  - Guilty
+  associated: []
+- issue: Proselytizing
+  precept: Occasional
+  requirement:
+  - Proselytizer
+  associated: []
+- issue: Proselytizing
+  precept: Sometimes
+  requirement:
+  - Proselytizer
+  associated: []
+- issue: Proselytizing
+  precept: Frequent
+  requirement:
+  - Proselytizer
+  associated: []
+- issue: Ranching
+  precept: Central
+  requirement:
+  - Rancher
+  associated: []
+- issue: Rough living
+  precept: Welcomed
+  requirement:
+  - Tree connection
+  - Pain Is Virtue
+  associated: []
+- issue: Slab bed
+  precept: Preferred
+  requirement:
+  - Pain is virtue
+  associated: []
+- issue: Sleep accelerator
+  precept: Preferred
+  requirement:
+  - Transhumanist
+  associated: []
+- issue: Indoors
+  precept: Preferred
+  requirement:
+  - Tunneler
+  - Shipborn
+  associated: []
+- issue: Temperature
+  precept: Tough
+  requirement:
+  - Tree connection
+  - Pain is virtue
+  - Shipborn
+  associated: []
+- issue: Work drive
+  precept: Tripled
+  requirement:
+  - Collectivist
+  associated: []
+- issue: Space habitat
+  precept: Preferred
+  requirement:
+  - Shipborn
+  associated: []
