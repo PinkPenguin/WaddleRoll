@@ -17,3 +17,6 @@ Thumbs.db
 build/
 dist/
 *.spec
+
+# Local config
+last_roll.yaml

@@ -15,10 +15,11 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt
 
 from core.discovery import discover_modules
-from ui.game_picker import GamePicker
+from ui.game_picker import GamePicker, MULTI_COLUMN_THRESHOLD
 
 BG = "#F280A1"
-PICKER_DEFAULT_SIZE = (420, 620)
+PICKER_DEFAULT_SIZE = (420, 620)     # single column
+PICKER_GRID_SIZE = (720, 620)        # 2-column grid -- needs real width, not just the single-column size stretched
 PICKER_MIN_SIZE = (420, 480)
 
 
@@ -26,12 +27,13 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("WaddleRoll, A build randomizer")
-        self.resize(*PICKER_DEFAULT_SIZE)
         self.setMinimumSize(*PICKER_MIN_SIZE)
         self.setStyleSheet(f"background-color: {BG};")
 
         self.modules = {m.id: m for m in discover_modules()}
         self._module_pages = {}  # id -> QWidget, built lazily on first visit
+
+        self.resize(*self._picker_size())
 
         self.stack = QStackedWidget()
         self.setCentralWidget(self.stack)
@@ -54,8 +56,11 @@ class MainWindow(QMainWindow):
 
     def _show_picker(self):
         self.setMinimumSize(*PICKER_MIN_SIZE)
-        self.resize(*PICKER_DEFAULT_SIZE)
+        self.resize(*self._picker_size())
         self.stack.setCurrentWidget(self.picker)
+
+    def _picker_size(self) -> tuple:
+        return PICKER_GRID_SIZE if len(self.modules) > MULTI_COLUMN_THRESHOLD else PICKER_DEFAULT_SIZE
 
     def _wrap_with_back_button(self, module_widget: QWidget, background_color: str) -> QWidget:
         wrapper = QWidget()
