@@ -18,12 +18,12 @@ class Module(GameModule):
     display_name = "Hero Siege"
     description = "Class, skill & relic wildcard roller"
 
-    background_color = "#150c08"   # keep in sync with BG in ui.py
-    accent_color = "#ff8c3a"       # keep in sync with ORANGE in ui.py
+    background_color = "#100b0a"   # keep in sync with INK in ui.py
+    accent_color = "#8f1616"       # keep in sync with BLOOD in ui.py
     icon = "⚔"
 
-    default_size = (800, 500)
-    min_size = (800, 500)
+    default_size = (550, 500)
+    min_size = (550, 500)
 
     def get_widget(self, parent=None):
         return HeroSiegeWidget(config_dir=CONFIG_DIR, parent=parent)
