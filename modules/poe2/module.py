@@ -8,9 +8,9 @@ from pathlib import Path
 
 from core.plugin_base import GameModule
 from modules.poe2.ui import PoE2Widget
+from core.paths import get_app_root
 
-MODULE_DIR = Path(__file__).parent
-CONFIG_DIR = MODULE_DIR / "config"
+CONFIG_DIR = get_app_root() / "modules" / "poe2" / "config"
 
 
 class Module(GameModule):

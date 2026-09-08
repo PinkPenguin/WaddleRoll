@@ -9,9 +9,9 @@ from pathlib import Path
 
 from core.plugin_base import GameModule
 from modules.torchlight_infinite.ui import TorchlightInfiniteWidget
+from core.paths import get_app_root
 
-MODULE_DIR = Path(__file__).parent
-CONFIG_DIR = MODULE_DIR / "config"
+CONFIG_DIR = get_app_root() / "modules" / "torchlight_infinite" / "config"
 
 
 class Module(GameModule):

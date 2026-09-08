@@ -10,9 +10,9 @@ from pathlib import Path
 
 from core.plugin_base import GameModule
 from modules.fallout4.ui import FO4Widget
+from core.paths import get_app_root
 
-MODULE_DIR = Path(__file__).parent
-CONFIG_DIR = MODULE_DIR / "config"
+CONFIG_DIR = get_app_root() / "modules" / "fallout4" / "config"
 
 
 class Module(GameModule):

@@ -8,9 +8,9 @@ from pathlib import Path
 
 from core.plugin_base import GameModule
 from modules.grim_dawn.ui import GrimDawnWidget
+from core.paths import get_app_root
 
-MODULE_DIR = Path(__file__).parent
-CONFIG_DIR = MODULE_DIR / "config"
+CONFIG_DIR = get_app_root() / "modules" / "grim_dawn" / "config"
 
 
 class Module(GameModule):
