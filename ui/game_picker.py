@@ -20,6 +20,7 @@ get added later.
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QFrame, QScrollArea,
+    QPushButton,
 )
 from PySide6.QtCore import Qt, Signal
 
@@ -84,6 +85,7 @@ class GameCard(QWidget):
 
 class GamePicker(QWidget):
     game_selected = Signal(str)  # emits the chosen module's id
+    manage_visibility_requested = Signal()  # "Manage Visible Games" clicked -- MainWindow owns the actual dialog/rebuild
 
     def __init__(self, modules, parent=None):
         super().__init__(parent)
@@ -102,6 +104,22 @@ class GamePicker(QWidget):
         subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
         subtitle.setStyleSheet(f"color: {TEXT}; font-size: 14px; font-style: italic;")
         outer_layout.addWidget(subtitle)
+
+        manage_row = QHBoxLayout()
+        manage_row.addStretch(1)
+        manage_btn = QPushButton("Manage Visible Games")
+        manage_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        manage_btn.setStyleSheet(f"""
+            QPushButton {{
+                color: {TEXT_DIM}; background-color: transparent;
+                border: none; padding: 2px; font-size: 10px;
+            }}
+            QPushButton:hover {{ color: {TEXT}; text-decoration: underline; }}
+        """)
+        manage_btn.clicked.connect(self.manage_visibility_requested.emit)
+        manage_row.addWidget(manage_btn)
+        manage_row.addStretch(1)
+        outer_layout.addLayout(manage_row)
 
         outer_layout.addSpacing(16)
 
