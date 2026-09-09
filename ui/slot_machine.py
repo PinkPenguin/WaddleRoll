@@ -107,7 +107,7 @@ class SlotMachine(QWidget):
         layout.addWidget(self.current_lbl)
         layout.addWidget(self.next_lbl)
 
-        self.setMinimumHeight(150 if not compact else 60)
+        self.setMinimumHeight(150 if not compact else 80)
 
         # Soft glow on the center label, only while genuinely landed --
         # a clearer "this is the result" cue than the arrow markers used
