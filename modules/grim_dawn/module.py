@@ -21,8 +21,8 @@ class Module(GameModule):
     accent_color = "#7a3420"       # keep in sync with RUST in ui.py
     icon = "†"
 
-    default_size = (550, 600)
-    min_size = (550, 600)
+    default_size = (850, 620)
+    min_size = (850, 620)
 
     def get_widget(self, parent=None):
         return GrimDawnWidget(config_dir=CONFIG_DIR, parent=parent)
