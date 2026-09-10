@@ -10,6 +10,7 @@ from core.plugin_base import GameModule
 from modules.grim_dawn.ui import GrimDawnWidget
 
 CONFIG_DIR = get_app_root() / "modules" / "grim_dawn" / "config"
+ASSETS_DIR = get_app_root() / "modules" / "grim_dawn" / "assets"
 
 
 class Module(GameModule):
@@ -25,4 +26,4 @@ class Module(GameModule):
     min_size = (850, 620)
 
     def get_widget(self, parent=None):
-        return GrimDawnWidget(config_dir=CONFIG_DIR, parent=parent)
+        return GrimDawnWidget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

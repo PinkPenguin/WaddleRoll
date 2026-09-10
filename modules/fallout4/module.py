@@ -13,6 +13,7 @@ from modules.fallout4.ui import FO4Widget
 from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "fallout4" / "config"
+ASSETS_DIR = get_app_root() / "modules" / "fallout4" / "assets"
 
 
 class Module(GameModule):
@@ -29,4 +30,4 @@ class Module(GameModule):
     min_size = (1100, 690)
 
     def get_widget(self, parent=None):
-        return FO4Widget(config_dir=CONFIG_DIR, parent=parent)
+        return FO4Widget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

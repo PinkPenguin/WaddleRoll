@@ -11,7 +11,7 @@ from modules.hero_siege.ui import HeroSiegeWidget
 from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "hero_siege" / "config"
-
+ASSETS_DIR = get_app_root() / "modules" / "hero_siege" / "assets"
 
 class Module(GameModule):
     id = "hero_siege"
@@ -26,4 +26,4 @@ class Module(GameModule):
     min_size = (550, 610)
 
     def get_widget(self, parent=None):
-        return HeroSiegeWidget(config_dir=CONFIG_DIR, parent=parent)
+        return HeroSiegeWidget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

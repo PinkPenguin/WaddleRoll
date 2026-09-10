@@ -7,10 +7,12 @@ Plugin wrapper connecting the RimWorld screen to the launcher shell.
 from pathlib import Path
 
 from core.plugin_base import GameModule
+from modules.fallout4.module import ASSETS_DIR
 from modules.rimworld.ui import RimworldWidget
 from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "rimworld" / "config"
+ASSETS_DIR = get_app_root() / "modules" / "rimworld" / "assets"
 
 
 class Module(GameModule):
@@ -26,4 +28,4 @@ class Module(GameModule):
     min_size = (750, 680)
 
     def get_widget(self, parent=None):
-        return RimworldWidget(config_dir=CONFIG_DIR, parent=parent)
+        return RimworldWidget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

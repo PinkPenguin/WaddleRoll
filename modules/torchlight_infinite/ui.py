@@ -45,6 +45,9 @@ from modules.torchlight_infinite.editor import open_skills_editor, open_heroes_e
 from ui.version_badge import VersionBadge
 from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.background_widget import BackgroundWidget
+from ui.assets import find_module_background
+
 
 # ── Palette: electric cyan/teal against deep indigo -- new hue family ───
 BG         = "#0a0e18"
@@ -108,10 +111,15 @@ def _action_button(text: str, color: str, compact: bool = False) -> QPushButton:
 
 
 class TorchlightInfiniteWidget(QWidget):
-    def __init__(self, config_dir: Path, parent=None):
+    def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
         self.config_dir = Path(config_dir)
         self.setStyleSheet(f"background-color: {BG};")
+
+        bg_path = find_module_background(assets_dir)
+        self._background = BackgroundWidget(bg_path, parent=self)
+        self._background.setGeometry(self.rect())
+        self._background.lower()
 
         self.skills = load_skills(self.config_dir / "skills.yaml")
         self.heroes = load_heroes(self.config_dir / "heroes.yaml")
@@ -122,6 +130,22 @@ class TorchlightInfiniteWidget(QWidget):
 
         self._build_ui()
         self._restore_last_roll()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._background.setGeometry(self.rect())
+
+    def showEvent(self, event):
+        # resizeEvent alone isn't reliable here -- Qt's resize() is a
+        # no-op (fires NO event at all) if the target size happens to
+        # already match the widget's current size, which can leave the
+        # background stuck at whatever geometry existed at __init__
+        # time (before this widget was ever placed in its real parent
+        # layout). showEvent is guaranteed to fire whenever the widget
+        # actually becomes visible, with its geometry already finalized
+        # by then, so this catches the case resizeEvent can silently miss.
+        super().showEvent(event)
+        self._background.setGeometry(self.rect())
 
     # ── UI construction ───────────────────────────────────────────────
 

@@ -7,10 +7,12 @@ Plugin wrapper connecting the Pokemon screen to the launcher shell.
 from pathlib import Path
 
 from core.plugin_base import GameModule
+from modules.fallout4.module import ASSETS_DIR
 from modules.pokemon.ui import PokemonWidget
 from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "pokemon" / "config"
+ASSETS_DIR = get_app_root() / "modules" / "pokemon" / "assets"
 
 
 class Module(GameModule):
@@ -25,8 +27,8 @@ class Module(GameModule):
     # Unmeasured placeholder -- needs a real sizeHint() measurement once
     # this is running with real data (and once team_size=6 shows all
     # six slot rows at once, which is the tallest the panel ever gets).
-    default_size = (520, 680)
-    min_size = (520, 680)
+    default_size = (680, 680)
+    min_size = (680, 680)
 
     def get_widget(self, parent=None):
-        return PokemonWidget(config_dir=CONFIG_DIR, parent=parent)
+        return PokemonWidget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

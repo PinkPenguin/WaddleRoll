@@ -4,13 +4,13 @@ modules/poe1/module.py
 Plugin wrapper connecting the PoE1 screen to the launcher shell.
 """
 
-from pathlib import Path
+from core.paths import get_app_root
 
 from core.plugin_base import GameModule
 from modules.poe1.ui import PoE1Widget
-from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "poe1" / "config"
+ASSETS_DIR = get_app_root() / "modules" / "poe1" / "assets"
 
 
 class Module(GameModule):
@@ -27,8 +27,8 @@ class Module(GameModule):
     # measured size as a starting guess. Still needs its own real
     # sizeHint() measurement once there's actual skill/class data loaded
     # -- don't trust this number as final.
-    default_size = (480, 660)
-    min_size = (480, 660)
+    default_size = (500, 660)
+    min_size = (500, 660)
 
     def get_widget(self, parent=None):
-        return PoE1Widget(config_dir=CONFIG_DIR, parent=parent)
+        return PoE1Widget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

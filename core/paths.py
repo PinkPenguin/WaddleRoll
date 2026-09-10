@@ -62,20 +62,43 @@ def get_bundled_resource_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
+RESOURCE_SUBFOLDERS = ["config", "assets"]  # per-module subfolders that get extracted from bundled defaults to the persistent location
+
+
+def _extract_missing_files(bundled_subfolder: Path, bundled_root: Path, persistent_root: Path) -> None:
+    """Copies every file under bundled_subfolder to its equivalent
+    persistent path, skipping anything that already exists there."""
+    if not bundled_subfolder.exists():
+        return
+    for bundled_file in bundled_subfolder.rglob("*"):
+        if bundled_file.is_dir():
+            continue
+        relative = bundled_file.relative_to(bundled_root)
+        target = persistent_root / relative
+        if target.exists():
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(bundled_file, target)
+
+
 def ensure_resources_extracted() -> None:
     """
-    Copies each module's bundled default config file to its persistent
-    location, but ONLY if it doesn't already exist there -- never
-    overwrites anything a returning user already has. Safe to call on
-    every single launch; a no-op once everything's already extracted.
-    Must run before any module tries to load its config (i.e. before
-    MainWindow/discover_modules()).
+    Copies each bundled default resource file -- per-module config/
+    assets (see RESOURCE_SUBFOLDERS) and the top-level launcher-wide
+    assets/ folder (background/logo for the picker itself, not tied to
+    any module) -- to its persistent location, but ONLY if it doesn't
+    already exist there -- never overwrites anything a returning user
+    already has. Safe to call on every single launch; a no-op once
+    everything's already extracted. Must run before any module tries
+    to load its config (i.e. before MainWindow/discover_modules()).
     """
     bundled_root = get_bundled_resource_root()
     persistent_root = get_app_root()
 
     if bundled_root == persistent_root:
         return  # running from source -- same tree, nothing to extract
+
+    _extract_missing_files(bundled_root / "assets", bundled_root, persistent_root)
 
     bundled_modules_dir = bundled_root / "modules"
     if not bundled_modules_dir.exists():
@@ -84,16 +107,6 @@ def ensure_resources_extracted() -> None:
     for module_dir in bundled_modules_dir.iterdir():
         if not module_dir.is_dir():
             continue
-        bundled_config_dir = module_dir / "config"
-        if not bundled_config_dir.exists():
-            continue
 
-        for bundled_file in bundled_config_dir.rglob("*"):
-            if bundled_file.is_dir():
-                continue
-            relative = bundled_file.relative_to(bundled_root)
-            target = persistent_root / relative
-            if target.exists():
-                continue
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(bundled_file, target)
+        for subfolder_name in RESOURCE_SUBFOLDERS:
+            _extract_missing_files(module_dir / subfolder_name, bundled_root, persistent_root)

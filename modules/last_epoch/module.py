@@ -11,6 +11,7 @@ from modules.last_epoch.ui import LastEpochWidget
 from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "last_epoch" / "config"
+ASSETS_DIR = get_app_root() / "modules" / "last_epoch" / "assets"
 
 
 class Module(GameModule):
@@ -27,4 +28,4 @@ class Module(GameModule):
     min_size = (580, 600)
 
     def get_widget(self, parent=None):
-        return LastEpochWidget(config_dir=CONFIG_DIR, parent=parent)
+        return LastEpochWidget(config_dir=CONFIG_DIR,assets_dir=ASSETS_DIR, parent=parent)

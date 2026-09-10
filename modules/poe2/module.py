@@ -11,6 +11,7 @@ from modules.poe2.ui import PoE2Widget
 from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "poe2" / "config"
+ASSETS_DIR = get_app_root() / "modules" / "poe2" / "assets"
 
 
 class Module(GameModule):
@@ -22,8 +23,8 @@ class Module(GameModule):
     accent_color = "#c9a227"       # keep in sync with GOLD in ui.py
     icon = "💎"
 
-    default_size = (480, 640)
-    min_size = (480, 640)
+    default_size = (550, 700)
+    min_size = (550, 700)
 
     def get_widget(self, parent=None):
-        return PoE2Widget(config_dir=CONFIG_DIR, parent=parent)
+        return PoE2Widget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

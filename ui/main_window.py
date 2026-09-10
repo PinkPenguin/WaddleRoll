@@ -20,9 +20,9 @@ from ui.game_picker import GamePicker, MULTI_COLUMN_THRESHOLD
 from ui.module_visibility import open_module_visibility_dialog
 
 BG = "#F280A1"
-PICKER_DEFAULT_SIZE = (420, 620)     # single column
-PICKER_GRID_SIZE = (720, 620)        # 2-column grid -- needs real width, not just the single-column size stretched
-PICKER_MIN_SIZE = (420, 700)
+PICKER_DEFAULT_SIZE = (420, 650)     # single column
+PICKER_GRID_SIZE = (580, 720)        # 2-column grid -- needs real width, not just the single-column size stretched
+PICKER_MIN_SIZE = (420, 720)
 
 
 class MainWindow(QMainWindow):

@@ -23,6 +23,12 @@ from PySide6.QtWidgets import (
     QPushButton,
 )
 from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QPainter, QPainterPath, QPixmap
+
+from core.paths import get_app_root
+from core.launcher_settings import load_launcher_visual_settings
+from ui.assets import find_asset, find_module_card
+from ui.background_widget import BackgroundWidget
 
 BG = "#F280A1"
 CARD_BG = "#20101a"
@@ -34,15 +40,60 @@ TEXT_DIM = "#a3708f"
 MULTI_COLUMN_THRESHOLD = 6   # switch from 1 column to a grid once more than this many modules are visible
 GRID_COLUMNS = 2
 
+LAUNCHER_ASSETS_DIR = get_app_root() / "assets"   # top-level, not under any module -- background/logo for the picker itself
+
 
 class GameCard(QWidget):
     clicked = Signal()
+    CORNER_RADIUS = 4
 
     def __init__(self, module, parent=None):
         super().__init__(parent)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.setMinimumHeight(70)
+
+        assets_dir = get_app_root() / "modules" / module.id / "assets"
+        card_image = find_module_card(assets_dir)
+
+        self._card_pixmap = QPixmap(str(card_image)) if card_image else None
+
+        if self._card_pixmap:
+            # Image-only card, per the "everything's in the image, no
+            # text/icon/description needed" decision -- paints the
+            # crop-to-fill art directly rather than embedding a
+            # BackgroundWidget child, since there's nothing else
+            # layered on top of it that would need keeping separate.
+            self.setStyleSheet("GameCard { border: none; border-radius: 4px; }")
+        else:
+            self._build_text_card(module)
+
+    def paintEvent(self, event):
+        if not self._card_pixmap or self._card_pixmap.isNull():
+            super().paintEvent(event)
+            return
+
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
+
+        # Clip to the same rounded-corner shape the text-based cards
+        # already use, so an image card doesn't look inconsistent
+        # sitting next to one that hasn't gotten art yet.
+        path = QPainterPath()
+        path.addRoundedRect(0, 0, self.width(), self.height(), self.CORNER_RADIUS, self.CORNER_RADIUS)
+        painter.setClipPath(path)
+
+        scaled = self._card_pixmap.scaled(
+            self.size(),
+            Qt.AspectRatioMode.KeepAspectRatioByExpanding,
+            Qt.TransformationMode.SmoothTransformation,
+        )
+        x = (self.width() - scaled.width()) // 2
+        y = (self.height() - scaled.height()) // 2
+        painter.drawPixmap(x, y, scaled)
+
+    def _build_text_card(self, module):
         self.setStyleSheet(f"""
             GameCard {{
                 background-color: {CARD_BG};
@@ -91,13 +142,39 @@ class GamePicker(QWidget):
         super().__init__(parent)
         self.setStyleSheet(f"background-color: {BG};")
 
+        launcher_visuals = load_launcher_visual_settings()
+
+        # No-op until assets/background.png (or .jpg) exists at the app
+        # root -- same pattern as every module's own background, so
+        # this is always safe to construct regardless of whether real
+        # art has been added yet.
+        bg_path = None if launcher_visuals["ignore_background"] else find_asset(LAUNCHER_ASSETS_DIR, "background")
+        self._background = BackgroundWidget(bg_path, parent=self)
+        self._background.setGeometry(self.rect())
+        self._background.lower()
+
         outer_layout = QVBoxLayout(self)
         outer_layout.setContentsMargins(40, 40, 40, 40)
         outer_layout.setSpacing(12)
 
-        title = QLabel("🐧 WADDLEROLL")
+        # Logo image replaces the plain emoji+text title when present --
+        # unlike a module's own title (which stays as text even once a
+        # background exists), the picker is the actual brand identity
+        # screen, so a real logo graphic is worth swapping in here
+        # specifically.
+        logo_path = None if launcher_visuals["ignore_logo"] else find_asset(LAUNCHER_ASSETS_DIR, "logo")
+        if logo_path:
+            logo_pixmap = QPixmap(str(logo_path))
+            if logo_pixmap.width() > 360 or logo_pixmap.height() > 140:
+                logo_pixmap = logo_pixmap.scaled(
+                    360, 140, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation
+                )
+            title = QLabel()
+            title.setPixmap(logo_pixmap)
+        else:
+            title = QLabel("🐧 WADDLEROLL")
+            title.setStyleSheet(f"color: {TEXT}; font-size: 32px; font-weight: bold; letter-spacing: 1px;")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title.setStyleSheet(f"color: {TEXT}; font-size: 32px; font-weight: bold; letter-spacing: 1px;")
         outer_layout.addWidget(title)
 
         subtitle = QLabel("Choose a game to randomize a build")
@@ -152,6 +229,17 @@ class GamePicker(QWidget):
 
         scroll.setWidget(cards_widget)
         outer_layout.addWidget(scroll, stretch=1)
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._background.setGeometry(self.rect())
+
+    def showEvent(self, event):
+        # Same fix as every module -- resizeEvent alone isn't reliable
+        # here, since Qt's resize() is a no-op (fires no event at all)
+        # if the target size happens to already match the current one.
+        super().showEvent(event)
+        self._background.setGeometry(self.rect())
 
     def _make_card(self, module) -> GameCard:
         card = GameCard(module)

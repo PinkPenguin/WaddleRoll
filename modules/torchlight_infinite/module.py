@@ -8,11 +8,12 @@ launcher shell.
 from pathlib import Path
 
 from core.plugin_base import GameModule
+from modules.fallout4.module import ASSETS_DIR
 from modules.torchlight_infinite.ui import TorchlightInfiniteWidget
 from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "torchlight_infinite" / "config"
-
+ASSETS_DIR = get_app_root() / "modules" / "torchlight_infinite" / "assets"
 
 class Module(GameModule):
     id = "torchlight_infinite"
@@ -30,4 +31,4 @@ class Module(GameModule):
     min_size = (520, 640)
 
     def get_widget(self, parent=None):
-        return TorchlightInfiniteWidget(config_dir=CONFIG_DIR, parent=parent)
+        return TorchlightInfiniteWidget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

@@ -11,6 +11,7 @@ from modules.dota2.ui import Dota2Widget
 from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "dota2" / "config"
+ASSETS_DIR = get_app_root() / "modules" / "dota2" / "assets"
 
 
 class Module(GameModule):
@@ -28,4 +29,4 @@ class Module(GameModule):
     min_size = (480, 620)
 
     def get_widget(self, parent=None):
-        return Dota2Widget(config_dir=CONFIG_DIR, parent=parent)
+        return Dota2Widget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

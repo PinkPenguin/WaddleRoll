@@ -55,6 +55,8 @@ from modules.rimworld.editor import (
 from ui.slot_machine import SlotMachine
 from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.background_widget import BackgroundWidget
+from ui.assets import find_module_background
 
 # ── Palette: muted slate-gray + burnt orange -- desaturated-neutral
 # base with a warm accent, distinct from every saturated-hue module ─────
@@ -106,10 +108,15 @@ def _primary_button(text: str) -> QPushButton:
 
 
 class RimworldWidget(QWidget):
-    def __init__(self, config_dir: Path, parent=None):
+    def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
         self.config_dir = Path(config_dir)
         self.setStyleSheet(f"background-color: {BG};")
+
+        bg_path = find_module_background(assets_dir)
+        self._background = BackgroundWidget(bg_path, parent=self)
+        self._background.setGeometry(self.rect())
+        self._background.lower()
 
         self.structures = load_structures(self.config_dir / "structures.yaml")
         self.memes = load_memes(self.config_dir / "memes.yaml")
@@ -125,6 +132,22 @@ class RimworldWidget(QWidget):
 
         self._build_ui()
         self._restore_last_roll()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._background.setGeometry(self.rect())
+
+    def showEvent(self, event):
+        # resizeEvent alone isn't reliable here -- Qt's resize() is a
+        # no-op (fires NO event at all) if the target size happens to
+        # already match the widget's current size, which can leave the
+        # background stuck at whatever geometry existed at __init__
+        # time (before this widget was ever placed in its real parent
+        # layout). showEvent is guaranteed to fire whenever the widget
+        # actually becomes visible, with its geometry already finalized
+        # by then, so this catches the case resizeEvent can silently miss.
+        super().showEvent(event)
+        self._background.setGeometry(self.rect())
 
     # ── UI construction ───────────────────────────────────────────────
 
