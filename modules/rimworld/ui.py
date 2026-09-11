@@ -57,6 +57,7 @@ from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
+from ui.colors import hex_to_rgba
 
 # ── Palette: muted slate-gray + burnt orange -- desaturated-neutral
 # base with a warm accent, distinct from every saturated-hue module ─────
@@ -111,7 +112,8 @@ class RimworldWidget(QWidget):
     def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
         self.config_dir = Path(config_dir)
-        self.setStyleSheet(f"background-color: {BG};")
+        self.setObjectName("rimworld_root")
+        self.setStyleSheet(f"QWidget#rimworld_root {{ background-color: {BG}; }}")
 
         bg_path = find_module_background(assets_dir)
         self._background = BackgroundWidget(bg_path, parent=self)
@@ -157,8 +159,12 @@ class RimworldWidget(QWidget):
         root.setSpacing(14)
 
         title = QLabel("RIMWORLD — IDEOLOGY ROLLER")
-        title.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;")
-        root.addWidget(title)
+        title.setStyleSheet(f"""
+            color: {TEXT}; background-color: {hex_to_rgba(BG, 230)};
+            border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 4px 14px;
+            font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;
+        """)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignLeft)
 
         # Tool row
         tools = QHBoxLayout()
@@ -177,21 +183,46 @@ class RimworldWidget(QWidget):
         root.addWidget(_divider())
 
         # Reveal slot machine -- compact (single line), glow disabled
-        # (see module docstring for why), reused for every reveal
+        # (see module docstring for why), reused for every reveal.
+        # Sits bare on root unlike every other module's SlotMachine
+        # (which lives inside a translucent panel) -- wrapped in its
+        # own small frame here since there's nothing else backing it.
+        slot_frame = QFrame()
+        slot_frame.setObjectName("rimworld_slot_frame")
+        slot_frame.setStyleSheet(f"""
+            QFrame#rimworld_slot_frame {{
+                background-color: {hex_to_rgba(BG_PANEL, 230)};
+                border: 1px solid {ACCENT_DIM};
+                border-radius: 8px;
+            }}
+        """)
+        slot_frame_layout = QVBoxLayout(slot_frame)
+        slot_frame_layout.setContentsMargins(6, 4, 6, 4)
+
         self.slot_machine = SlotMachine(
             text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY,
             compact=True, show_glow=False,
         )
-        root.addWidget(self.slot_machine)
+        slot_frame_layout.addWidget(self.slot_machine)
+        root.addWidget(slot_frame)
 
         # IDEOLOGY summary -- Structure + 3 memes, larger font, fixed
         # (not scrollable, there's only ever at most 4 of these)
         ideology_label = QLabel("IDEOLOGY")
-        ideology_label.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
-        root.addWidget(ideology_label)
+        ideology_label.setStyleSheet(f"""
+            color: {ACCENT}; background-color: {hex_to_rgba(BG, 230)};
+            border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 2px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;
+        """)
+        root.addWidget(ideology_label, alignment=Qt.AlignmentFlag.AlignLeft)
 
         ideology_panel = QFrame()
-        ideology_panel.setStyleSheet(f"background-color: {BG_PANEL};")
+        ideology_panel.setObjectName("rimworld_ideology_panel")
+        ideology_panel.setStyleSheet(f"""
+            QFrame#rimworld_ideology_panel {{
+                background-color: {hex_to_rgba(BG_PANEL, 230)};
+            }}
+        """)
         self.ideology_layout = QVBoxLayout(ideology_panel)
         self.ideology_layout.setContentsMargins(14, 10, 14, 10)
         self.ideology_layout.setSpacing(4)
@@ -199,14 +230,19 @@ class RimworldWidget(QWidget):
 
         # PRECEPTS -- the existing scrollable growing list
         precepts_label = QLabel("PRECEPTS")
-        precepts_label.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
-        root.addWidget(precepts_label)
+        precepts_label.setStyleSheet(f"""
+            color: {ACCENT}; background-color: {hex_to_rgba(BG, 230)};
+            border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 2px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;
+        """)
+        root.addWidget(precepts_label, alignment=Qt.AlignmentFlag.AlignLeft)
 
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
-        scroll.setStyleSheet(f"QScrollArea {{ background-color: {BG_PANEL}; border: none; }}")
+        scroll.setStyleSheet(f"QScrollArea {{ background-color: {hex_to_rgba(BG_PANEL, 230)}; border: none; }}")
         results_widget = QWidget()
-        results_widget.setStyleSheet(f"background-color: {BG_PANEL};")
+        results_widget.setObjectName("rimworld_results_widget")
+        results_widget.setStyleSheet(f"QWidget#rimworld_results_widget {{ background-color: {hex_to_rgba(BG_PANEL, 230)}; }}")
         self.results_layout = QVBoxLayout(results_widget)
         self.results_layout.setContentsMargins(14, 10, 14, 10)
         self.results_layout.setSpacing(4)
@@ -216,7 +252,7 @@ class RimworldWidget(QWidget):
 
         self.warning_lbl = QLabel("")
         self.warning_lbl.setWordWrap(True)
-        self.warning_lbl.setStyleSheet(f"color: {WARN}; font-family: '{FONT_FAMILY}'; font-size: 11px; border: none;")
+        self.warning_lbl.setStyleSheet(f"color: {WARN}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 11px; border: none;")
         root.addWidget(self.warning_lbl)
 
         # Footer
@@ -243,12 +279,12 @@ class RimworldWidget(QWidget):
 
     def _append_ideology_row(self, label: str, value: str):
         row = QLabel(f"<b>{label}:</b> {value}")
-        row.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 18px; font-weight: bold; border: none;")
+        row.setStyleSheet(f"color: {TEXT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 18px; font-weight: bold; border: none;")
         self.ideology_layout.addWidget(row)
 
     def _append_precept_row(self, issue: str, precept: str):
         row = QLabel(f"<b>{issue}:</b> {precept}")
-        row.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 13px; border: none;")
+        row.setStyleSheet(f"color: {TEXT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 13px; border: none;")
         # Alphabetical position -- the underlying roll and reveal order
         # both stay randomized (the extremity tally's fairness depends
         # on that), this only reorders where the row lands visually.

@@ -18,6 +18,8 @@ import yaml
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QLabel, QLineEdit
 from PySide6.QtCore import Qt
 
+from ui.colors import hex_to_rgba
+
 
 def load_game_version(config_dir: Path) -> str:
     path = Path(config_dir) / "version.yaml"
@@ -49,7 +51,11 @@ class VersionBadge(QWidget):
         layout.setSpacing(6)
 
         label = QLabel("Data compiled for game version:")
-        label.setStyleSheet(f"color: {text_color}; font-family: '{font_family}'; font-size: 10px;")
+        label.setStyleSheet(f"""
+            color: {text_color}; background-color: {hex_to_rgba(bg_color, 230)};
+            border: 1px solid {accent_color}; border-radius: 6px; padding: 2px 8px;
+            font-family: '{font_family}'; font-size: 10px;
+        """)
         layout.addWidget(label)
 
         self.edit = QLineEdit(load_game_version(self.config_dir))

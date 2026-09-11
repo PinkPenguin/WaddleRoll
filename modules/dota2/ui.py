@@ -46,6 +46,7 @@ from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
+from ui.colors import hex_to_rgba
 
 # ── Palette: royal blue against near-black navy -- new hue family ───────
 BG         = "#0a0c14"
@@ -63,7 +64,7 @@ WIKI_SEARCH_URL = "https://liquipedia.net/dota2/index.php?search=%s"
 
 def _checkbox_qss(text_color: str) -> str:
     return f"""
-        QCheckBox {{ color: {text_color}; font-family: '{FONT_FAMILY}'; font-size: 11px; }}
+        QCheckBox {{ color: {text_color}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 11px; }}
         QCheckBox::indicator {{
             width: 14px; height: 14px;
             border: 1px solid {ACCENT}; border-radius: 2px;
@@ -130,7 +131,16 @@ class Dota2Widget(QWidget):
     def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
         self.config_dir = Path(config_dir)
-        self.setStyleSheet(f"background-color: {BG};")
+        # Scoped with an ID selector -- a bare, unscoped rule here would
+        # cascade this background-color down to every child widget too
+        # (labels, buttons, everything), which is exactly what was
+        # silently happening this whole time. Invisible before the
+        # background image existed (every child secretly painting the
+        # same flat color as intended was indistinguishable from
+        # correct), and visible the moment the root's real background
+        # became art instead of a flat color.
+        self.setObjectName("dota2_root")
+        self.setStyleSheet(f"QWidget#dota2_root {{ background-color: {BG}; }}")
 
         bg_path = find_module_background(assets_dir)
         self._background = BackgroundWidget(bg_path, parent=self)
@@ -170,10 +180,14 @@ class Dota2Widget(QWidget):
         root.setSpacing(14)
 
         title = QLabel("DOTA 2 — HERO ROLLER")
-        title.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 23px; font-weight: bold;")
-        root.addWidget(title)
+        title.setStyleSheet(f"""
+            color: {TEXT}; background-color: {hex_to_rgba(BG, 230)};
+            border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 4px 10px;
+            font-family: '{FONT_FAMILY}'; font-size: 23px; font-weight: bold;
+        """)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignLeft)
 
-        self.version_badge = VersionBadge(self.config_dir, ACCENT_DIM, ACCENT_DIM, BG, FONT_FAMILY)
+        self.version_badge = VersionBadge(self.config_dir, ACCENT, ACCENT_DIM, BG, FONT_FAMILY)
         root.addWidget(self.version_badge)
 
         # Tool row
@@ -192,20 +206,40 @@ class Dota2Widget(QWidget):
 
         # Slot machine panel -- flat, no border, no radius at all
         panel = QFrame()
-        panel.setStyleSheet(f"background-color: {BG_PANEL};")
+        panel.setObjectName("dota2_panel")
+        panel.setStyleSheet(f"""
+            QFrame#dota2_panel {{
+                background-color: {hex_to_rgba(BG_PANEL, 240)};
+                border: 1px solid {ACCENT_DIM};
+                border-radius: 12px;
+            }}
+        """)
         panel_layout = QVBoxLayout(panel)
         panel_layout.setContentsMargins(20, 22, 20, 14)
         panel_layout.setSpacing(6)
 
         hero_label = QLabel("HERO")
         hero_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        hero_label.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
+        hero_label.setStyleSheet(f"color: {ACCENT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
         panel_layout.addWidget(hero_label)
 
-        self.slot_machine = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY)
+        slot_row_frame = QFrame()
+        slot_row_frame.setObjectName("slot_row_frame")
+        slot_row_frame.setStyleSheet(f"""
+            QFrame#slot_row_frame {{
+                background-color: {hex_to_rgba(BG_PANEL, 240)};
+                border: 1px solid {ACCENT_DIM};
+                border-radius: 10px;
+            }}
+        """)
+        slot_row_layout = QVBoxLayout(slot_row_frame)
+        slot_row_layout.setContentsMargins(4, 2, 4, 2)
+
+        self.slot_machine = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True)
         self.slot_machine.clicked.connect(self._open_wiki)
         self.slot_machine.finished.connect(self._on_spin_finished)
-        panel_layout.addWidget(self.slot_machine)
+        slot_row_layout.addWidget(self.slot_machine)
+        panel_layout.addWidget(slot_row_frame)
 
         notes_row = QHBoxLayout()
         notes_row.addStretch(1)
@@ -221,19 +255,39 @@ class Dota2Widget(QWidget):
         self.warning_lbl = QLabel("")
         self.warning_lbl.setWordWrap(True)
         self.warning_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.warning_lbl.setStyleSheet(f"color: {WARN}; font-family: '{FONT_FAMILY}'; font-size: 11px;")
+        self.warning_lbl.setStyleSheet(f"color: {WARN}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 11px;")
         root.addWidget(self.warning_lbl)
 
         root.addStretch(1)
 
-        # Lock row
+        # Lock row -- no alignment fix needed here like title/warning_lbl
+        # needed: the trailing addStretch(1) already absorbs the extra
+        # space, so these two size to their content naturally as-is.
         locks = QHBoxLayout()
         locks.setSpacing(16)
         lock_label = QLabel("LOCK:")
-        lock_label.setStyleSheet(f"color: {ACCENT_DIM}; font-family: '{FONT_FAMILY}'; font-size: 11px;")
+        lock_label.setStyleSheet(f"""
+            color: {ACCENT}; background-color: {hex_to_rgba(BG, 230)};
+            border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 2px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        """)
         locks.addWidget(lock_label)
         self.lock_hero = QCheckBox("Hero")
-        self.lock_hero.setStyleSheet(_checkbox_qss(ACCENT_DIM))
+        self.lock_hero.setStyleSheet(f"""
+            QCheckBox {{
+                color: {ACCENT}; background-color: {hex_to_rgba(BG, 230)};
+                border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 2px 8px;
+                font-family: '{FONT_FAMILY}'; font-size: 11px;
+            }}
+            QCheckBox::indicator {{
+                width: 14px; height: 14px;
+                border: 1px solid {ACCENT}; border-radius: 2px;
+                background: transparent;
+            }}
+            QCheckBox::indicator:checked {{
+                background-color: {ACCENT}; border: 1px solid {ACCENT};
+            }}
+        """)
         locks.addWidget(self.lock_hero)
         locks.addStretch(1)
         root.addLayout(locks)

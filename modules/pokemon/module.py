@@ -27,8 +27,8 @@ class Module(GameModule):
     # Unmeasured placeholder -- needs a real sizeHint() measurement once
     # this is running with real data (and once team_size=6 shows all
     # six slot rows at once, which is the tallest the panel ever gets).
-    default_size = (680, 680)
-    min_size = (680, 680)
+    default_size = (700, 620)
+    min_size = (700, 620)
 
     def get_widget(self, parent=None):
         return PokemonWidget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

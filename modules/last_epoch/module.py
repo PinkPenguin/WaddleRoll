@@ -4,11 +4,10 @@ modules/last_epoch/module.py
 Plugin wrapper connecting the Last Epoch screen to the launcher shell.
 """
 
-from pathlib import Path
+from core.paths import get_app_root
 
 from core.plugin_base import GameModule
 from modules.last_epoch.ui import LastEpochWidget
-from core.paths import get_app_root
 
 CONFIG_DIR = get_app_root() / "modules" / "last_epoch" / "config"
 ASSETS_DIR = get_app_root() / "modules" / "last_epoch" / "assets"
@@ -24,8 +23,8 @@ class Module(GameModule):
     icon = "⏳"
 
     # Distinct window proportions per-module, per your request
-    default_size = (580, 600)
-    min_size = (580, 600)
+    default_size = (580, 650)
+    min_size = (580, 650)
 
     def get_widget(self, parent=None):
-        return LastEpochWidget(config_dir=CONFIG_DIR,assets_dir=ASSETS_DIR, parent=parent)
+        return LastEpochWidget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)

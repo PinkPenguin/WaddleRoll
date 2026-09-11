@@ -52,6 +52,7 @@ from ui.version_badge import VersionBadge
 from ui.config_folder import open_config_folder
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
+from ui.colors import hex_to_rgba
 
 # ── Palette: two colors in real tension, not one accent on flat dark ────
 INK      = "#100b0a"   # warm near-black -- ink/stage-shadow, not neutral gray
@@ -97,7 +98,9 @@ class TornPanel(QWidget):
             points.append((rng.uniform(0, jag), h - (h * i / steps)))
 
         polygon = QPolygonF([QPointF(x, y) for x, y in points])
-        painter.setBrush(QColor(BG_PANEL))
+        panel_fill = QColor(BG_PANEL)
+        panel_fill.setAlpha(230)
+        painter.setBrush(panel_fill)
         painter.setPen(QPen(QColor(MUSTARD), 2))
         painter.drawPolygon(polygon)
 
@@ -178,7 +181,8 @@ class HeroSiegeWidget(QWidget):
     def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
         self.config_dir = Path(config_dir)
-        self.setStyleSheet(f"background-color: {INK};")
+        self.setObjectName("hero_siege_root")
+        self.setStyleSheet(f"QWidget#hero_siege_root {{ background-color: {INK}; }}")
 
         bg_path = find_module_background(assets_dir)
         self._background = BackgroundWidget(bg_path, parent=self)
@@ -221,8 +225,12 @@ class HeroSiegeWidget(QWidget):
         # the personality on its own
         title = QLabel("HERO SIEGE")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title.setStyleSheet(f"color: {BLOOD}; font-family: '{DISPLAY_FONT}'; font-size: 40px; letter-spacing: 1px;")
-        root.addWidget(title)
+        title.setStyleSheet(f"""
+            color: {BLOOD}; background-color: {hex_to_rgba(INK, 230)};
+            border: 1px solid {MUSTARD}; border-radius: 6px; padding: 4px 16px;
+            font-family: '{DISPLAY_FONT}'; font-size: 40px; letter-spacing: 1px;
+        """)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.version_badge = VersionBadge(self.config_dir, MUSTARD, MUSTARD, INK, BODY_FONT)
         root.addWidget(self.version_badge)
@@ -233,12 +241,30 @@ class HeroSiegeWidget(QWidget):
 
         self.wildcard_cb = QCheckBox("Enable Relic Wildcard")
         self.wildcard_cb.setChecked(self.settings.get("wildcard_enabled", True))
-        self.wildcard_cb.setStyleSheet(_checkbox_qss(BONE))
+        self.wildcard_cb.setStyleSheet(f"""
+            QCheckBox {{
+                color: {BONE}; background-color: {hex_to_rgba(INK, 230)};
+                border: 1px solid {MUSTARD}; border-radius: 6px; padding: 2px 8px;
+                font-family: '{BODY_FONT}'; font-size: 11px;
+            }}
+            QCheckBox::indicator {{
+                width: 14px; height: 14px;
+                border: 1px solid {MUSTARD}; border-radius: 2px;
+                background: transparent;
+            }}
+            QCheckBox::indicator:checked {{
+                background-color: {MUSTARD}; border: 1px solid {MUSTARD};
+            }}
+        """)
         self.wildcard_cb.toggled.connect(self._persist_settings)
         opts.addWidget(self.wildcard_cb)
 
         chance_label = QLabel("Chance:")
-        chance_label.setStyleSheet(f"color: {BONE}; font-family: '{BODY_FONT}'; font-size: 12px;")
+        chance_label.setStyleSheet(f"""
+            color: {BONE}; background-color: {hex_to_rgba(INK, 230)};
+            border: 1px solid {MUSTARD}; border-radius: 6px; padding: 2px 8px;
+            font-family: '{BODY_FONT}'; font-size: 12px;
+        """)
         opts.addWidget(chance_label)
 
         self.wildcard_chance_pct = round(self.settings.get("wildcard_chance", 0.12) * 100)
@@ -248,9 +274,13 @@ class HeroSiegeWidget(QWidget):
         opts.addWidget(chance_minus)
 
         self.chance_value_lbl = QLabel(f"{self.wildcard_chance_pct}%")
-        self.chance_value_lbl.setFixedWidth(40)
+        self.chance_value_lbl.setFixedWidth(48)
         self.chance_value_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.chance_value_lbl.setStyleSheet(f"color: {MUSTARD}; font-family: '{BODY_FONT}'; font-size: 13px; font-weight: bold;")
+        self.chance_value_lbl.setStyleSheet(f"""
+            color: {MUSTARD}; background-color: {hex_to_rgba(INK, 230)};
+            border: 1px solid {MUSTARD}; border-radius: 6px; padding: 2px 4px;
+            font-family: '{BODY_FONT}'; font-size: 13px; font-weight: bold;
+        """)
         opts.addWidget(self.chance_value_lbl)
 
         chance_plus = _stepper_btn("+")
@@ -282,19 +312,28 @@ class HeroSiegeWidget(QWidget):
         # Output panel -- real torn/jagged shape, not another rounded QFrame
         panel = TornPanel()
 
-        self.slot_machine = SlotMachine(text_color=BONE, dim_color=MUSTARD, font_family=BODY_FONT)
+        self.slot_machine = SlotMachine(text_color=BONE, dim_color=MUSTARD, font_family=BODY_FONT, compact=True)
         self.slot_machine.finished.connect(self._on_class_landed)
         panel.layout.addWidget(self.slot_machine)
 
-        # Mode + result merged into one line -- no floating all-caps
-        # eyebrow caption. Wildcard gets a small inline tag only when
-        # it's actually notable; a normal skill roll doesn't announce
-        # "SKILL" every single time.
-        self.result_lbl = QLabel("Roll to get started")
-        self.result_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.result_lbl.setWordWrap(True)
-        self.result_lbl.setStyleSheet(f"color: {BONE}; font-family: '{BODY_FONT}'; font-size: 19px;")
-        panel.layout.addWidget(self.result_lbl)
+        # Skill/relic reveal -- a real second SlotMachine, smaller than
+        # the class reveal, that starts spinning once the class lands
+        # rather than the old instant text pop-in (read as abrupt, not
+        # a satisfying second beat). The wildcard tag needed splitting
+        # into its own small label since a SlotMachine's plain-text
+        # labels can't embed the old inline colored <span> the way the
+        # previous QLabel-based result text did.
+        self.skill_slot = SlotMachine(
+            text_color=BONE, dim_color=MUSTARD, font_family=BODY_FONT,
+            compact=True, current_font_size=22,
+        )
+        self.skill_slot.finished.connect(self._on_skill_landed)
+        panel.layout.addWidget(self.skill_slot)
+
+        self.wildcard_tag_lbl = QLabel("")
+        self.wildcard_tag_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.wildcard_tag_lbl.setStyleSheet(f"color: {ROT}; background: transparent; font-family: '{BODY_FONT}'; font-size: 13px;")
+        panel.layout.addWidget(self.wildcard_tag_lbl)
 
         self.exclude_btn = _flat_button("Exclude This Skill")
         self.exclude_btn.setEnabled(False)
@@ -304,13 +343,13 @@ class HeroSiegeWidget(QWidget):
         self.warning_lbl = QLabel("")
         self.warning_lbl.setWordWrap(True)
         self.warning_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.warning_lbl.setStyleSheet(f"color: {ROT}; font-family: '{BODY_FONT}'; font-size: 11px; border: none;")
+        self.warning_lbl.setStyleSheet(f"color: {ROT}; background: transparent; font-family: '{BODY_FONT}'; font-size: 11px; border: none;")
         panel.layout.addWidget(self.warning_lbl)
 
         self.debug_lbl = QLabel("")
         self.debug_lbl.setWordWrap(True)
         self.debug_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.debug_lbl.setStyleSheet(f"color: {MUSTARD}; font-family: '{BODY_FONT}'; font-size: 10px; border: none;")
+        self.debug_lbl.setStyleSheet(f"color: {MUSTARD}; background: transparent; font-family: '{BODY_FONT}'; font-size: 10px; border: none;")
         panel.layout.addWidget(self.debug_lbl)
 
         panel.layout.addStretch(1)
@@ -321,12 +360,40 @@ class HeroSiegeWidget(QWidget):
         footer.setSpacing(14)
 
         self.lock_class_cb = QCheckBox("Lock Class")
-        self.lock_class_cb.setStyleSheet(_checkbox_qss(MUSTARD))
+        self.lock_class_cb.setStyleSheet(f"""
+            QCheckBox {{
+                color: {MUSTARD}; background-color: {hex_to_rgba(INK, 230)};
+                border: 1px solid {MUSTARD}; border-radius: 6px; padding: 2px 8px;
+                font-family: '{BODY_FONT}'; font-size: 11px;
+            }}
+            QCheckBox::indicator {{
+                width: 14px; height: 14px;
+                border: 1px solid {MUSTARD}; border-radius: 2px;
+                background: transparent;
+            }}
+            QCheckBox::indicator:checked {{
+                background-color: {MUSTARD}; border: 1px solid {MUSTARD};
+            }}
+        """)
         footer.addWidget(self.lock_class_cb)
 
         self.ignore_exclusions_cb = QCheckBox("Ignore Exclusions")
         self.ignore_exclusions_cb.setChecked(self.settings.get("ignore_exclusions", False))
-        self.ignore_exclusions_cb.setStyleSheet(_checkbox_qss(MUSTARD))
+        self.ignore_exclusions_cb.setStyleSheet(f"""
+            QCheckBox {{
+                color: {MUSTARD}; background-color: {hex_to_rgba(INK, 230)};
+                border: 1px solid {MUSTARD}; border-radius: 6px; padding: 2px 8px;
+                font-family: '{BODY_FONT}'; font-size: 11px;
+            }}
+            QCheckBox::indicator {{
+                width: 14px; height: 14px;
+                border: 1px solid {MUSTARD}; border-radius: 2px;
+                background: transparent;
+            }}
+            QCheckBox::indicator:checked {{
+                background-color: {MUSTARD}; border: 1px solid {MUSTARD};
+            }}
+        """)
         self.ignore_exclusions_cb.toggled.connect(self._persist_settings)
         footer.addWidget(self.ignore_exclusions_cb)
 
@@ -344,16 +411,37 @@ class HeroSiegeWidget(QWidget):
 
         pool = [c["name"] for c in self.classes if not c.get("excluded", False)]
         self.slot_machine.start_idle(pool)
+        self.skill_slot.start_idle(self._all_skill_names())
 
-    # ── Result text ──────────────────────────────────────────────────
+    # ── Pools ────────────────────────────────────────────────────────
 
-    def _format_result_text(self, result: dict) -> str:
-        if "error" in result:
-            return result["error"]
-        text = result["result"] or "(none available)"
+    def _all_skill_names(self) -> list[str]:
+        """Flattened pool across every non-excluded class -- used for
+        the skill slot's initial idle spin, before any class is chosen."""
+        names = []
+        for c in self.classes:
+            if c.get("excluded", False):
+                continue
+            names.extend(s["name"] for s in c.get("skills", []) if not s.get("excluded", False))
+        return names
+
+    def _skill_or_relic_pool(self, result: dict) -> list[str]:
+        """Visual variety pool for the skill slot's spin, matching
+        whichever mode was actually rolled -- the chosen class's own
+        skills for a skill roll, or the relic list for a wildcard, so
+        the spin cycles through names that could plausibly belong to
+        the real result rather than an unrelated mix. Falls back to a
+        single-item pool of just the actual result if a pool somehow
+        comes up empty, since spin() needs at least one name to build
+        its ring from."""
         if result["mode"] == "relic":
-            return f'{text} <span style="color:{ROT}; font-size:13px;">· Relic Wildcard</span>'
-        return text
+            pool = [r["name"] for r in self.relics if not r.get("excluded", False)]
+            return pool or [result["result"] or "?"]
+        for c in self.classes:
+            if c.get("name") == result["class"]:
+                pool = [s["name"] for s in c.get("skills", []) if not s.get("excluded", False)]
+                return pool or [result["result"] or "?"]
+        return [result["result"] or "?"]
 
     # ── Actions ──────────────────────────────────────────────────────
 
@@ -367,7 +455,8 @@ class HeroSiegeWidget(QWidget):
             return
         self.last_result = saved
         self.slot_machine.set_static("—" if "error" in saved else saved["class"])
-        self._reveal_result(saved)
+        self.skill_slot.set_static("—" if "error" in saved else (saved.get("result") or "(none available)"))
+        self._reveal_meta(saved)
 
     def _save_last_roll(self):
         if not self.settings.get("remember_last_roll", True):
@@ -389,40 +478,65 @@ class HeroSiegeWidget(QWidget):
 
         if "error" in result:
             self.slot_machine.set_static("—")
-            self._reveal_result(result)
+            self.skill_slot.set_static("—")
+            self._reveal_meta(result)
             self._save_last_roll()
             return
 
-        self.result_lbl.setText("")
         self.exclude_btn.setEnabled(False)
         self.warning_lbl.setText("")
         self.debug_lbl.setText("")
+        self.wildcard_tag_lbl.setText("")
 
         if locked_name:
             self.slot_machine.set_static(result["class"])
-            self._reveal_result(result)
+            self.skill_slot.set_static(result["result"] or "(none available)")
+            self._reveal_meta(result)
             self._save_last_roll()
         else:
             pool = [c["name"] for c in self.classes if not c.get("excluded", False)]
             self.slot_machine.spin(pool, result["class"])
+            # Idle here, not left showing the previous roll's stale
+            # result -- spin() cleanly interrupts an idle SlotMachine,
+            # so this transitions naturally into the real reveal once
+            # the class actually lands (see _on_class_landed).
+            self.skill_slot.start_idle(self._all_skill_names())
 
     def _on_class_landed(self, class_name: str):
         """Only fires for an actual animated spin landing -- locked
-        rolls and restores call set_static(), which doesn't emit
-        finished, and reveal immediately instead."""
+        rolls and restores call set_static(), which doesn't reveal
+        instantly. Starts the skill/relic slot spinning here rather
+        than popping the result in as flat text -- a real second
+        reveal, giving the class landing its own moment before the
+        skill's own animation begins, instead of both happening at the
+        exact same instant."""
         if self.last_result:
-            self._reveal_result(self.last_result)
+            result = self.last_result
+            pool = self._skill_or_relic_pool(result)
+            skill_text = result["result"] or "(none available)"
+            self.skill_slot.spin(pool, skill_text, duration_ms=1200)
             self._save_last_roll()
 
-    def _reveal_result(self, result: dict):
-        self.result_lbl.setText(self._format_result_text(result))
+    def _on_skill_landed(self, skill_text: str):
+        """Fires once the skill/relic slot's own spin lands -- the
+        wildcard tag, warning, debug text, and exclude button all wait
+        for this rather than the class landing, since they're
+        specifically about the skill/relic result, not the class."""
+        if self.last_result:
+            self._reveal_meta(self.last_result)
 
+    def _reveal_meta(self, result: dict):
+        """Everything about a result other than the class/skill names
+        themselves, which now live in their own SlotMachines -- the
+        wildcard tag, warning text, debug text, and exclude button."""
         if "error" in result:
+            self.wildcard_tag_lbl.setText("")
             self.warning_lbl.setText("")
             self.debug_lbl.setText("")
             self.exclude_btn.setEnabled(False)
             return
 
+        self.wildcard_tag_lbl.setText("· Relic Wildcard" if result["mode"] == "relic" else "")
         self.warning_lbl.setText(result.get("warning") or "")
 
         skipped = result.get("skipped_classes") or []
@@ -438,7 +552,8 @@ class HeroSiegeWidget(QWidget):
         self.lock_class_cb.setChecked(False)
         pool = [c["name"] for c in self.classes if not c.get("excluded", False)]
         self.slot_machine.start_idle(pool)
-        self.result_lbl.setText("Roll to get started")
+        self.skill_slot.start_idle(self._all_skill_names())
+        self.wildcard_tag_lbl.setText("")
         self.warning_lbl.setText("")
         self.debug_lbl.setText("")
         self.exclude_btn.setText("Exclude This Skill")
@@ -453,6 +568,8 @@ class HeroSiegeWidget(QWidget):
             if self.slot_machine._mode == "idle":
                 pool = [c["name"] for c in self.classes if not c.get("excluded", False)]
                 self.slot_machine.start_idle(pool)
+            if self.skill_slot._mode == "idle":
+                self.skill_slot.start_idle(self._all_skill_names())
 
     def _exclude_current_skill(self):
         """Flips excluded=true on the exact skill just rolled, within the

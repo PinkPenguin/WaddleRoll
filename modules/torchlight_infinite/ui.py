@@ -47,7 +47,8 @@ from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
-
+from ui.slot_machine import SlotMachine
+from ui.colors import hex_to_rgba
 
 # ── Palette: electric cyan/teal against deep indigo -- new hue family ───
 BG         = "#0a0e18"
@@ -58,20 +59,6 @@ TEXT       = "#dceef0"
 WARN       = "#e8a34e"
 
 FONT_FAMILY = "Verdana"
-
-
-def _checkbox_qss(text_color: str) -> str:
-    return f"""
-        QCheckBox {{ color: {text_color}; font-family: '{FONT_FAMILY}'; font-size: 11px; }}
-        QCheckBox::indicator {{
-            width: 14px; height: 14px;
-            border: 1px solid {ACCENT}; border-radius: 2px;
-            background: transparent;
-        }}
-        QCheckBox::indicator:checked {{
-            background-color: {ACCENT}; border: 1px solid {ACCENT};
-        }}
-    """
 
 
 def _divider() -> QFrame:
@@ -114,7 +101,8 @@ class TorchlightInfiniteWidget(QWidget):
     def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
         self.config_dir = Path(config_dir)
-        self.setStyleSheet(f"background-color: {BG};")
+        self.setObjectName("torchlight_root")
+        self.setStyleSheet(f"QWidget#torchlight_root {{ background-color: {BG}; }}")
 
         bg_path = find_module_background(assets_dir)
         self._background = BackgroundWidget(bg_path, parent=self)
@@ -155,8 +143,12 @@ class TorchlightInfiniteWidget(QWidget):
         root.setSpacing(16)
 
         title = QLabel("TORCHLIGHT INFINITE — SKILL ROLLER")
-        title.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;")
-        root.addWidget(title)
+        title.setStyleSheet(f"""
+            color: {TEXT}; background-color: {hex_to_rgba(BG, 230)};
+            border: 1px solid {ACCENT_DIM}; border-radius: 2px; padding: 4px 14px;
+            font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;
+        """)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignLeft)
 
         self.version_badge = VersionBadge(self.config_dir, ACCENT_DIM, ACCENT_DIM, BG, FONT_FAMILY)
         root.addWidget(self.version_badge)
@@ -167,7 +159,21 @@ class TorchlightInfiniteWidget(QWidget):
 
         self.hero_trait_roll_cb = QCheckBox("Also Roll Hero Trait")
         self.hero_trait_roll_cb.setChecked(self.settings.get("hero_trait_roll_enabled", False))
-        self.hero_trait_roll_cb.setStyleSheet(_checkbox_qss(TEXT))
+        self.hero_trait_roll_cb.setStyleSheet(f"""
+            QCheckBox {{
+                color: {TEXT}; background-color: {hex_to_rgba(BG, 230)};
+                border: 1px solid {ACCENT_DIM}; border-radius: 2px; padding: 2px 8px;
+                font-family: '{FONT_FAMILY}'; font-size: 11px;
+            }}
+            QCheckBox::indicator {{
+                width: 14px; height: 14px;
+                border: 1px solid {ACCENT}; border-radius: 2px;
+                background: transparent;
+            }}
+            QCheckBox::indicator:checked {{
+                background-color: {ACCENT}; border: 1px solid {ACCENT};
+            }}
+        """)
         self.hero_trait_roll_cb.toggled.connect(self._persist_settings)
         self.hero_trait_roll_cb.toggled.connect(self._update_hero_trait_visibility)
         tools.addWidget(self.hero_trait_roll_cb)
@@ -191,22 +197,25 @@ class TorchlightInfiniteWidget(QWidget):
 
         # Output panel -- sharp-edged, bordered, distinct panel shape
         panel = QFrame()
+        panel.setObjectName("torchlight_panel")
         panel.setStyleSheet(f"""
-            background-color: {BG_PANEL};
-            border: 1px solid {ACCENT};
-            border-radius: 2px;
+            QFrame#torchlight_panel {{
+                background-color: {hex_to_rgba(BG_PANEL, 230)};
+                border: 1px solid {ACCENT};
+                border-radius: 2px;
+            }}
         """)
         panel_layout = QVBoxLayout(panel)
         panel_layout.setContentsMargins(26, 24, 26, 24)
         panel_layout.setSpacing(14)
 
         skill_label = QLabel("SKILL")
-        skill_label.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
+        skill_label.setStyleSheet(f"color: {ACCENT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
         panel_layout.addWidget(skill_label)
 
-        self.skill_lbl = QLabel("—")
-        self.skill_lbl.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;")
-        panel_layout.addWidget(self.skill_lbl)
+        self.skill_slot = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True, current_font_size=20, min_height=0)
+        self.skill_slot.finished.connect(self._on_skill_landed)
+        panel_layout.addWidget(self.skill_slot)
 
         self.exclude_btn = _action_button("Exclude This Skill", ACCENT_DIM, compact=True)
         self.exclude_btn.setEnabled(False)
@@ -216,24 +225,22 @@ class TorchlightInfiniteWidget(QWidget):
         panel_layout.addWidget(_divider())
 
         self.hero_caption = QLabel("HERO")
-        self.hero_caption.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
+        self.hero_caption.setStyleSheet(f"color: {ACCENT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
         panel_layout.addWidget(self.hero_caption)
 
-        self.hero_lbl = QLabel("—")
-        self.hero_lbl.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;")
-        panel_layout.addWidget(self.hero_lbl)
+        self.hero_slot = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True, current_font_size=20, min_height=0)
+        panel_layout.addWidget(self.hero_slot)
 
         self.trait_caption = QLabel("TRAIT")
-        self.trait_caption.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
+        self.trait_caption.setStyleSheet(f"color: {ACCENT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
         panel_layout.addWidget(self.trait_caption)
 
-        self.trait_lbl = QLabel("—")
-        self.trait_lbl.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;")
-        panel_layout.addWidget(self.trait_lbl)
+        self.trait_slot = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True, current_font_size=20, min_height=0)
+        panel_layout.addWidget(self.trait_slot)
 
         self.warning_lbl = QLabel("")
         self.warning_lbl.setWordWrap(True)
-        self.warning_lbl.setStyleSheet(f"color: {WARN}; font-family: '{FONT_FAMILY}'; font-size: 11px;")
+        self.warning_lbl.setStyleSheet(f"color: {WARN}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 11px;")
         panel_layout.addWidget(self.warning_lbl)
 
         panel_layout.addStretch(1)
@@ -243,13 +250,31 @@ class TorchlightInfiniteWidget(QWidget):
         locks = QHBoxLayout()
         locks.setSpacing(16)
         lock_label = QLabel("LOCK:")
-        lock_label.setStyleSheet(f"color: {ACCENT_DIM}; font-family: '{FONT_FAMILY}'; font-size: 11px;")
+        lock_label.setStyleSheet(f"""
+            color: {ACCENT_DIM}; background-color: {hex_to_rgba(BG, 230)};
+            border: 1px solid {ACCENT_DIM}; border-radius: 2px; padding: 2px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        """)
         locks.addWidget(lock_label)
 
         self.lock_skill = QCheckBox("Skill")
         self.lock_hero_trait = QCheckBox("Hero Trait")
         for cb in (self.lock_skill, self.lock_hero_trait):
-            cb.setStyleSheet(_checkbox_qss(ACCENT_DIM))
+            cb.setStyleSheet(f"""
+                QCheckBox {{
+                    color: {ACCENT_DIM}; background-color: {hex_to_rgba(BG, 230)};
+                    border: 1px solid {ACCENT_DIM}; border-radius: 2px; padding: 2px 8px;
+                    font-family: '{FONT_FAMILY}'; font-size: 11px;
+                }}
+                QCheckBox::indicator {{
+                    width: 14px; height: 14px;
+                    border: 1px solid {ACCENT}; border-radius: 2px;
+                    background: transparent;
+                }}
+                QCheckBox::indicator:checked {{
+                    background-color: {ACCENT}; border: 1px solid {ACCENT};
+                }}
+            """)
             locks.addWidget(cb)
         locks.addStretch(1)
         root.addLayout(locks)
@@ -271,17 +296,35 @@ class TorchlightInfiniteWidget(QWidget):
 
         self._update_hero_trait_visibility()
 
+        self.skill_slot.start_idle(self._all_skill_names())
+        self.hero_slot.start_idle(self._all_hero_names())
+        self.trait_slot.start_idle(self._all_trait_names())
+
     def _update_hero_trait_visibility(self):
         """setEnabled, not setVisible -- same Qt pre-first-paint timing
         quirk every other module works around the same way."""
         enabled = self.hero_trait_roll_cb.isChecked()
         self.hero_caption.setEnabled(enabled)
-        self.hero_lbl.setEnabled(enabled)
+        self.hero_slot.setEnabled(enabled)
         self.trait_caption.setEnabled(enabled)
-        self.trait_lbl.setEnabled(enabled)
+        self.trait_slot.setEnabled(enabled)
         self.lock_hero_trait.setEnabled(enabled)
 
     # ── Actions ──────────────────────────────────────────────────────
+
+    def _all_skill_names(self) -> list[str]:
+        return [s["name"] for s in self.skills if not s.get("excluded", False)]
+
+    def _all_hero_names(self) -> list[str]:
+        return [h["name"] for h in self.heroes if not h.get("excluded", False)]
+
+    def _all_trait_names(self) -> list[str]:
+        names = []
+        for h in self.heroes:
+            if h.get("excluded", False):
+                continue
+            names.extend(t["name"] for t in h.get("traits", []) if not t.get("excluded", False))
+        return names
 
     def _restore_last_roll(self):
         if not self.settings.get("remember_last_roll", True):
@@ -293,15 +336,15 @@ class TorchlightInfiniteWidget(QWidget):
         skill_result = saved.get("skill_result")
         if skill_result and skill_result.get("skill"):
             self.last_skill_result = skill_result
-            self.skill_lbl.setText(skill_result["skill"])
+            self.skill_slot.set_static(skill_result["skill"])
             self.exclude_btn.setEnabled(True)
             self.warning_lbl.setText(skill_result.get("warning") or "")
 
         hero_trait_result = saved.get("hero_trait_result")
         if hero_trait_result and hero_trait_result.get("trait"):
             self.last_hero_trait_result = hero_trait_result
-            self.hero_lbl.setText(hero_trait_result["hero"])
-            self.trait_lbl.setText(hero_trait_result["trait"])
+            self.hero_slot.set_static(hero_trait_result["hero"])
+            self.trait_slot.set_static(hero_trait_result["trait"])
 
     def _save_last_roll(self):
         if not self.settings.get("remember_last_roll", True):
@@ -312,32 +355,58 @@ class TorchlightInfiniteWidget(QWidget):
         }
         save_last_roll(self.config_dir / "last_roll.yaml", data)
 
+    def _on_skill_landed(self, _skill_name: str):
+        """Only fires for an actual animated spin landing -- locked/
+        error cases enable the exclude button directly instead, since
+        set_static() never emits finished."""
+        self.exclude_btn.setText("Exclude This Skill")
+        self.exclude_btn.setEnabled(True)
+
     def _do_roll(self):
         locked_skill = self.last_skill_result.get("skill") if (self.lock_skill.isChecked() and self.last_skill_result) else None
         skill_result = roll_skill(self.skills, locked_skill=locked_skill)
         self.last_skill_result = skill_result
 
         if skill_result["skill"] is None:
-            self.skill_lbl.setText("—")
+            self.skill_slot.set_static("—")
             self.warning_lbl.setText(skill_result.get("warning") or "")
             self.exclude_btn.setEnabled(False)
-        else:
-            self.skill_lbl.setText(skill_result["skill"])
+        elif locked_skill:
+            self.skill_slot.set_static(skill_result["skill"])
             self.warning_lbl.setText("")
             self.exclude_btn.setText("Exclude This Skill")
             self.exclude_btn.setEnabled(True)
+        else:
+            self.warning_lbl.setText("")
+            self.exclude_btn.setEnabled(False)
+            self.skill_slot.spin(self._all_skill_names(), skill_result["skill"], duration_ms=1200)
+            # exclude_btn re-enabled via _on_skill_landed once this actually lands
 
         if self.hero_trait_roll_cb.isChecked():
-            locked_hero = self.last_hero_trait_result.get("hero") if (self.lock_hero_trait.isChecked() and self.last_hero_trait_result) else None
-            locked_trait = self.last_hero_trait_result.get("trait") if (self.lock_hero_trait.isChecked() and self.last_hero_trait_result) else None
+            was_hero_trait_locked = bool(
+                self.lock_hero_trait.isChecked() and self.last_hero_trait_result
+            )
+            locked_hero = self.last_hero_trait_result.get("hero") if was_hero_trait_locked else None
+            locked_trait = self.last_hero_trait_result.get("trait") if was_hero_trait_locked else None
             hero_trait_result = roll_hero_trait(self.heroes, locked_hero=locked_hero, locked_trait=locked_trait)
             self.last_hero_trait_result = hero_trait_result
+
             if hero_trait_result.get("trait"):
-                self.hero_lbl.setText(hero_trait_result["hero"])
-                self.trait_lbl.setText(hero_trait_result["trait"])
+                if was_hero_trait_locked:
+                    self.hero_slot.set_static(hero_trait_result["hero"])
+                    self.trait_slot.set_static(hero_trait_result["trait"])
+                else:
+                    # Both spin at once (fully independent of the skill
+                    # roll and of each other in terms of underlying
+                    # logic -- roll_hero_trait() picks the pair as one
+                    # flat unit), but trait lands slightly after hero
+                    # for a "this trait belongs to the hero you just
+                    # saw" feel, not because of any real data dependency.
+                    self.hero_slot.spin(self._all_hero_names(), hero_trait_result["hero"], duration_ms=1500)
+                    self.trait_slot.spin(self._all_trait_names(), hero_trait_result["trait"], duration_ms=2200)
             else:
-                self.hero_lbl.setText("—")
-                self.trait_lbl.setText("—")
+                self.hero_slot.set_static("—")
+                self.trait_slot.set_static("—")
             if hero_trait_result.get("warning"):
                 self.warning_lbl.setText(hero_trait_result["warning"])
 
@@ -378,9 +447,9 @@ class TorchlightInfiniteWidget(QWidget):
         self.last_hero_trait_result = None
         self.lock_skill.setChecked(False)
         self.lock_hero_trait.setChecked(False)
-        self.skill_lbl.setText("—")
-        self.hero_lbl.setText("—")
-        self.trait_lbl.setText("—")
+        self.skill_slot.start_idle(self._all_skill_names())
+        self.hero_slot.start_idle(self._all_hero_names())
+        self.trait_slot.start_idle(self._all_trait_names())
         self.warning_lbl.setText("")
         self.exclude_btn.setText("Exclude This Skill")
         self.exclude_btn.setEnabled(False)
@@ -391,12 +460,18 @@ class TorchlightInfiniteWidget(QWidget):
         if result is not None:
             self.skills = result
             save_skills(self.config_dir / "skills.yaml", self.skills)
+            if self.skill_slot._mode == "idle":
+                self.skill_slot.start_idle(self._all_skill_names())
 
     def _manage_heroes(self):
         result = open_heroes_editor(self, self.heroes)
         if result is not None:
             self.heroes = result
             save_heroes(self.config_dir / "heroes.yaml", self.heroes)
+            if self.hero_slot._mode == "idle":
+                self.hero_slot.start_idle(self._all_hero_names())
+            if self.trait_slot._mode == "idle":
+                self.trait_slot.start_idle(self._all_trait_names())
 
     def _persist_settings(self, *_args):
         self.settings = {

@@ -52,7 +52,8 @@ class SlotMachine(QWidget):
 
     def __init__(self, text_color="#ffffff", dim_color="#888888",
                  font_family="Arial", parent=None, compact: bool = False,
-                 show_glow: bool = True):
+                 show_glow: bool = True, current_font_size: int = 34,
+                 min_height: int = None, bordered_rows: bool = False):
         """
         compact: when True, prev/next are still created and still added
         to the layout (so nothing else in this class needs to
@@ -73,22 +74,61 @@ class SlotMachine(QWidget):
         never clears it the way spin() does at the start of a new one)
         -- neither is the intended "flash" effect, so it's better off
         disabled than half-working.
+
+        current_font_size: size of the landed/current result specifically
+        -- defaults to the original 34px so every existing usage is
+        unaffected. Built for Hero Siege's secondary skill/relic reveal,
+        which needed to read as visually smaller/subordinate to the
+        primary class reveal happening in its own SlotMachine.
+
+        min_height: explicit override for the compact-mode minimum
+        height. None (the default) falls back to the built-in formula
+        below. Exists because that formula is a flat additive constant
+        that never scales down cleanly for every layout -- some modules
+        need direct control rather than another guessed formula.
+
+        bordered_rows: when True, each of the three stacked labels
+        (prev/current/next) gets its own subtle border/radius, giving
+        each visible reel position a defined "window" rather than free-
+        floating text. Off by default so every existing usage is
+        unaffected -- built for PoE1's full 3-line reel, where each row
+        stays visible (unlike compact mode, where prev/next collapse to
+        0px and a border on them would never show anyway).
         """
         super().__init__(parent)
+        self.setObjectName("slot_machine_root")
+        self.setStyleSheet("QWidget#slot_machine_root { background: transparent; }")
         self._font_family = font_family
         self._text_color = text_color
         self._dim_color = dim_color
         self._compact = compact
         self._show_glow = show_glow
+        self._bordered_rows = bordered_rows
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 10, 0, 10)
-        layout.setSpacing(10)
+        if compact:
+            # prev/next are genuinely 0px tall here, but Qt's layout
+            # spacing still reserves space AROUND them regardless of
+            # their own size -- spacing only goes away if a widget is
+            # actually hidden, not just zero-height. Confirmed real via
+            # direct testing (current_font_size=0, min_height=0 still
+            # produced a large frame) -- the full 10/10/10 margins+
+            # spacing tuned for the non-compact 3-line reel were the
+            # remaining overhead. Safe for every module still using the
+            # default min_height formula (80px at the default font
+            # size) since that floor stays larger than this smaller
+            # natural size regardless -- only modules that also lower
+            # min_height (like Last Epoch) actually see a difference.
+            layout.setContentsMargins(0, 4, 0, 4)
+            layout.setSpacing(2)
+        else:
+            layout.setContentsMargins(0, 10, 0, 10)
+            layout.setSpacing(10)
 
         # Sizes bumped up from the original 13/24/13 -- the reel was
         # reading as squished vertically at the old sizes.
         self.prev_lbl = self._make_label(dim_color, 17)
-        self.current_lbl = self._make_label(text_color, 34, bold=True)
+        self.current_lbl = self._make_label(text_color, current_font_size, bold=True)
         self.next_lbl = self._make_label(dim_color, 17)
 
         # Compact mode: always add these to the layout (never leave them
@@ -107,7 +147,10 @@ class SlotMachine(QWidget):
         layout.addWidget(self.current_lbl)
         layout.addWidget(self.next_lbl)
 
-        self.setMinimumHeight(150 if not compact else 80)
+        if min_height is not None:
+            self.setMinimumHeight(min_height)
+        else:
+            self.setMinimumHeight(150 if not compact else current_font_size + 46)
 
         # Soft glow on the center label, only while genuinely landed --
         # a clearer "this is the result" cue than the arrow markers used
@@ -149,9 +192,13 @@ class SlotMachine(QWidget):
 
     def _apply_label_style(self, lbl, color, size, bold):
         weight = "bold" if bold else "normal"
+        border = (
+            f"border: 1px solid {self._dim_color}; border-radius: 4px; padding: 2px 10px;"
+            if self._bordered_rows else "border: none;"
+        )
         lbl.setStyleSheet(
-            f"color: {color}; font-family: '{self._font_family}'; "
-            f"font-size: {size}px; font-weight: {weight};"
+            f"color: {color}; background: transparent; font-family: '{self._font_family}'; "
+            f"font-size: {size}px; font-weight: {weight}; {border}"
         )
 
     def _set_label_color(self, lbl, color):

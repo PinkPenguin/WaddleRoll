@@ -22,15 +22,17 @@ from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QFrame, QScrollArea,
     QPushButton,
 )
-from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QPainter, QPainterPath, QPixmap
+from PySide6.QtCore import Qt, Signal, QRectF
+from PySide6.QtGui import QPainter, QPainterPath, QPixmap, QPen, QColor
 
 from core.paths import get_app_root
 from core.launcher_settings import load_launcher_visual_settings
 from ui.assets import find_asset, find_module_card
 from ui.background_widget import BackgroundWidget
+from ui.colors import hex_to_rgba
 
 BG = "#F280A1"
+CHIP_BG = "#3d1f2e"   # dedicated dark chip color -- BG is the light pink theme itself, reusing it gave title/subtitle chips zero real contrast, just more pink on pink
 CARD_BG = "#20101a"
 CARD_HOVER = "#2c1524"
 ACCENT = "#ff5fa8"
@@ -41,6 +43,7 @@ MULTI_COLUMN_THRESHOLD = 6   # switch from 1 column to a grid once more than thi
 GRID_COLUMNS = 2
 
 LAUNCHER_ASSETS_DIR = get_app_root() / "assets"   # top-level, not under any module -- background/logo for the picker itself
+WADDLEROLL_PINK = "#F280A1"   # the project's own established brand color, per HANDOFF.md
 
 
 class GameCard(QWidget):
@@ -69,29 +72,63 @@ class GameCard(QWidget):
             self._build_text_card(module)
 
     def paintEvent(self, event):
-        if not self._card_pixmap or self._card_pixmap.isNull():
-            super().paintEvent(event)
-            return
+        if self._card_pixmap and not self._card_pixmap.isNull():
+            painter = QPainter(self)
+            painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+            painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
 
+            # Clip to the same rounded-corner shape the text-based cards
+            # already use, so an image card doesn't look inconsistent
+            # sitting next to one that hasn't gotten art yet.
+            path = QPainterPath()
+            path.addRoundedRect(0, 0, self.width(), self.height(), self.CORNER_RADIUS, self.CORNER_RADIUS)
+            painter.setClipPath(path)
+
+            scaled = self._card_pixmap.scaled(
+                self.size(),
+                Qt.AspectRatioMode.KeepAspectRatioByExpanding,
+                Qt.TransformationMode.SmoothTransformation,
+            )
+            x = (self.width() - scaled.width()) // 2
+            y = (self.height() - scaled.height()) // 2
+            painter.drawPixmap(x, y, scaled)
+            painter.end()  # close this painter explicitly before opening a new one below --
+                            # Qt only allows one active QPainter per widget at a time
+        else:
+            super().paintEvent(event)
+
+        self._draw_stroke()
+
+    def _draw_stroke(self):
+        """Double stroke on every card, image or text -- a pink outer
+        line (WaddleRoll's own established brand color) with a thin
+        white line layered just inside it, so every card ties back to
+        the app's own identity rather than looking like a random photo
+        or a flat color block dropped onto the picker."""
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-        painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
 
-        # Clip to the same rounded-corner shape the text-based cards
-        # already use, so an image card doesn't look inconsistent
-        # sitting next to one that hasn't gotten art yet.
-        path = QPainterPath()
-        path.addRoundedRect(0, 0, self.width(), self.height(), self.CORNER_RADIUS, self.CORNER_RADIUS)
-        painter.setClipPath(path)
+        pink_width = 0
+        if pink_width > 0:
+            pink_pen = QPen(QColor(WADDLEROLL_PINK))
+            pink_pen.setWidthF(pink_width)
+            painter.setPen(pink_pen)
+            inset = pink_width / 2
+            painter.drawRoundedRect(
+                QRectF(inset, inset, self.width() - 2 * inset, self.height() - 2 * inset),
+                self.CORNER_RADIUS, self.CORNER_RADIUS,
+            )
 
-        scaled = self._card_pixmap.scaled(
-            self.size(),
-            Qt.AspectRatioMode.KeepAspectRatioByExpanding,
-            Qt.TransformationMode.SmoothTransformation,
+        white_width = 4.0
+        white_pen = QPen(QColor("#ffffff"))
+        white_pen.setWidthF(white_width)
+        painter.setPen(white_pen)
+        inset2 = pink_width + white_width / 2
+        painter.drawRoundedRect(
+            QRectF(inset2, inset2, self.width() - 2 * inset2, self.height() - 2 * inset2),
+            max(self.CORNER_RADIUS - 2, 0), max(self.CORNER_RADIUS - 2, 0),
         )
-        x = (self.width() - scaled.width()) // 2
-        y = (self.height() - scaled.height()) // 2
-        painter.drawPixmap(x, y, scaled)
 
     def _build_text_card(self, module):
         self.setStyleSheet(f"""
@@ -140,7 +177,8 @@ class GamePicker(QWidget):
 
     def __init__(self, modules, parent=None):
         super().__init__(parent)
-        self.setStyleSheet(f"background-color: {BG};")
+        self.setObjectName("game_picker_root")
+        self.setStyleSheet(f"QWidget#game_picker_root {{ background-color: {BG}; }}")
 
         launcher_visuals = load_launcher_visual_settings()
 
@@ -171,16 +209,27 @@ class GamePicker(QWidget):
                 )
             title = QLabel()
             title.setPixmap(logo_pixmap)
+            title.setStyleSheet("background: transparent;")
+            title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            outer_layout.addWidget(title)
         else:
             title = QLabel("🐧 WADDLEROLL")
-            title.setStyleSheet(f"color: {TEXT}; font-size: 32px; font-weight: bold; letter-spacing: 1px;")
-        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        outer_layout.addWidget(title)
+            title.setStyleSheet(f"""
+                color: {TEXT}; background-color: {hex_to_rgba(CHIP_BG, 230)};
+                border: 1px solid {ACCENT}; border-radius: 8px; padding: 6px 16px;
+                font-size: 32px; font-weight: bold; letter-spacing: 1px;
+            """)
+            title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            outer_layout.addWidget(title, alignment=Qt.AlignmentFlag.AlignCenter)
 
         subtitle = QLabel("Choose a game to randomize a build")
         subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        subtitle.setStyleSheet(f"color: {TEXT}; font-size: 14px; font-style: italic;")
-        outer_layout.addWidget(subtitle)
+        subtitle.setStyleSheet(f"""
+            color: {TEXT}; background-color: {hex_to_rgba(CHIP_BG, 230)};
+            border: 1px solid {ACCENT}; border-radius: 6px; padding: 3px 12px;
+            font-size: 14px; font-style: italic;
+        """)
+        outer_layout.addWidget(subtitle, alignment=Qt.AlignmentFlag.AlignCenter)
 
         manage_row = QHBoxLayout()
         manage_row.addStretch(1)

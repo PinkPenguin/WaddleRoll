@@ -55,6 +55,7 @@ from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
+from ui.colors import hex_to_rgba
 
 # ── Palette: two colors in tension, a different pairing from Hero Siege ──
 IRON     = "#0e1210"   # cold, blue-tinged near-black -- tarnished steel in shadow
@@ -92,7 +93,9 @@ class RivetedPanel(QWidget):
         rivet_r = 4
 
         painter.setPen(QPen(QColor(RUST), 2))
-        painter.setBrush(QColor(BG_PANEL))
+        panel_fill = QColor(BG_PANEL)
+        panel_fill.setAlpha(230)
+        painter.setBrush(panel_fill)
         painter.drawRect(1, 1, w - 2, h - 2)
 
         painter.setPen(Qt.PenStyle.NoPen)
@@ -106,7 +109,7 @@ class RivetedPanel(QWidget):
 
 def _checkbox_qss(text_color: str) -> str:
     return f"""
-        QCheckBox {{ color: {text_color}; font-family: '{BODY_FONT}'; font-size: 11px; }}
+        QCheckBox {{ color: {text_color}; background: transparent; font-family: '{BODY_FONT}'; font-size: 11px; }}
         QCheckBox::indicator {{
             width: 14px; height: 14px;
             border: 1px solid {PLAGUE}; border-radius: 2px;
@@ -164,7 +167,8 @@ class GrimDawnWidget(QWidget):
     def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
         self.config_dir = Path(config_dir)
-        self.setStyleSheet(f"background-color: {IRON};")
+        self.setObjectName("grim_dawn_root")
+        self.setStyleSheet(f"QWidget#grim_dawn_root {{ background-color: {IRON}; }}")
 
         bg_path = find_module_background(assets_dir)
         self._background = BackgroundWidget(bg_path, parent=self)
@@ -203,8 +207,12 @@ class GrimDawnWidget(QWidget):
 
         title = QLabel("GRIM DAWN")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title.setStyleSheet(f"color: {RUST}; font-family: '{DISPLAY_FONT}'; font-size: 34px; letter-spacing: 1px;")
-        root.addWidget(title)
+        title.setStyleSheet(f"""
+            color: {RUST}; background-color: {hex_to_rgba(IRON, 230)};
+            border: 1px solid {PLAGUE}; border-radius: 6px; padding: 4px 14px;
+            font-family: '{DISPLAY_FONT}'; font-size: 34px; letter-spacing: 1px;
+        """)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.version_badge = VersionBadge(self.config_dir, PLAGUE, PLAGUE, IRON, BODY_FONT)
         root.addWidget(self.version_badge)
@@ -245,7 +253,7 @@ class GrimDawnWidget(QWidget):
         self.warning_lbl = QLabel("")
         self.warning_lbl.setWordWrap(True)
         self.warning_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.warning_lbl.setStyleSheet(f"color: {WARN}; font-family: '{BODY_FONT}'; font-size: 11px; border: none;")
+        self.warning_lbl.setStyleSheet(f"color: {WARN}; background: transparent; font-family: '{BODY_FONT}'; font-size: 11px; border: none;")
         panel.layout.addWidget(self.warning_lbl)
 
         panel.layout.addStretch(1)
@@ -274,7 +282,7 @@ class GrimDawnWidget(QWidget):
 
         caption = QLabel(caption_text)
         caption.setFixedWidth(140)
-        caption.setStyleSheet(f"color: {PLAGUE}; font-family: '{BODY_FONT}'; font-size: 11px;")
+        caption.setStyleSheet(f"color: {PLAGUE}; background: transparent; font-family: '{BODY_FONT}'; font-size: 11px;")
         row.addWidget(caption)
 
         slot = SlotMachine(text_color=BONE, dim_color=RUST, font_family=BODY_FONT, compact=True)

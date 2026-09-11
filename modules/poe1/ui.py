@@ -39,6 +39,7 @@ from ui.version_badge import VersionBadge
 from ui.config_folder import open_config_folder
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
+from ui.colors import hex_to_rgba
 
 # ── Palette: ash + iron (deliberately desaturated) ────────────────────
 BG          = "#0b0b0c"
@@ -57,20 +58,6 @@ VAAL_SKILL_COLOR       = "#e0483c"  # red -- same value as PoE2's
 ASCENDANCY_SKILL_COLOR = "#e8c34a"  # gold -- same value as PoE2's
 
 FONT_FAMILY = "Trebuchet MS"
-
-
-def _checkbox_qss(text_color: str) -> str:
-    return f"""
-        QCheckBox {{ color: {text_color}; font-family: '{FONT_FAMILY}'; font-size: 11px; }}
-        QCheckBox::indicator {{
-            width: 14px; height: 14px;
-            border: 1px solid {ACCENT}; border-radius: 2px;
-            background: transparent;
-        }}
-        QCheckBox::indicator:checked {{
-            background-color: {ACCENT}; border: 1px solid {ACCENT};
-        }}
-    """
 
 
 def _divider() -> QFrame:
@@ -112,7 +99,8 @@ class PoE1Widget(QWidget):
     def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
         self.config_dir = Path(config_dir)
-        self.setStyleSheet(f"background-color: {BG};")
+        self.setObjectName("poe1_root")
+        self.setStyleSheet(f"QWidget#poe1_root {{ background-color: {BG}; }}")
 
         # No-op until modules/poe1/assets/background.png (or .jpg) actually
         # exists -- BackgroundWidget paints nothing at all if given None,
@@ -161,18 +149,25 @@ class PoE1Widget(QWidget):
         # it's free to be replaced with a logo/banner asset later without
         # touching anything else.
         title_wrap = QWidget()
+        title_wrap.setObjectName("poe1_title_wrap")
+        title_wrap.setStyleSheet(f"""
+            QWidget#poe1_title_wrap {{
+                background-color: {hex_to_rgba(BG, 230)};
+                border: 1px solid {ACCENT_DIM}; border-radius: 6px;
+            }}
+        """)
         title_layout = QVBoxLayout(title_wrap)
-        title_layout.setContentsMargins(0, 0, 0, 0)
+        title_layout.setContentsMargins(20, 12, 20, 12)
         title_layout.setSpacing(4)
 
         kicker_lbl = QLabel("PATH OF EXILE")
         kicker_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        kicker_lbl.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 12px; font-weight: bold; letter-spacing: 3px;")
+        kicker_lbl.setStyleSheet(f"color: {ACCENT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 12px; font-weight: bold; letter-spacing: 3px;")
         title_layout.addWidget(kicker_lbl)
 
         title_lbl = QLabel("SKILL ROLLER")
         title_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title_lbl.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 28px; font-weight: bold; letter-spacing: 1px;")
+        title_lbl.setStyleSheet(f"color: {TEXT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 28px; font-weight: bold; letter-spacing: 1px;")
         title_layout.addWidget(title_lbl)
 
         title_rule = QFrame()
@@ -181,7 +176,7 @@ class PoE1Widget(QWidget):
         title_rule.setStyleSheet(f"background-color: {ACCENT}; max-height: 2px; border: none;")
         title_layout.addWidget(title_rule, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        root.addWidget(title_wrap)
+        root.addWidget(title_wrap, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.version_badge = VersionBadge(self.config_dir, ACCENT_DIM, ACCENT_DIM, BG, FONT_FAMILY)
         root.addWidget(self.version_badge)
@@ -213,7 +208,21 @@ class PoE1Widget(QWidget):
         self.allow_item_cb.setChecked(self.settings.get("allow_item_skills", True))
         self.allow_ascendancy_skill_cb.setChecked(self.settings.get("allow_ascendancy_skills", True))
         for cb in (self.allow_vaal_cb, self.allow_item_cb, self.allow_ascendancy_skill_cb):
-            cb.setStyleSheet(_checkbox_qss(TEXT))
+            cb.setStyleSheet(f"""
+                QCheckBox {{
+                    color: {TEXT}; background-color: {hex_to_rgba(BG, 230)};
+                    border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 2px 8px;
+                    font-family: '{FONT_FAMILY}'; font-size: 11px;
+                }}
+                QCheckBox::indicator {{
+                    width: 14px; height: 14px;
+                    border: 1px solid {ACCENT}; border-radius: 2px;
+                    background: transparent;
+                }}
+                QCheckBox::indicator:checked {{
+                    background-color: {ACCENT}; border: 1px solid {ACCENT};
+                }}
+            """)
             cb.toggled.connect(self._persist_settings)
             cb.toggled.connect(self._refresh_idle_pool)
             filters.addWidget(cb)
@@ -222,17 +231,24 @@ class PoE1Widget(QWidget):
 
         # Skill slot machine panel
         panel = QFrame()
-        panel.setStyleSheet(f"background-color: {BG_PANEL}; border: 1px solid {ACCENT_DIM}; border-radius: 6px;")
+        panel.setObjectName("poe1_panel")
+        panel.setStyleSheet(f"""
+            QFrame#poe1_panel {{
+                background-color: {BG_PANEL};
+                border: 1px solid {ACCENT_DIM};
+                border-radius: 6px;
+            }}
+        """)
         panel_layout = QVBoxLayout(panel)
         panel_layout.setContentsMargins(24, 28, 24, 28)
         panel_layout.setSpacing(12)
 
         skill_label = QLabel("SKILL")
         skill_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        skill_label.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
+        skill_label.setStyleSheet(f"color: {ACCENT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
         panel_layout.addWidget(skill_label)
 
-        self.slot_machine = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY)
+        self.slot_machine = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, bordered_rows=True)
         self.slot_machine.clicked.connect(self._open_wiki)
         panel_layout.addWidget(self.slot_machine)
 
@@ -243,7 +259,21 @@ class PoE1Widget(QWidget):
         asc_row.setSpacing(14)
         self.ascendancy_roll_cb = QCheckBox("Also Roll Ascendancy")
         self.ascendancy_roll_cb.setChecked(self.settings.get("ascendancy_roll_enabled", False))
-        self.ascendancy_roll_cb.setStyleSheet(_checkbox_qss(TEXT))
+        self.ascendancy_roll_cb.setStyleSheet(f"""
+            QCheckBox {{
+                color: {TEXT}; background-color: {hex_to_rgba(BG, 230)};
+                border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 2px 8px;
+                font-family: '{FONT_FAMILY}'; font-size: 11px;
+            }}
+            QCheckBox::indicator {{
+                width: 14px; height: 14px;
+                border: 1px solid {ACCENT}; border-radius: 2px;
+                background: transparent;
+            }}
+            QCheckBox::indicator:checked {{
+                background-color: {ACCENT}; border: 1px solid {ACCENT};
+            }}
+        """)
         self.ascendancy_roll_cb.toggled.connect(self._persist_settings)
         self.ascendancy_roll_cb.toggled.connect(self._update_ascendancy_visibility)
         asc_row.addWidget(self.ascendancy_roll_cb)
@@ -253,13 +283,13 @@ class PoE1Widget(QWidget):
 
         self.ascendancy_result_lbl = QLabel("")
         self.ascendancy_result_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.ascendancy_result_lbl.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 15px;")
+        self.ascendancy_result_lbl.setStyleSheet(f"color: {TEXT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 15px;")
         root.addWidget(self.ascendancy_result_lbl)
 
         self.warning_lbl = QLabel("")
         self.warning_lbl.setWordWrap(True)
         self.warning_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.warning_lbl.setStyleSheet(f"color: {WARN}; font-family: '{FONT_FAMILY}'; font-size: 11px;")
+        self.warning_lbl.setStyleSheet(f"color: {WARN}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 11px;")
         root.addWidget(self.warning_lbl)
 
         root.addStretch(1)
@@ -268,15 +298,31 @@ class PoE1Widget(QWidget):
         locks = QHBoxLayout()
         locks.setSpacing(16)
         lock_label = QLabel("LOCK:")
-        lock_label.setStyleSheet(f"color: {ACCENT_DIM}; font-family: '{FONT_FAMILY}'; font-size: 11px;")
+        lock_label.setStyleSheet(f"""
+            color: {ACCENT_DIM}; background-color: {hex_to_rgba(BG, 230)};
+            border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 2px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        """)
         locks.addWidget(lock_label)
         self.lock_skill = QCheckBox("Skill")
-        self.lock_skill.setStyleSheet(_checkbox_qss(ACCENT_DIM))
-        locks.addWidget(self.lock_skill)
         self.lock_class = QCheckBox("Class")
         self.lock_ascendancy = QCheckBox("Ascendancy")
-        for cb in (self.lock_class, self.lock_ascendancy):
-            cb.setStyleSheet(_checkbox_qss(ACCENT_DIM))
+        for cb in (self.lock_skill, self.lock_class, self.lock_ascendancy):
+            cb.setStyleSheet(f"""
+                QCheckBox {{
+                    color: {ACCENT_DIM}; background-color: {hex_to_rgba(BG, 230)};
+                    border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 2px 8px;
+                    font-family: '{FONT_FAMILY}'; font-size: 11px;
+                }}
+                QCheckBox::indicator {{
+                    width: 14px; height: 14px;
+                    border: 1px solid {ACCENT}; border-radius: 2px;
+                    background: transparent;
+                }}
+                QCheckBox::indicator:checked {{
+                    background-color: {ACCENT}; border: 1px solid {ACCENT};
+                }}
+            """)
             locks.addWidget(cb)
         locks.addStretch(1)
         root.addLayout(locks)

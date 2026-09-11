@@ -47,13 +47,15 @@ from PySide6.QtCore import Qt
 
 from modules.pokemon.roller import (
     load_pokemon, save_pokemon, load_settings, save_settings,
-    max_generation, roll_team,
+    max_generation, roll_team, eligible_pool,
 )
 from modules.pokemon.editor import open_pokemon_grid
 from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
+from ui.slot_machine import SlotMachine
+from ui.colors import hex_to_rgba
 
 # ── Palette: red + white, actual Poké Ball colors -- the one module
 # that's LIGHT rather than dark, which is its own strong distinguisher
@@ -76,7 +78,7 @@ FONT_FAMILY = "Tahoma"
 def _checkbox_qss(text_color: str, indicator_color: str = None) -> str:
     indicator_color = indicator_color or ACCENT
     return f"""
-        QCheckBox {{ color: {text_color}; font-family: '{FONT_FAMILY}'; font-size: 11px; }}
+        QCheckBox {{ color: {text_color}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 11px; }}
         QCheckBox::indicator {{
             width: 14px; height: 14px;
             border: 1px solid {indicator_color}; border-radius: 2px;
@@ -153,7 +155,11 @@ def _stepper_row(label_text: str, minus_handler, plus_handler) -> tuple[QHBoxLay
     row = QHBoxLayout()
     row.setSpacing(8)
     label = QLabel(label_text)
-    label.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 12px;")
+    label.setStyleSheet(f"""
+        color: {TEXT}; background-color: {hex_to_rgba(BG_PANEL, 230)};
+        border: 1px solid {BORDER_SOFT}; border-radius: 6px; padding: 2px 8px;
+        font-family: '{FONT_FAMILY}'; font-size: 12px;
+    """)
     row.addWidget(label)
 
     minus_btn = _stepper_btn("−")
@@ -162,8 +168,12 @@ def _stepper_row(label_text: str, minus_handler, plus_handler) -> tuple[QHBoxLay
 
     value_lbl = QLabel("0")
     value_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-    value_lbl.setFixedWidth(24)
-    value_lbl.setStyleSheet(f"color: {ACCENT}; font-family: '{FONT_FAMILY}'; font-size: 13px; font-weight: bold;")
+    value_lbl.setFixedWidth(30)
+    value_lbl.setStyleSheet(f"""
+        color: {ACCENT}; background-color: {hex_to_rgba(BG_PANEL, 230)};
+        border: 1px solid {BORDER_SOFT}; border-radius: 6px; padding: 2px 2px;
+        font-family: '{FONT_FAMILY}'; font-size: 13px; font-weight: bold;
+    """)
     row.addWidget(value_lbl)
 
     plus_btn = _stepper_btn("+")
@@ -177,7 +187,8 @@ class PokemonWidget(QWidget):
     def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
         self.config_dir = Path(config_dir)
-        self.setStyleSheet(f"background-color: {BG};")
+        self.setObjectName("pokemon_root")
+        self.setStyleSheet(f"QWidget#pokemon_root {{ background-color: {BG}; }}")
 
         bg_path = find_module_background(assets_dir)
         self._background = BackgroundWidget(bg_path, parent=self)
@@ -222,8 +233,12 @@ class PokemonWidget(QWidget):
         root.setSpacing(14)
 
         title = QLabel("POKÉMON — TEAM ROLLER")
-        title.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;")
-        root.addWidget(title)
+        title.setStyleSheet(f"""
+            color: {TEXT}; background-color: {hex_to_rgba(BG_PANEL, 230)};
+            border: 1px solid {BORDER_SOFT}; border-radius: 6px; padding: 4px 14px;
+            font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;
+        """)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignLeft)
 
         # No VersionBadge here -- unlike every other module, this one
         # isn't tied to a single specific game's patch version.
@@ -255,9 +270,12 @@ class PokemonWidget(QWidget):
 
         # Team panel -- borderless, just a rounded, slightly lighter fill
         panel = QFrame()
+        panel.setObjectName("pokemon_panel")
         panel.setStyleSheet(f"""
-            background-color: {BG_PANEL};
-            border-radius: 14px;
+            QFrame#pokemon_panel {{
+                background-color: {hex_to_rgba(BG_PANEL, 230)};
+                border-radius: 14px;
+            }}
         """)
         panel_layout = QVBoxLayout(panel)
         panel_layout.setContentsMargins(22, 18, 22, 18)
@@ -268,7 +286,7 @@ class PokemonWidget(QWidget):
 
         self.warning_lbl = QLabel("")
         self.warning_lbl.setWordWrap(True)
-        self.warning_lbl.setStyleSheet(f"color: {WARN}; font-family: '{FONT_FAMILY}'; font-size: 11px; border: none;")
+        self.warning_lbl.setStyleSheet(f"color: {WARN}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 11px; border: none;")
         panel_layout.addWidget(self.warning_lbl)
 
         panel_layout.addStretch(1)
@@ -287,6 +305,10 @@ class PokemonWidget(QWidget):
         root.addLayout(footer)
 
         self._update_slot_visibility()
+
+        idle_pool = [p["name"] for p in eligible_pool(self.pokemon, self.generation)] or ["—"]
+        for slot in self.slots:
+            slot["slot_machine"].start_idle(idle_pool)
 
     def _build_slot_row(self, parent_layout, index: int) -> dict:
         row_widget = QWidget()
@@ -311,9 +333,12 @@ class PokemonWidget(QWidget):
         row_layout.setContentsMargins(12, 10, 12, 10)
         row_layout.setSpacing(14)
 
-        name_lbl = QLabel("—")
-        name_lbl.setStyleSheet(f"color: {TEXT}; font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;")
-        row_layout.addWidget(name_lbl, stretch=1)
+        slot_machine = SlotMachine(
+            text_color=TEXT, dim_color=BORDER_SOFT, font_family=FONT_FAMILY,
+            compact=True, current_font_size=15, min_height=0,
+        )
+        slot_machine.finished.connect(self._make_slot_landed_handler(index))
+        row_layout.addWidget(slot_machine, stretch=1)
 
         lock_cb = QCheckBox("Lock")
         lock_cb.setStyleSheet(_checkbox_qss(ACCENT_DIM, BORDER_SOFT))
@@ -328,7 +353,7 @@ class PokemonWidget(QWidget):
 
         return {
             "row_widget": row_widget,
-            "name_lbl": name_lbl,
+            "slot_machine": slot_machine,
             "lock_cb": lock_cb,
             "exclude_btn": exclude_btn,
             "current_name": None,
@@ -337,6 +362,21 @@ class PokemonWidget(QWidget):
     def _update_slot_visibility(self):
         for i, slot in enumerate(self.slots):
             slot["row_widget"].setVisible(i < self.team_size)
+
+    def _make_slot_landed_handler(self, index: int):
+        """Factory, not a plain lambda in the loop -- same late-binding
+        closure guard _make_exclude_handler already uses. Fires only
+        for an actual animated spin landing (set_static() never emits
+        finished), updating this slot's own current_name once its own
+        SlotMachine actually lands, independent of when any other
+        slot's does."""
+        def handler(name: str):
+            slot = self.slots[index]
+            slot["current_name"] = name
+            slot["exclude_btn"].setText("Exclude")
+            slot["exclude_btn"].setEnabled(True)
+            self._save_last_roll()
+        return handler
 
     # ── Steppers ─────────────────────────────────────────────────────
 
@@ -358,13 +398,24 @@ class PokemonWidget(QWidget):
         if self.generation < self.max_gen:
             self.generation += 1
             self.generation_lbl.setText(str(self.generation))
+            self._refresh_idle_slots()
             self._persist_settings()
 
     def _dec_generation(self):
         if self.generation > 1:
             self.generation -= 1
             self.generation_lbl.setText(str(self.generation))
+            self._refresh_idle_slots()
             self._persist_settings()
+
+    def _refresh_idle_slots(self):
+        """Only restarts slots currently idling -- doesn't interrupt a
+        mid-spin or already-landed result just because the generation
+        cutoff changed."""
+        idle_pool = [p["name"] for p in eligible_pool(self.pokemon, self.generation)] or ["—"]
+        for slot in self.slots:
+            if slot["slot_machine"]._mode == "idle":
+                slot["slot_machine"].start_idle(idle_pool)
 
     # ── Actions ──────────────────────────────────────────────────────
 
@@ -379,7 +430,7 @@ class PokemonWidget(QWidget):
             if i >= len(self.slots):
                 break
             self.slots[i]["current_name"] = name
-            self.slots[i]["name_lbl"].setText(name)
+            self.slots[i]["slot_machine"].set_static(name)
             self.slots[i]["exclude_btn"].setEnabled(True)
 
     def _save_last_roll(self):
@@ -401,19 +452,36 @@ class PokemonWidget(QWidget):
         result = roll_team(self.pokemon, len(unlocked_indices), self.generation, exclude_names=locked_names)
         rolled = result["rolled"]
 
+        # Visual-variety pool for the spins -- same eligibility rules
+        # roll_team() applies internally, also excluding whatever's
+        # locked so a spinning slot never flashes a name that's already
+        # claimed by another slot on the same team.
+        spin_pool = [
+            p["name"] for p in eligible_pool(self.pokemon, self.generation)
+            if p["name"] not in locked_names
+        ] or ["—"]
+
+        # All unlocked slots spin at once but land at staggered times by
+        # fixed slot index (not the order within unlocked_indices) --
+        # gives a consistent top-to-bottom cascade feel regardless of
+        # which specific slots happen to be locked. A sequential
+        # cascade (each slot waiting for the previous to land) would
+        # take 10+ seconds across 6 independent, unordered results --
+        # unlike Last Epoch's class->skill->notable, nothing here
+        # actually depends on another slot's result.
         for idx, name in zip(unlocked_indices, rolled):
             slot = self.slots[idx]
-            slot["current_name"] = name
-            slot["name_lbl"].setText(name)
-            slot["exclude_btn"].setText("Exclude")
-            slot["exclude_btn"].setEnabled(True)
+            slot["exclude_btn"].setEnabled(False)
+            duration = 1200 + idx * 300
+            slot["slot_machine"].spin(spin_pool, name, duration_ms=duration)
 
         # Pool ran short -- leave any remaining unlocked slots empty
-        # rather than pretending there's a result.
+        # rather than pretending there's a result. No animation for
+        # these -- there's nothing to reveal.
         for idx in unlocked_indices[len(rolled):]:
             slot = self.slots[idx]
             slot["current_name"] = None
-            slot["name_lbl"].setText("—")
+            slot["slot_machine"].set_static("—")
             slot["exclude_btn"].setEnabled(False)
 
         self.warning_lbl.setText(result.get("warning") or "")
@@ -453,9 +521,10 @@ class PokemonWidget(QWidget):
         return handler
 
     def _clear(self):
+        idle_pool = [p["name"] for p in eligible_pool(self.pokemon, self.generation)] or ["—"]
         for slot in self.slots:
             slot["current_name"] = None
-            slot["name_lbl"].setText("—")
+            slot["slot_machine"].start_idle(idle_pool)
             slot["lock_cb"].setChecked(False)
             slot["exclude_btn"].setText("Exclude")
             slot["exclude_btn"].setEnabled(False)
@@ -467,6 +536,7 @@ class PokemonWidget(QWidget):
         if result is not None:
             self.pokemon = result
             save_pokemon(self.config_dir / "pokemon.yaml", self.pokemon)
+            self._refresh_idle_slots()
 
     def _persist_settings(self, *_args):
         self.settings = {
