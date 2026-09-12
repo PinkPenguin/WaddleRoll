@@ -164,7 +164,7 @@ class RimworldWidget(QWidget):
             border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 4px 14px;
             font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;
         """)
-        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignLeft)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignCenter)
 
         # Tool row
         tools = QHBoxLayout()

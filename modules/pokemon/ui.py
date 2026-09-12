@@ -238,7 +238,7 @@ class PokemonWidget(QWidget):
             border: 1px solid {BORDER_SOFT}; border-radius: 6px; padding: 4px 14px;
             font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;
         """)
-        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignLeft)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignCenter)
 
         # No VersionBadge here -- unlike every other module, this one
         # isn't tied to a single specific game's patch version.
@@ -335,7 +335,7 @@ class PokemonWidget(QWidget):
 
         slot_machine = SlotMachine(
             text_color=TEXT, dim_color=BORDER_SOFT, font_family=FONT_FAMILY,
-            compact=True, current_font_size=15, min_height=0,
+            compact=True, current_font_size=22,
         )
         slot_machine.finished.connect(self._make_slot_landed_handler(index))
         row_layout.addWidget(slot_machine, stretch=1)

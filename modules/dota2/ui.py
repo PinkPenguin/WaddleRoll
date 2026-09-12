@@ -185,7 +185,7 @@ class Dota2Widget(QWidget):
             border: 1px solid {ACCENT_DIM}; border-radius: 6px; padding: 4px 10px;
             font-family: '{FONT_FAMILY}'; font-size: 23px; font-weight: bold;
         """)
-        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignLeft)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.version_badge = VersionBadge(self.config_dir, ACCENT, ACCENT_DIM, BG, FONT_FAMILY)
         root.addWidget(self.version_badge)

@@ -148,7 +148,7 @@ class TorchlightInfiniteWidget(QWidget):
             border: 1px solid {ACCENT_DIM}; border-radius: 2px; padding: 4px 14px;
             font-family: '{FONT_FAMILY}'; font-size: 22px; font-weight: bold;
         """)
-        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignLeft)
+        root.addWidget(title, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.version_badge = VersionBadge(self.config_dir, ACCENT_DIM, ACCENT_DIM, BG, FONT_FAMILY)
         root.addWidget(self.version_badge)
@@ -213,7 +213,7 @@ class TorchlightInfiniteWidget(QWidget):
         skill_label.setStyleSheet(f"color: {ACCENT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
         panel_layout.addWidget(skill_label)
 
-        self.skill_slot = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True, current_font_size=20, min_height=0)
+        self.skill_slot = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True)
         self.skill_slot.finished.connect(self._on_skill_landed)
         panel_layout.addWidget(self.skill_slot)
 
@@ -228,14 +228,14 @@ class TorchlightInfiniteWidget(QWidget):
         self.hero_caption.setStyleSheet(f"color: {ACCENT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
         panel_layout.addWidget(self.hero_caption)
 
-        self.hero_slot = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True, current_font_size=20, min_height=0)
+        self.hero_slot = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True)
         panel_layout.addWidget(self.hero_slot)
 
         self.trait_caption = QLabel("TRAIT")
         self.trait_caption.setStyleSheet(f"color: {ACCENT}; background: transparent; font-family: '{FONT_FAMILY}'; font-size: 10px; letter-spacing: 2px;")
         panel_layout.addWidget(self.trait_caption)
 
-        self.trait_slot = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True, current_font_size=20, min_height=0)
+        self.trait_slot = SlotMachine(text_color=TEXT, dim_color=ACCENT_DIM, font_family=FONT_FAMILY, compact=True)
         panel_layout.addWidget(self.trait_slot)
 
         self.warning_lbl = QLabel("")
