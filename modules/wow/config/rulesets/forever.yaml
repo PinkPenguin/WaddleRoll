@@ -1,0 +1,239 @@
+# modules/wow/config/rulesets/forever.yaml
+#
+# "Forever" ruleset -- kept empty deliberately. This is a specific
+# private server, and private servers regularly deviate from standard
+# expansion class/race rules (custom combinations, different faction
+# locks, etc.) in ways that can't be verified from general WoW
+# knowledge alone. Filling this in with plausible-looking data would
+# risk being confidently wrong about this server's actual rules --
+# same policy as every other module's placeholder data (PoE2's empty
+# ascendancy roster, Last Epoch's empty skill trees): never fabricate
+# real game data, ship structure only until real data is confirmed.
+#
+# Populate directly by hand, or via "Manage Classes" in-app once
+# there's at least one class row to start from -- either way, fill in
+# real class/race names and faction assignments as they're confirmed
+# against the actual server, not guessed.
+#
+# Shape once populated (see roller.py's own docstring for the full
+# rationale on why races nest under their own class rather than a
+# shared race pool with per-race class flags):
+#
+# classes:
+#   - name: "Paladin"
+#     excluded: false
+#     races:
+#       - name: "Human"
+#         faction: ["Alliance"]
+#         excluded: false
+#       - name: "Dwarf"
+#         faction: ["Alliance"]
+#         excluded: false
+#   - name: "Shaman"
+#     excluded: false
+#     races:
+#       - name: "Orc"
+#         faction: ["Horde"]
+#         excluded: false
+#       - name: "Tauren"
+#         faction: ["Horde"]
+#         excluded: false
+#
+# Faction is always a list, even for the common single-faction case --
+# one consistent shape, no ambiguity about format. A race playable by
+# BOTH factions (confirmed to exist for at least one race in the
+# Forever showcase) just lists both:
+#
+#       - name: "SomeDualFactionRace"
+#         faction: ["Alliance", "Horde"]
+#         excluded: false
+#
+# Such a race is correctly eligible under either the Alliance filter or
+# the Horde filter (not just one, not neither), and displays in gold in
+# the app rather than blue or red, since neither color would be
+# accurate for a race that isn't exclusive to one side.
+
+classes:
+  - name: "Druid"
+    excluded: false
+    races:
+      - name: "Night Elf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Tauren"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Skyborne"
+        faction: ["Alliance", "Horde"]
+        excluded: false
+  - name: "Hunter"
+    excluded: false
+    races:
+      - name: "Human"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Dwarf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Night Elf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Orc"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Tauren"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Troll"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Skyborne"
+        faction: ["Alliance", "Horde"]
+        excluded: false
+  - name: "Mage"
+    excluded: false
+    races:
+      - name: "Human"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Gnome"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Orc"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Undead"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Troll"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Skyborne"
+        faction: ["Alliance"]
+        excluded: false
+  - name: "Paladin"
+    excluded: false
+    races:
+      - name: "Human"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Dwarf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Undead"
+        faction: ["Horde"]
+        excluded: false
+  - name: "Priest"
+    excluded: false
+    races:
+      - name: "Human"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Dwarf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Night Elf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Gnome"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Undead"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Troll"
+        faction: ["Horde"]
+        excluded: false
+  - name: "Rogue"
+    excluded: false
+    races:
+      - name: "Human"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Dwarf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Night Elf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Gnome"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Orc"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Undead"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Troll"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Skyborne"
+        faction: ["Alliance", "Horde"]
+        excluded: false
+  - name: "Shaman"
+    excluded: false
+    races:
+      - name: "Dwarf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Orc"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Tauren"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Troll"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Skyborne"
+        faction: ["Horde"]
+        excluded: false
+  - name: "Warlock"
+    excluded: false
+    races:
+      - name: "Human"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Gnome"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Orc"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Undead"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Troll"
+        faction: ["Horde"]
+        excluded: false
+  - name: "Warrior"
+    excluded: false
+    races:
+      - name: "Human"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Dwarf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Night Elf"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Gnome"
+        faction: ["Alliance"]
+        excluded: false
+      - name: "Orc"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Undead"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Tauren"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Troll"
+        faction: ["Horde"]
+        excluded: false
+      - name: "Skyborne"
+        faction: ["Alliance", "Horde"]
+        excluded: false

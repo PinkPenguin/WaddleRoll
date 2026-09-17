@@ -20,3 +20,4 @@ dist/
 
 # Local config
 last_roll.yaml
+roll_history.yaml
