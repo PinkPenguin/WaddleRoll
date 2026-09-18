@@ -33,6 +33,7 @@ from modules.poe1.roller import (
     eligible_skill_pool,
 )
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
 from modules.poe1.editor import open_skills_editor, open_classes_editor
 from ui.slot_machine import SlotMachine
 from ui.version_badge import VersionBadge
@@ -91,6 +92,23 @@ def _action_button(text: str, color: str) -> QPushButton:
             font-family: '{FONT_FAMILY}'; font-size: 13px; font-weight: bold;
         }}
         QPushButton:hover {{ background-color: {ACCENT_DIM}; color: {TEXT}; }}
+    """)
+    return btn
+
+
+def _quiet_link_button(text: str) -> QPushButton:
+    """Small translucent backing (no border) -- reads fine on a flat
+    background but disappears against busy art if left fully
+    transparent."""
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {ACCENT_DIM}; background-color: {hex_to_rgba(BG, 170)};
+            border: none; border-radius: 4px; padding: 4px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        }}
+        QPushButton:hover {{ color: {ACCENT}; text-decoration: underline; }}
     """)
     return btn
 
@@ -333,6 +351,9 @@ class PoE1Widget(QWidget):
         # Footer
         footer = QHBoxLayout()
         footer.setSpacing(14)
+        history_btn = _quiet_link_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
         footer.addStretch(1)
         clear_btn = _action_button("Clear", ACCENT_DIM)
         clear_btn.clicked.connect(self._clear)
@@ -422,6 +443,74 @@ class PoE1Widget(QWidget):
         }
         save_last_roll(self.config_dir / "last_roll.yaml", data)
 
+    def _record_roll_history(self):
+        """Records if EITHER the independent skill or ascendancy roll
+        produced a genuine result -- these two rolls don't depend on
+        each other, so a roll where one succeeded and the other didn't
+        (or wasn't even enabled) is still worth keeping, not just the
+        case where both came back with something."""
+        skill_ok = bool(self.last_skill_result and self.last_skill_result.get("skill"))
+        asc_ok = bool(
+            self.last_ascendancy_result
+            and "error" not in self.last_ascendancy_result
+            and self.last_ascendancy_result.get("class")
+        )
+        if not skill_ok and not asc_ok:
+            return
+        entry = {
+            "skill_result": self.last_skill_result,
+            "ascendancy_result": self.last_ascendancy_result,
+        }
+        append_roll_history(self.config_dir / "roll_history.yaml", entry)
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            skill_result = entry.get("skill_result") or {}
+            skill_name = skill_result.get("skill") or "(no skill)"
+            asc_result = entry.get("ascendancy_result") or {}
+            asc_text = ""
+            if asc_result and "error" not in asc_result and asc_result.get("class"):
+                asc_text = f" | {asc_result['class']}"
+                if asc_result.get("ascendancy"):
+                    asc_text += f" → {asc_result['ascendancy']}"
+            return f"{skill_name}{asc_text}"
+
+        def restore_entry(entry: dict):
+            """Mirrors _restore_last_roll's own logic exactly, since
+            restoring an arbitrary history entry is the same operation
+            as restoring the single most recent one -- just with an
+            explicit "—" fallback for the skill slot, since a history
+            restore can be replacing an existing displayed result
+            (unlike the launch-time restore, which starts from a fresh,
+            still-idling slot with nothing to clear away)."""
+            self.last_skill_result = None
+            self.last_ascendancy_result = None
+            self.warning_lbl.setText("")
+            self.ascendancy_result_lbl.setText("")
+
+            skill_result = entry.get("skill_result")
+            if skill_result and skill_result.get("skill"):
+                self.last_skill_result = skill_result
+                self.warning_lbl.setText(skill_result.get("warning") or "")
+                color = self._skill_color_by_name(skill_result["skill"])
+                self.slot_machine.set_static(skill_result["skill"], color)
+            else:
+                self.slot_machine.set_static("—")
+
+            asc_result = entry.get("ascendancy_result")
+            if asc_result and "error" not in asc_result:
+                self.last_ascendancy_result = asc_result
+                asc_text = asc_result["class"]
+                if asc_result.get("ascendancy"):
+                    asc_text += f"  →  {asc_result['ascendancy']}"
+                self.ascendancy_result_lbl.setText(asc_text)
+
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
+
     def _do_roll(self):
         locked_skill = self.last_skill_result.get("skill") if (self.lock_skill.isChecked() and self.last_skill_result) else None
 
@@ -468,6 +557,7 @@ class PoE1Widget(QWidget):
                     self.warning_lbl.setText(asc_result["warning"])
 
         self._save_last_roll()
+        self._record_roll_history()
 
     def _clear(self):
         self.last_skill_result = None

@@ -52,6 +52,7 @@ from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
 from ui.colors import hex_to_rgba
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
 
 # ── Palette: gold structural chrome, functional Alliance/Horde duality ──
 BG            = "#141110"
@@ -81,7 +82,7 @@ def _tool_button(text: str) -> QPushButton:
             border: 1px solid {GOLD_DIM}; border-radius: 4px; padding: 6px 14px;
             font-family: '{FONT_FAMILY}'; font-size: 12px;
         }}
-        QPushButton:hover {{ background-color: {hex_to_rgba(BG, 120)}; }}
+        QPushButton:hover {{ background-color: {hex_to_rgba(GOLD, 60)}; }}
     """)
     return btn
 
@@ -91,8 +92,8 @@ def _flat_button(text: str) -> QPushButton:
     btn.setCursor(Qt.CursorShape.PointingHandCursor)
     btn.setStyleSheet(f"""
         QPushButton {{
-            color: {GOLD_DIM}; background-color: transparent;
-            border: none; padding: 6px 10px;
+            color: {GOLD_DIM}; background-color: {hex_to_rgba(BG, 170)};
+            border: none; border-radius: 4px; padding: 6px 10px;
             font-family: '{FONT_FAMILY}'; font-size: 12px;
         }}
         QPushButton:hover {{ color: {GOLD}; text-decoration: underline; }}
@@ -386,6 +387,11 @@ class WowWidget(QWidget):
         # Footer
         footer = QHBoxLayout()
         footer.setSpacing(14)
+
+        history_btn = _flat_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
+
         footer.addStretch(1)
 
         clear_btn = _flat_button("Clear")
@@ -503,6 +509,30 @@ class WowWidget(QWidget):
             return
         save_last_roll(self.config_dir / "last_roll.yaml", self.last_result)
 
+    def _record_roll_history(self, result: dict):
+        """Kept separate from _save_last_roll -- that one's a restore-
+        on-launch mechanism (overwrite, single entry), this is an
+        append-only log (capped, many entries). Different concerns,
+        different files, even though both fire at the same "roll is
+        fully settled" point."""
+        if not result or "error" in result:
+            return
+        append_roll_history(self.config_dir / "roll_history.yaml", result)
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            race = entry.get("race") or "(no race)"
+            return f"{entry.get('class', '?')} — {race}"
+
+        def restore_entry(entry: dict):
+            self.last_result = entry
+            self._show_static(entry)
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
+
     def _show_static(self, result: dict):
         if "error" in result:
             self.class_slot.set_static("—")
@@ -556,12 +586,13 @@ class WowWidget(QWidget):
     def _on_race_landed(self, _race_name: str):
         if self.last_result:
             self.warning_lbl.setText(self.last_result.get("warning") or "")
-            self._save_last_roll()
+            self._advance_reveal_queue()
 
     def _advance_reveal_queue(self):
         result = self.last_result
         if not self._reveal_queue:
             self._save_last_roll()
+            self._record_roll_history(result)
             return
 
         stage, was_locked = self._reveal_queue.pop(0)

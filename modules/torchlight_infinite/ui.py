@@ -45,6 +45,7 @@ from modules.torchlight_infinite.editor import open_skills_editor, open_heroes_e
 from ui.version_badge import VersionBadge
 from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
 from ui.slot_machine import SlotMachine
@@ -93,6 +94,23 @@ def _action_button(text: str, color: str, compact: bool = False) -> QPushButton:
             font-family: '{FONT_FAMILY}'; font-size: 13px; font-weight: bold;
         }}
         QPushButton:hover {{ background-color: {ACCENT_DIM}; color: {TEXT}; }}
+    """)
+    return btn
+
+
+def _quiet_link_button(text: str) -> QPushButton:
+    """Small translucent backing (no border) -- reads fine on a flat
+    background but disappears against busy art if left fully
+    transparent."""
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {ACCENT_DIM}; background-color: {hex_to_rgba(BG, 170)};
+            border: none; border-radius: 4px; padding: 4px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        }}
+        QPushButton:hover {{ color: {ACCENT}; text-decoration: underline; }}
     """)
     return btn
 
@@ -282,6 +300,11 @@ class TorchlightInfiniteWidget(QWidget):
         # Footer
         footer = QHBoxLayout()
         footer.setSpacing(14)
+
+        history_btn = _quiet_link_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
+
         footer.addStretch(1)
 
         clear_btn = _action_button("Clear", ACCENT_DIM)
@@ -355,6 +378,69 @@ class TorchlightInfiniteWidget(QWidget):
         }
         save_last_roll(self.config_dir / "last_roll.yaml", data)
 
+    def _record_roll_history(self):
+        """Records if EITHER the independent skill or hero-trait roll
+        produced a genuine result -- same reasoning as PoE1/PoE2's two
+        independent rolls."""
+        skill_ok = bool(self.last_skill_result and self.last_skill_result.get("skill"))
+        ht_ok = bool(self.last_hero_trait_result and self.last_hero_trait_result.get("trait"))
+        if not skill_ok and not ht_ok:
+            return
+        entry = {
+            "skill_result": self.last_skill_result,
+            "hero_trait_result": self.last_hero_trait_result,
+        }
+        append_roll_history(self.config_dir / "roll_history.yaml", entry)
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            skill_result = entry.get("skill_result") or {}
+            skill_name = skill_result.get("skill") or "(no skill)"
+            ht_result = entry.get("hero_trait_result") or {}
+            ht_text = ""
+            if ht_result and ht_result.get("trait"):
+                ht_text = f" | {ht_result.get('hero', '?')} — {ht_result['trait']}"
+            return f"{skill_name}{ht_text}"
+
+        def restore_entry(entry: dict):
+            self.last_skill_result = None
+            self.last_hero_trait_result = None
+            self.warning_lbl.setText("")
+            self.exclude_btn.setText("Exclude This Skill")
+            self.exclude_btn.setEnabled(False)
+
+            skill_result = entry.get("skill_result")
+            if skill_result and skill_result.get("skill"):
+                self.last_skill_result = skill_result
+                self.skill_slot.set_static(skill_result["skill"])
+                self.exclude_btn.setEnabled(True)
+                self.warning_lbl.setText(skill_result.get("warning") or "")
+            else:
+                self.skill_slot.set_static("—")
+
+            hero_trait_result = entry.get("hero_trait_result")
+            if hero_trait_result and hero_trait_result.get("trait"):
+                self.last_hero_trait_result = hero_trait_result
+                # This entry has a genuine hero/trait result -- make
+                # sure that section is actually enabled to show it, not
+                # left grayed out because the checkbox happened to be
+                # off when this dialog was opened. Checking it fires
+                # its own toggled signal, which already wires both
+                # _update_hero_trait_visibility and _persist_settings.
+                if not self.hero_trait_roll_cb.isChecked():
+                    self.hero_trait_roll_cb.setChecked(True)
+                self.hero_slot.set_static(hero_trait_result["hero"])
+                self.trait_slot.set_static(hero_trait_result["trait"])
+            else:
+                self.hero_slot.set_static("—")
+                self.trait_slot.set_static("—")
+
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
+
     def _on_skill_landed(self, _skill_name: str):
         """Only fires for an actual animated spin landing -- locked/
         error cases enable the exclude button directly instead, since
@@ -411,6 +497,7 @@ class TorchlightInfiniteWidget(QWidget):
                 self.warning_lbl.setText(hero_trait_result["warning"])
 
         self._save_last_roll()
+        self._record_roll_history()
 
     def _exclude_current_skill(self):
         """Mirrors Hero Siege's one-click exclude: confirms first, since

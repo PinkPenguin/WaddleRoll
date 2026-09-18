@@ -46,6 +46,7 @@ from modules.hero_siege.roller import (
     load_settings, save_settings, roll,
 )
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
 from modules.hero_siege.editor import open_classes_editor, open_relics_editor
 from ui.slot_machine import SlotMachine
 from ui.version_badge import VersionBadge
@@ -144,6 +145,24 @@ def _flat_button(text: str) -> QPushButton:
         }}
         QPushButton:hover {{ color: {MUSTARD}; text-decoration: underline; }}
         QPushButton:disabled {{ color: #4a3a30; }}
+    """)
+    return btn
+
+
+def _quiet_link_button(text: str) -> QPushButton:
+    """Small translucent backing (no border) rather than fully
+    transparent -- reads fine on a flat background but disappears
+    against busy art. Kept separate from _flat_button (used by Clear)
+    rather than changing that one's appearance too."""
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {BLOOD}; background-color: {hex_to_rgba(INK, 170)};
+            border: none; border-radius: 4px; padding: 4px 8px;
+            font-family: '{BODY_FONT}'; font-size: 11px;
+        }}
+        QPushButton:hover {{ color: {MUSTARD}; text-decoration: underline; }}
     """)
     return btn
 
@@ -397,6 +416,10 @@ class HeroSiegeWidget(QWidget):
         self.ignore_exclusions_cb.toggled.connect(self._persist_settings)
         footer.addWidget(self.ignore_exclusions_cb)
 
+        history_btn = _quiet_link_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
+
         footer.addStretch(1)
 
         clear_btn = _flat_button("Clear")
@@ -463,6 +486,36 @@ class HeroSiegeWidget(QWidget):
             return
         save_last_roll(self.config_dir / "last_roll.yaml", self.last_result)
 
+    def _record_roll_history(self, result: dict):
+        """Fires alongside every _save_last_roll call in this file --
+        there are three of them (error case, locked-class case, and
+        inside _on_class_landed for the normal animated case), not one
+        shared save point like Dota/FO4/Grim Dawn had, since this
+        module's reveal is chained through direct signal connections
+        rather than a single settle point. Each of the three fires
+        exactly once per roll, so adding this alongside all three
+        covers every path without risking a double-record."""
+        if not result or "error" in result:
+            return
+        append_roll_history(self.config_dir / "roll_history.yaml", result)
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            mode_tag = " (Relic)" if entry.get("mode") == "relic" else ""
+            result_text = entry.get("result") or "(none)"
+            return f"{entry.get('class', '?')} — {result_text}{mode_tag}"
+
+        def restore_entry(entry: dict):
+            self.last_result = entry
+            self.slot_machine.set_static("—" if "error" in entry else entry["class"])
+            self.skill_slot.set_static("—" if "error" in entry else (entry.get("result") or "(none available)"))
+            self._reveal_meta(entry)
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
+
     def _do_roll(self):
         wildcard_enabled = self.wildcard_cb.isChecked()
         wildcard_chance = self.wildcard_chance_pct / 100.0
@@ -481,6 +534,7 @@ class HeroSiegeWidget(QWidget):
             self.skill_slot.set_static("—")
             self._reveal_meta(result)
             self._save_last_roll()
+            self._record_roll_history(result)
             return
 
         self.exclude_btn.setEnabled(False)
@@ -493,6 +547,7 @@ class HeroSiegeWidget(QWidget):
             self.skill_slot.set_static(result["result"] or "(none available)")
             self._reveal_meta(result)
             self._save_last_roll()
+            self._record_roll_history(result)
         else:
             pool = [c["name"] for c in self.classes if not c.get("excluded", False)]
             self.slot_machine.spin(pool, result["class"])
@@ -516,6 +571,7 @@ class HeroSiegeWidget(QWidget):
             skill_text = result["result"] or "(none available)"
             self.skill_slot.spin(pool, skill_text, duration_ms=1200)
             self._save_last_roll()
+            self._record_roll_history(result)
 
     def _on_skill_landed(self, skill_text: str):
         """Fires once the skill/relic slot's own spin lands -- the

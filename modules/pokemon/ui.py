@@ -52,6 +52,7 @@ from modules.pokemon.roller import (
 from modules.pokemon.editor import open_pokemon_grid
 from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
 from ui.slot_machine import SlotMachine
@@ -113,6 +114,25 @@ def _flat_button(text: str, color: str = None) -> QPushButton:
         }}
         QPushButton:hover {{ color: {ACCENT}; text-decoration: underline; }}
         QPushButton:disabled {{ color: #c8bfae; }}
+    """)
+    return btn
+
+
+def _quiet_link_button(text: str) -> QPushButton:
+    """Small translucent backing (no border) -- reads fine on a flat
+    background but disappears against busy art if left fully
+    transparent. Kept separate from _flat_button (used for Manage
+    Pokémon/Open Config Folder/Clear/per-slot Exclude) rather than
+    changing those buttons' appearance too."""
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {ACCENT_DIM}; background-color: {hex_to_rgba(BG_PANEL, 200)};
+            border: none; border-radius: 4px; padding: 4px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        }}
+        QPushButton:hover {{ color: {ACCENT}; text-decoration: underline; }}
     """)
     return btn
 
@@ -295,6 +315,9 @@ class PokemonWidget(QWidget):
         # Footer
         footer = QHBoxLayout()
         footer.setSpacing(14)
+        history_btn = _quiet_link_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
         footer.addStretch(1)
         clear_btn = _flat_button("Clear")
         clear_btn.clicked.connect(self._clear)
@@ -335,7 +358,7 @@ class PokemonWidget(QWidget):
 
         slot_machine = SlotMachine(
             text_color=TEXT, dim_color=BORDER_SOFT, font_family=FONT_FAMILY,
-            compact=True, current_font_size=22,
+            compact=True, current_font_size=15, min_height= 0,
         )
         slot_machine.finished.connect(self._make_slot_landed_handler(index))
         row_layout.addWidget(slot_machine, stretch=1)
@@ -439,6 +462,76 @@ class PokemonWidget(QWidget):
         team = [s["current_name"] for s in self.slots[:self.team_size] if s["current_name"]]
         save_last_roll(self.config_dir / "last_roll.yaml", {"team": team})
 
+    def _record_roll_history(self, locked_names: list, unlocked_indices: list, rolled: list):
+        """Records exactly once, immediately, from the just-computed
+        result -- deliberately NOT inside _save_last_roll or
+        _make_slot_landed_handler, both of which fire multiple times
+        per roll here (once per landing slot, on top of the roll-
+        completion save itself), since Pokemon's slots land
+        independently rather than through one shared settle point.
+        Hooking this into either would create up to 6 duplicate
+        history entries for a single roll.
+
+        The full team is reconstructed directly from what was just
+        computed (locked_names + the newly rolled names, by their
+        original slot index) rather than read back from
+        self.slots[i]["current_name"]: for an unlocked slot that name
+        doesn't actually update until that slot's own spin finishes,
+        so reading it here -- before any slot has visually landed --
+        would silently record last roll's stale name, or nothing, for
+        every slot that's still spinning."""
+        team_by_index = {}
+        for i in range(self.team_size):
+            slot = self.slots[i]
+            if slot["lock_cb"].isChecked() and slot["current_name"]:
+                team_by_index[i] = slot["current_name"]
+        for idx, name in zip(unlocked_indices, rolled):
+            team_by_index[idx] = name
+
+        team = [team_by_index[i] for i in sorted(team_by_index)]
+        if not team:
+            return
+        append_roll_history(self.config_dir / "roll_history.yaml", {"team": team})
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            team = entry.get("team") or []
+            return ", ".join(team) if team else "(empty team)"
+
+        def restore_entry(entry: dict):
+            team = entry.get("team") or []
+            # Restoring a team of a different size than currently
+            # displayed adjusts the stepper to match -- showing 3
+            # restored slots alongside 3 leftover empty ones from a
+            # bigger current team_size would be a confusing partial
+            # restore, not a real "go back to this roll."
+            if team:
+                self.team_size = max(1, min(6, len(team)))
+                self.team_size_lbl.setText(str(self.team_size))
+                self._update_slot_visibility()
+                self._persist_settings()
+
+            for i, slot in enumerate(self.slots):
+                slot["lock_cb"].setChecked(False)
+                if i < len(team):
+                    name = team[i]
+                    slot["current_name"] = name
+                    slot["slot_machine"].set_static(name)
+                    slot["exclude_btn"].setText("Exclude")
+                    slot["exclude_btn"].setEnabled(True)
+                else:
+                    slot["current_name"] = None
+                    slot["slot_machine"].set_static("—")
+                    slot["exclude_btn"].setText("Exclude")
+                    slot["exclude_btn"].setEnabled(False)
+
+            self.warning_lbl.setText("")
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
+
     def _do_roll(self):
         locked_names = []
         unlocked_indices = []
@@ -486,6 +579,7 @@ class PokemonWidget(QWidget):
 
         self.warning_lbl.setText(result.get("warning") or "")
         self._save_last_roll()
+        self._record_roll_history(locked_names, unlocked_indices, rolled)
 
     def _make_exclude_handler(self, index: int):
         """Factory, not a plain lambda in the loop -- avoids the classic

@@ -41,6 +41,8 @@ from ui.config_folder import open_config_folder
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
+from ui.colors import hex_to_rgba
 
 # ── Pip-Boy palette ──────────────────────────────────────────────────────
 BG         = "#0a0f0a"
@@ -122,6 +124,27 @@ def _pip_button(text: str, color: str = GREEN, compact: bool = False) -> QPushBu
             font-family: '{FONT_FAMILY}'; font-size: 14px; font-weight: bold;
         }}
         QPushButton:hover {{ background-color: {GREEN_DARK}; color: {GREEN}; }}
+    """)
+    return btn
+
+
+def _quiet_link_button(text: str) -> QPushButton:
+    """Deliberately small and low-key -- not another bordered tool
+    button (the tool row was already at 5 of those, pushing the window
+    too wide once a 6th got added), just quiet terminal-style text.
+
+    Small translucent backing (no border) rather than fully transparent
+    -- reads fine on FO4's own flat terminal-green background but
+    disappears against the module's actual background art."""
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {GREEN_DIM}; background-color: {hex_to_rgba(BG, 170)};
+            border: none; border-radius: 4px; padding: 3px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        }}
+        QPushButton:hover {{ color: {GREEN}; text-decoration: underline; }}
     """)
     return btn
 
@@ -236,6 +259,10 @@ class FO4Widget(QWidget):
         self.perk_locked = TermCheckbox("PERK", checked=False, dim=True)
         for cb in (self.special_locked, self.weapon_locked, self.perk_locked):
             footer.addWidget(cb)
+
+        history_btn = _quiet_link_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
 
         footer.addStretch(1)
 
@@ -469,6 +496,7 @@ class FO4Widget(QWidget):
         self._update_display()
         self._set_status("> ROLL COMPLETE — GOOD LUCK, VAULT DWELLER", GREEN)
         self._save_last_roll()
+        self._record_roll_history()
 
     def _do_clear(self):
         self.current_special = None
@@ -563,6 +591,44 @@ class FO4Widget(QWidget):
             "perks": self.current_perks,
         }
         save_last_roll(self.config_dir / "last_roll.yaml", data)
+
+    def _record_roll_history(self):
+        """No explicit result dict to check here (unlike every other
+        module) -- FO4's result is bundled across three separate pieces
+        of instance state. Both of _do_roll's actual error cases
+        already return early before ever reaching this point, but
+        keeping this guard anyway for the same defensive consistency
+        every other module's history recording has, rather than relying
+        on control flow alone."""
+        if not self.current_roll or not self.current_roll.get("weapon"):
+            return
+        entry = {
+            "special": self.current_special,
+            "roll": self.current_roll,
+            "perks": self.current_perks,
+        }
+        append_roll_history(self.config_dir / "roll_history.yaml", entry)
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            roll = entry.get("roll") or {}
+            weapon = roll.get("weapon") or {}
+            name = weapon.get("name", "?")
+            perks = entry.get("perks") or []
+            perk_text = f" + {len(perks)} perk(s)" if perks else ""
+            return f"{name}{perk_text}"
+
+        def restore_entry(entry: dict):
+            self.current_special = entry.get("special")
+            self.current_roll = entry.get("roll")
+            self.current_perks = entry.get("perks") or []
+            self._update_display()
+            self._set_status("> RESTORED FROM HISTORY", GREEN_DIM)
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
 
     def _persist_settings(self, *_args):
         self.settings = {

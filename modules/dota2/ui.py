@@ -44,6 +44,7 @@ from ui.slot_machine import SlotMachine
 from ui.version_badge import VersionBadge
 from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
 from ui.colors import hex_to_rgba
@@ -111,15 +112,24 @@ def _action_button(text: str, color: str) -> QPushButton:
     return btn
 
 
-def _notes_link_button() -> QPushButton:
+def _quiet_link_button(text: str) -> QPushButton:
     """Deliberately small and low-key -- not a full action button, just
-    a quiet text link sitting under the slot machine."""
-    btn = QPushButton("view notes")
+    a quiet text link. Originally built just for "view notes" sitting
+    under the slot machine; generalized to take its own text once
+    "View History" needed the exact same treatment rather than
+    duplicating this styling a second time.
+
+    Small translucent backing (no border) rather than fully transparent
+    -- reads fine on a flat background but disappears against busy art,
+    same class of issue every other exposed label needed the chip
+    treatment for."""
+    btn = QPushButton(text)
     btn.setCursor(Qt.CursorShape.PointingHandCursor)
     btn.setStyleSheet(f"""
         QPushButton {{
-            color: {ACCENT_DIM}; background-color: transparent;
-            border: none; padding: 2px; font-family: '{FONT_FAMILY}'; font-size: 10px;
+            color: {ACCENT_DIM}; background-color: {hex_to_rgba(BG, 170)};
+            border: none; border-radius: 4px; padding: 3px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 10px;
         }}
         QPushButton:hover {{ color: {ACCENT}; text-decoration: underline; }}
         QPushButton:disabled {{ color: #333333; }}
@@ -243,7 +253,7 @@ class Dota2Widget(QWidget):
 
         notes_row = QHBoxLayout()
         notes_row.addStretch(1)
-        self.notes_btn = _notes_link_button()
+        self.notes_btn = _quiet_link_button("view notes")
         self.notes_btn.setEnabled(False)
         self.notes_btn.clicked.connect(self._view_notes_for_current_hero)
         notes_row.addWidget(self.notes_btn)
@@ -295,6 +305,9 @@ class Dota2Widget(QWidget):
         # Footer
         footer = QHBoxLayout()
         footer.setSpacing(14)
+        history_btn = _quiet_link_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
         footer.addStretch(1)
         clear_btn = _action_button("Clear", ACCENT_DIM)
         clear_btn.clicked.connect(self._clear)
@@ -329,6 +342,30 @@ class Dota2Widget(QWidget):
             return
         save_last_roll(self.config_dir / "last_roll.yaml", self.last_hero_result)
 
+    def _record_roll_history(self, result: dict):
+        """Fires alongside _save_last_roll, not on a delay -- this
+        module's own data is already fully determined the instant
+        roll_hero() returns, same as the save itself; only the visual
+        reveal (if any) happens later. Skips a "no hero" result, same
+        as any other error/empty-result case shouldn't clutter the log."""
+        if not result or not result.get("hero"):
+            return
+        append_roll_history(self.config_dir / "roll_history.yaml", result)
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            return entry.get("hero", "?")
+
+        def restore_entry(entry: dict):
+            self.last_hero_result = entry
+            self.slot_machine.set_static(entry.get("hero") or "—")
+            self.notes_btn.setEnabled(bool(entry.get("hero")))
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
+
     def _do_roll(self):
         locked_hero = self.last_hero_result.get("hero") if (self.lock_hero.isChecked() and self.last_hero_result) else None
         result = roll_hero(self.heroes, locked_hero=locked_hero)
@@ -348,6 +385,7 @@ class Dota2Widget(QWidget):
                 self.slot_machine.spin(self._eligible_pool_names(), result["hero"])
 
         self._save_last_roll()
+        self._record_roll_history(result)
 
     def _clear(self):
         self.last_hero_result = None

@@ -55,6 +55,7 @@ from modules.rimworld.editor import (
 from ui.slot_machine import SlotMachine
 from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
 from ui.colors import hex_to_rgba
@@ -108,6 +109,24 @@ def _primary_button(text: str) -> QPushButton:
     return btn
 
 
+def _quiet_link_button(text: str) -> QPushButton:
+    """Small translucent backing (no border) -- reads fine on a flat
+    background but disappears against busy art if left fully
+    transparent. Kept separate from _flat_button (used for the Manage/
+    Config/Copy/Clear buttons) rather than changing those too."""
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {ACCENT_DIM}; background-color: {hex_to_rgba(BG, 170)};
+            border: none; border-radius: 4px; padding: 4px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        }}
+        QPushButton:hover {{ color: {ACCENT}; text-decoration: underline; }}
+    """)
+    return btn
+
+
 class RimworldWidget(QWidget):
     def __init__(self, config_dir: Path, assets_dir: Path = None, parent=None):
         super().__init__(parent)
@@ -131,6 +150,7 @@ class RimworldWidget(QWidget):
 
         self._reveal_queue = []
         self._precept_issues_sorted = []   # kept sorted alphabetically, parallel to the precept rows' positions
+        self._history_recorded = True  # nothing pending to record yet
 
         self._build_ui()
         self._restore_last_roll()
@@ -263,6 +283,10 @@ class RimworldWidget(QWidget):
         copy_btn.clicked.connect(self._copy_to_clipboard)
         footer.addWidget(copy_btn)
 
+        history_btn = _quiet_link_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
+
         footer.addStretch(1)
 
         clear_btn = _flat_button("Clear")
@@ -313,6 +337,7 @@ class RimworldWidget(QWidget):
         self.last_structure = structure_result["structure"]
         self.last_memes = meme_result["memes"]
         self.last_precepts = precept_result["precepts"]
+        self._history_recorded = False
 
         warnings = [w for w in (structure_result.get("warning"), meme_result.get("warning")) if w]
         self.warning_lbl.setText("  ".join(warnings))
@@ -332,6 +357,9 @@ class RimworldWidget(QWidget):
     def _reveal_next(self):
         if not self._reveal_queue:
             self._save_last_roll()
+            if not self._history_recorded:
+                self._history_recorded = True
+                self._record_roll_history()
             return
 
         label, value, is_precept = self._reveal_queue.pop(0)
@@ -371,6 +399,57 @@ class RimworldWidget(QWidget):
             "precepts": self.last_precepts,
         }
         save_last_roll(self.config_dir / "last_roll.yaml", data)
+
+    def _record_roll_history(self):
+        if not self.last_structure and not self.last_memes and not self.last_precepts:
+            return
+        entry = {
+            "structure": self.last_structure,
+            "memes": self.last_memes,
+            "precepts": self.last_precepts,
+        }
+        append_roll_history(self.config_dir / "roll_history.yaml", entry)
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            structure = entry.get("structure") or "(no structure)"
+            memes = entry.get("memes") or []
+            meme_text = ", ".join(memes) if memes else "no memes"
+            precepts = entry.get("precepts") or {}
+            return f"{structure} — {meme_text} ({len(precepts)} precepts)"
+
+        def restore_entry(entry: dict):
+            # Cancels any pending reveal -- if a QTimer.singleShot from
+            # an in-progress reveal is still queued up when this dialog
+            # is opened (dlg.exec() is modal but doesn't halt the event
+            # loop, so a pending timer genuinely can still fire), it
+            # would otherwise later find an empty queue, hit
+            # _reveal_next's base case again, and try to record this
+            # same restored entry a second time. Marking history as
+            # already recorded for this logical state is the actual
+            # guard; clearing the queue just stops the stale timer from
+            # doing anything at all when it does fire.
+            self._reveal_queue = []
+            self._history_recorded = True
+
+            self.last_structure = entry.get("structure")
+            self.last_memes = entry.get("memes") or []
+            self.last_precepts = entry.get("precepts") or {}
+            self.warning_lbl.setText("")
+            self._clear_results_display()
+
+            if self.last_structure:
+                self._append_ideology_row("Structure", self.last_structure)
+            for i, name in enumerate(self.last_memes, start=1):
+                self._append_ideology_row(f"Meme {i}", name)
+            for issue, precept in self.last_precepts.items():
+                self._append_precept_row(issue, precept)
+
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
 
     def _clear(self):
         self.last_structure = None

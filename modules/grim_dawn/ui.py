@@ -53,6 +53,7 @@ from ui.slot_machine import SlotMachine
 from ui.version_badge import VersionBadge
 from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
 from ui.colors import hex_to_rgba
@@ -142,6 +143,25 @@ def _flat_button(text: str) -> QPushButton:
         QPushButton {{
             color: {RUST}; background-color: transparent;
             border: none; padding: 4px 6px;
+            font-family: '{BODY_FONT}'; font-size: 11px;
+        }}
+        QPushButton:hover {{ color: {PLAGUE}; text-decoration: underline; }}
+    """)
+    return btn
+
+
+def _quiet_link_button(text: str) -> QPushButton:
+    """Small translucent backing (no border) rather than fully
+    transparent -- reads fine on a flat background but disappears
+    against busy art, same issue every other exposed label needed the
+    chip treatment for. Kept separate from _flat_button (used by
+    Clear) rather than changing that one's appearance too."""
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {RUST}; background-color: {hex_to_rgba(IRON, 170)};
+            border: none; border-radius: 4px; padding: 4px 8px;
             font-family: '{BODY_FONT}'; font-size: 11px;
         }}
         QPushButton:hover {{ color: {PLAGUE}; text-decoration: underline; }}
@@ -262,6 +282,11 @@ class GrimDawnWidget(QWidget):
         # Footer
         footer = QHBoxLayout()
         footer.setSpacing(14)
+
+        history_btn = _quiet_link_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
+
         footer.addStretch(1)
 
         clear_btn = _flat_button("Clear")
@@ -338,6 +363,30 @@ class GrimDawnWidget(QWidget):
             return
         save_last_roll(self.config_dir / "last_roll.yaml", self.last_result)
 
+    def _record_roll_history(self, result: dict):
+        """Fires alongside _save_last_roll, not on a delay -- same as
+        Dota/FO4, this module's own data is already fully determined
+        the instant roll() returns; _save_last_roll doesn't wait for
+        any of the three staggered slots to actually land either, so
+        neither does this."""
+        if not result or "error" in result:
+            return
+        append_roll_history(self.config_dir / "roll_history.yaml", result)
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            skill = entry.get("skill") or "(no skill)"
+            return f"{entry.get('mastery_a', '?')} — {skill} — {entry.get('mastery_b', '?')}"
+
+        def restore_entry(entry: dict):
+            self.last_result = entry
+            self._show_static(entry)
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
+
     def _do_roll(self):
         locked_a = self.last_result.get("mastery_a") if (self.lock_mastery_a.isChecked() and self.last_result) else None
         locked_skill = self.last_result.get("skill") if (self.lock_skill.isChecked() and self.last_result) else None
@@ -352,6 +401,7 @@ class GrimDawnWidget(QWidget):
             self.mastery_b_slot.set_static("—")
             self.warning_lbl.setText(result["error"])
             self._save_last_roll()
+            self._record_roll_history(result)
             return
 
         self.warning_lbl.setText(result.get("warning") or "")
@@ -377,6 +427,7 @@ class GrimDawnWidget(QWidget):
             self.mastery_b_slot.spin(self._mastery_names(), result["mastery_b"], duration_ms=MASTERY_B_DURATION_MS)
 
         self._save_last_roll()
+        self._record_roll_history(result)
 
     def _show_static(self, result: dict):
         """Used for restore -- already resolved, nothing to animate."""

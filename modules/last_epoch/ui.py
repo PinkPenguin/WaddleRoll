@@ -23,6 +23,7 @@ from modules.last_epoch.editor import open_classes_editor
 from ui.version_badge import VersionBadge
 from ui.config_folder import open_config_folder
 from ui.last_roll import load_last_roll, save_last_roll
+from ui.roll_history import append_roll_history, load_roll_history, open_roll_history_dialog
 from ui.background_widget import BackgroundWidget
 from ui.assets import find_module_background
 from ui.colors import hex_to_rgba
@@ -90,6 +91,23 @@ def _action_button(text: str, color: str) -> QPushButton:
             font-family: '{FONT_FAMILY}'; font-size: 13px; font-weight: bold;
         }}
         QPushButton:hover {{ background-color: {PINK_DIM}; color: {TEXT}; }}
+    """)
+    return btn
+
+
+def _quiet_link_button(text: str) -> QPushButton:
+    """Small translucent backing (no border) -- reads fine on a flat
+    background but disappears against busy art if left fully
+    transparent."""
+    btn = QPushButton(text)
+    btn.setCursor(Qt.CursorShape.PointingHandCursor)
+    btn.setStyleSheet(f"""
+        QPushButton {{
+            color: {PINK_DIM}; background-color: {hex_to_rgba(BG, 170)};
+            border: none; border-radius: 4px; padding: 4px 8px;
+            font-family: '{FONT_FAMILY}'; font-size: 11px;
+        }}
+        QPushButton:hover {{ color: {PINK}; text-decoration: underline; }}
     """)
     return btn
 
@@ -239,6 +257,11 @@ class LastEpochWidget(QWidget):
         # Footer
         footer = QHBoxLayout()
         footer.setSpacing(14)
+
+        history_btn = _quiet_link_button("View History")
+        history_btn.clicked.connect(self._view_history)
+        footer.addWidget(history_btn)
+
         footer.addStretch(1)
 
         clear_btn = _action_button("Clear", PINK_DIM)
@@ -340,6 +363,27 @@ class LastEpochWidget(QWidget):
             return
         save_last_roll(self.config_dir / "last_roll.yaml", self.last_result)
 
+    def _record_roll_history(self, result: dict):
+        if not result or "error" in result:
+            return
+        append_roll_history(self.config_dir / "roll_history.yaml", result)
+
+    def _view_history(self):
+        history = load_roll_history(self.config_dir / "roll_history.yaml")
+
+        def format_entry(entry: dict) -> str:
+            skill = entry.get("skill") or "(no skill)"
+            notable = entry.get("notable")
+            notable_tag = f" · {notable}" if notable else ""
+            return f"{entry.get('class', '?')} — {skill}{notable_tag}"
+
+        def restore_entry(entry: dict):
+            self.last_result = entry
+            self._show_static(entry)
+            self._save_last_roll()
+
+        open_roll_history_dialog(self, "Roll History", history, format_entry, on_restore=restore_entry)
+
     def _show_static(self, result: dict):
         """Used for restore -- already resolved, nothing to animate."""
         if "error" in result:
@@ -377,6 +421,7 @@ class LastEpochWidget(QWidget):
             self.notable_slot.set_static("—")
             self.warning_lbl.setText(result["error"])
             self._save_last_roll()
+            self._record_roll_history(result)
             return
 
         self.warning_lbl.setText("")
@@ -411,12 +456,13 @@ class LastEpochWidget(QWidget):
     def _on_notable_landed(self, _notable_name: str):
         if self.last_result:
             self.warning_lbl.setText(self.last_result.get("warning") or "")
-            self._save_last_roll()
+            self._advance_reveal_queue()
 
     def _advance_reveal_queue(self):
         result = self.last_result
         if not self._reveal_queue:
             self._save_last_roll()
+            self._record_roll_history(result)
             return
 
         stage, was_locked = self._reveal_queue.pop(0)

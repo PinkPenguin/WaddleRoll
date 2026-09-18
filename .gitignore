@@ -16,6 +16,7 @@ Thumbs.db
 # Build/dist artifacts, if you ever package this
 build/
 dist/
+releases/
 *.spec
 
 # Local config
