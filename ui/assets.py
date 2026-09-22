@@ -13,7 +13,7 @@ art later is just dropping a correctly-named file in place, not
 touching any code.
 
 Per-module (modules/<name>/assets/):
-  card.png / card.jpg              -- picker screen thumbnail
+  card_old.png / card.jpg              -- picker screen thumbnail
   background.png / background.jpg  -- module UI's full background
   title.png / title.jpg            -- reserved, not decided whether this happens at all
 

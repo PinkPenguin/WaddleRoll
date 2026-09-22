@@ -16,12 +16,14 @@ from PySide6.QtCore import Qt
 
 from core.discovery import discover_modules
 from core.launcher_settings import load_hidden_module_ids, save_hidden_module_ids
-from ui.game_picker import GamePicker, MULTI_COLUMN_THRESHOLD
+from ui.game_picker import GamePicker, compute_picker_size
 from ui.module_visibility import open_module_visibility_dialog
 
 BG = "#F280A1"
-PICKER_DEFAULT_SIZE = (420, 650)     # single column
-PICKER_GRID_SIZE = (580, 720)        # 2-column grid -- needs real width, not just the single-column size stretched
+# Floor the window can't shrink below, regardless of module count --
+# a separate concern from the picker's IDEAL size (that's computed
+# per-count by compute_picker_size), this just keeps it from being
+# resized down to something unusably small.
 PICKER_MIN_SIZE = (420, 720)
 
 
@@ -86,7 +88,7 @@ class MainWindow(QMainWindow):
         self.stack.setCurrentWidget(self.picker)
 
     def _picker_size(self) -> tuple:
-        return PICKER_GRID_SIZE if len(self._visible_modules()) > MULTI_COLUMN_THRESHOLD else PICKER_DEFAULT_SIZE
+        return compute_picker_size(len(self._visible_modules()))
 
     def _wrap_with_back_button(self, module_widget: QWidget, background_color: str) -> QWidget:
         wrapper = QWidget()

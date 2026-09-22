@@ -7,15 +7,35 @@ Purely generic -- knows nothing about any specific game.
 
 Palette: pink/magenta, matching the PNGN (PinkPenguin) branding.
 
-Layout: a single column while there aren't too many modules, switching
-automatically to a 2-column grid past MULTI_COLUMN_THRESHOLD -- not a
-manual toggle, since the person expects to keep every module visible
-rather than hiding most of them, so the layout itself needs to handle
-"many visible modules" gracefully rather than depending on a
-visibility toggle keeping the count low. Either way, the whole card
-area is wrapped in a QScrollArea now (it wasn't before) as a safety net
--- this shouldn't need to be perfectly tuned forever as more modules
-get added later.
+Layout: card size is FIXED (CARD_WIDTH x CARD_HEIGHT), not derived from
+available width -- the window grows to fit as more modules get added,
+via increasing column count at fixed tiers (columns_for_count()), not
+the other way around. This replaced an earlier version where the card
+itself stretched to fill whatever width the layout handed it: harmless
+for the flat-color/text cards, but real card art uses crop-to-fill
+(KeepAspectRatioByExpanding in GameCard.paintEvent), and the same
+source image was cropping completely differently depending on whether
+it landed in the single-column strip or the old 2-column grid -- a
+layout-dependent bug, not a rendering one. CARD_WIDTH/CARD_HEIGHT now
+match the actual generated card art's ratio exactly (3:1, see that
+constant's own comment) rather than an arbitrary placeholder -- the
+source files themselves are still oversized for a UI card, which is a
+separate, already-acknowledged thing to fix on the asset side, not
+something this file's display sizing needs to compensate for.
+
+compute_picker_size() is exported so main_window.py can size the
+window from actual current module count, the same "measured, not
+guessed" principle already applied to every module's own window sizing
+-- just applied to the picker shell itself now. Its per-section height
+estimates are exactly that, estimates (no way to measure real Qt
+layout metrics without actually running the UI) -- worth a real check
+against the live app and nudging CHROME_HEIGHT_ESTIMATE if the numbers
+turn out to be off in practice.
+
+Either way, the whole card area stays wrapped in a QScrollArea as a
+genuine safety net for the case column growth alone can't handle
+(module counts large enough that even the top column tier still needs
+more rows than reasonably fit on screen) -- not the primary mechanism.
 """
 
 from PySide6.QtWidgets import (
@@ -39,11 +59,64 @@ ACCENT = "#ff5fa8"
 TEXT = "#f7e4ef"
 TEXT_DIM = "#a3708f"
 
-MULTI_COLUMN_THRESHOLD = 6   # switch from 1 column to a grid once more than this many modules are visible
-GRID_COLUMNS = 2
+# Fixed card size, matching the actual generated card art's ratio
+# (2172x724 = exactly 3:1) -- the source files themselves are much
+# larger than needed for a UI card (that's a separate, already-
+# acknowledged thing to fix on the asset side), but the DISPLAY ratio
+# here should match them exactly now that there's a real number,
+# rather than the earlier placeholder guess (which happened to land
+# close, 3.09:1, but wasn't actually derived from anything).
+CARD_WIDTH = 270
+CARD_HEIGHT = 90
+CARD_GAP = 12
+
+# (max_module_count_for_this_tier, columns) -- checked in order, first
+# match wins. Growing in steps rather than one binary switch, so the
+# jump from 1 to 2 columns isn't the only transition that ever
+# happens as the roster grows over time.
+COLUMN_TIERS = [
+    (4, 1),
+    (10, 2),   # each column's last full row before stepping up -- not just an even number
+    (18, 3),   # 16 (the old boundary) would leave 3 columns' last row 1/3 filled at the switch point
+    (28, 4),   # same reasoning as above, 25 wasn't a multiple of 4 either
+]
+MAX_COLUMNS = 5   # beyond the last tier's cap -- QScrollArea covers whatever this still doesn't fit
+
+# Rough estimate of everything in the picker's outer layout that ISN'T
+# the card grid itself (margins, logo/title, subtitle, manage-visible-
+# games row, inter-widget spacing) -- see module docstring on why this
+# is an estimate, not a measurement.
+CHROME_HEIGHT_ESTIMATE = 328   # was 360 before margins dropped from 40 to 24 per side (-32 total)
+CHROME_WIDTH_ESTIMATE = 68     # was 100 before the same margin change (-32 total)
 
 LAUNCHER_ASSETS_DIR = get_app_root() / "assets"   # top-level, not under any module -- background/logo for the picker itself
 WADDLEROLL_PINK = "#F280A1"   # the project's own established brand color, per HANDOFF.md
+
+
+def columns_for_count(n: int) -> int:
+    for max_count, cols in COLUMN_TIERS:
+        if n <= max_count:
+            return cols
+    return MAX_COLUMNS
+
+
+def compute_picker_size(module_count: int) -> tuple:
+    """Window size derived from the fixed card size and however many
+    columns/rows the current module count needs -- not a hand-picked
+    constant per layout mode. Falls back to at least 1 column/row so
+    an empty or tiny module count doesn't compute something degenerate."""
+    if module_count <= 0:
+        columns, rows = 1, 1
+    else:
+        columns = columns_for_count(module_count)
+        rows = -(-module_count // columns)  # ceil division without importing math
+
+    grid_width = columns * CARD_WIDTH + (columns - 1) * CARD_GAP
+    grid_height = rows * CARD_HEIGHT + (rows - 1) * CARD_GAP
+
+    width = grid_width + CHROME_WIDTH_ESTIMATE
+    height = grid_height + CHROME_HEIGHT_ESTIMATE
+    return (width, height)
 
 
 class GameCard(QWidget):
@@ -54,7 +127,7 @@ class GameCard(QWidget):
         super().__init__(parent)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.setMinimumHeight(70)
+        self.setFixedSize(CARD_WIDTH, CARD_HEIGHT)
 
         assets_dir = get_app_root() / "modules" / module.id / "assets"
         card_image = find_module_card(assets_dir)
@@ -120,7 +193,7 @@ class GameCard(QWidget):
                 self.CORNER_RADIUS, self.CORNER_RADIUS,
             )
 
-        white_width = 4.0
+        white_width = 2.0
         white_pen = QPen(QColor("#ffffff"))
         white_pen.setWidthF(white_width)
         painter.setPen(white_pen)
@@ -192,7 +265,7 @@ class GamePicker(QWidget):
         self._background.lower()
 
         outer_layout = QVBoxLayout(self)
-        outer_layout.setContentsMargins(40, 40, 40, 40)
+        outer_layout.setContentsMargins(24, 24, 24, 24)
         outer_layout.setSpacing(12)
 
         # Logo image replaces the plain emoji+text title when present --
@@ -262,19 +335,20 @@ class GamePicker(QWidget):
         cards_widget = QWidget()
         cards_widget.setStyleSheet("background: transparent;")
 
-        if len(modules) > MULTI_COLUMN_THRESHOLD:
-            grid = QGridLayout(cards_widget)
-            grid.setSpacing(12)
-            for i, module in enumerate(modules):
-                row, col = divmod(i, GRID_COLUMNS)
-                grid.addWidget(self._make_card(module), row, col)
-        else:
-            col_layout = QVBoxLayout(cards_widget)
-            col_layout.setContentsMargins(0, 0, 0, 0)
-            col_layout.setSpacing(12)
-            for module in modules:
-                col_layout.addWidget(self._make_card(module))
-            col_layout.addStretch(1)
+        columns = columns_for_count(len(modules))
+        grid = QGridLayout(cards_widget)
+        grid.setSpacing(CARD_GAP)
+        for i, module in enumerate(modules):
+            row, col = divmod(i, columns)
+            grid.addWidget(self._make_card(module), row, col)
+
+        # Push all rows to the top rather than letting Qt spread them
+        # out to fill the scroll area's viewport when there's more
+        # vertical space than the grid actually needs -- same ceil
+        # division compute_picker_size uses, so this lines up with
+        # whatever row count the window was actually sized for.
+        final_row = -(-len(modules) // columns)
+        grid.setRowStretch(final_row, 1)
 
         scroll.setWidget(cards_widget)
         outer_layout.addWidget(scroll, stretch=1)
