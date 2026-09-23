@@ -54,186 +54,363 @@
 # accurate for a race that isn't exclusive to one side.
 
 classes:
-  - name: "Druid"
+- name: Druid
+  excluded: false
+  specs:
+  - name: Balance
     excluded: false
-    races:
-      - name: "Night Elf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Tauren"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Skyborne"
-        faction: ["Alliance", "Horde"]
-        excluded: false
-  - name: "Hunter"
+  - name: Feral
     excluded: false
-    races:
-      - name: "Human"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Dwarf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Night Elf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Orc"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Tauren"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Troll"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Skyborne"
-        faction: ["Alliance", "Horde"]
-        excluded: false
-  - name: "Mage"
+  - name: Restoration
     excluded: false
-    races:
-      - name: "Human"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Gnome"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Orc"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Undead"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Troll"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Skyborne"
-        faction: ["Alliance"]
-        excluded: false
-  - name: "Paladin"
+  races:
+  - name: Night Elf
+    faction:
+    - Alliance
     excluded: false
-    races:
-      - name: "Human"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Dwarf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Undead"
-        faction: ["Horde"]
-        excluded: false
-  - name: "Priest"
+  - name: Tauren
+    faction:
+    - Horde
     excluded: false
-    races:
-      - name: "Human"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Dwarf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Night Elf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Gnome"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Undead"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Troll"
-        faction: ["Horde"]
-        excluded: false
-  - name: "Rogue"
+  - name: Skyborne
+    faction:
+    - Alliance
+    - Horde
     excluded: false
-    races:
-      - name: "Human"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Dwarf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Night Elf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Gnome"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Orc"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Undead"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Troll"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Skyborne"
-        faction: ["Alliance", "Horde"]
-        excluded: false
-  - name: "Shaman"
+- name: Hunter
+  excluded: false
+  specs:
+  - name: Beast Mastery
     excluded: false
-    races:
-      - name: "Dwarf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Orc"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Tauren"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Troll"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Skyborne"
-        faction: ["Horde"]
-        excluded: false
-  - name: "Warlock"
+  - name: Marksmanship
     excluded: false
-    races:
-      - name: "Human"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Gnome"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Orc"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Undead"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Troll"
-        faction: ["Horde"]
-        excluded: false
-  - name: "Warrior"
+  - name: Survival
     excluded: false
-    races:
-      - name: "Human"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Dwarf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Night Elf"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Gnome"
-        faction: ["Alliance"]
-        excluded: false
-      - name: "Orc"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Undead"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Tauren"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Troll"
-        faction: ["Horde"]
-        excluded: false
-      - name: "Skyborne"
-        faction: ["Alliance", "Horde"]
-        excluded: false
+  races:
+  - name: Human
+    faction:
+    - Alliance
+    excluded: false
+  - name: Dwarf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Night Elf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Orc
+    faction:
+    - Horde
+    excluded: false
+  - name: Tauren
+    faction:
+    - Horde
+    excluded: false
+  - name: Troll
+    faction:
+    - Horde
+    excluded: false
+  - name: Skyborne
+    faction:
+    - Alliance
+    - Horde
+    excluded: false
+- name: Mage
+  excluded: false
+  specs:
+  - name: Arcane
+    excluded: false
+  - name: Fire
+    excluded: false
+  - name: Frost
+    excluded: false
+  races:
+  - name: Human
+    faction:
+    - Alliance
+    excluded: false
+  - name: Gnome
+    faction:
+    - Alliance
+    excluded: false
+  - name: Orc
+    faction:
+    - Horde
+    excluded: false
+  - name: Undead
+    faction:
+    - Horde
+    excluded: false
+  - name: Troll
+    faction:
+    - Horde
+    excluded: false
+  - name: Skyborne
+    faction:
+    - Alliance
+    excluded: false
+- name: Paladin
+  excluded: false
+  specs:
+  - name: Holy
+    excluded: false
+  - name: Protection
+    excluded: false
+  - name: Retribution
+    excluded: false
+  races:
+  - name: Human
+    faction:
+    - Alliance
+    excluded: false
+  - name: Dwarf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Undead
+    faction:
+    - Horde
+    excluded: false
+- name: Priest
+  excluded: false
+  specs:
+  - name: Discipline
+    excluded: false
+  - name: Holy
+    excluded: false
+  - name: Shadow
+    excluded: false
+  races:
+  - name: Human
+    faction:
+    - Alliance
+    excluded: false
+  - name: Dwarf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Night Elf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Gnome
+    faction:
+    - Alliance
+    excluded: false
+  - name: Undead
+    faction:
+    - Horde
+    excluded: false
+  - name: Troll
+    faction:
+    - Horde
+    excluded: false
+- name: Rogue
+  excluded: false
+  specs:
+  - name: Assassination
+    excluded: false
+  - name: Combat
+    excluded: false
+  - name: Subtlety
+    excluded: false
+  races:
+  - name: Human
+    faction:
+    - Alliance
+    excluded: false
+  - name: Dwarf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Night Elf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Gnome
+    faction:
+    - Alliance
+    excluded: false
+  - name: Orc
+    faction:
+    - Horde
+    excluded: false
+  - name: Undead
+    faction:
+    - Horde
+    excluded: false
+  - name: Troll
+    faction:
+    - Horde
+    excluded: false
+  - name: Skyborne
+    faction:
+    - Alliance
+    - Horde
+    excluded: false
+- name: Shaman
+  excluded: false
+  specs:
+  - name: Elemental
+    excluded: false
+  - name: Enhancement
+    excluded: false
+  - name: Restoration
+    excluded: false
+  races:
+  - name: Dwarf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Orc
+    faction:
+    - Horde
+    excluded: false
+  - name: Tauren
+    faction:
+    - Horde
+    excluded: false
+  - name: Troll
+    faction:
+    - Horde
+    excluded: false
+  - name: Skyborne
+    faction:
+    - Horde
+    excluded: false
+- name: Warlock
+  excluded: false
+  specs:
+  - name: Affliction
+    excluded: false
+  - name: Demonology
+    excluded: false
+  - name: Destruction
+    excluded: false
+  races:
+  - name: Human
+    faction:
+    - Alliance
+    excluded: false
+  - name: Gnome
+    faction:
+    - Alliance
+    excluded: false
+  - name: Orc
+    faction:
+    - Horde
+    excluded: false
+  - name: Undead
+    faction:
+    - Horde
+    excluded: false
+  - name: Troll
+    faction:
+    - Horde
+    excluded: false
+- name: Warrior
+  excluded: false
+  specs:
+  - name: Arms
+    excluded: false
+  - name: Fury
+    excluded: false
+  - name: Protection
+    excluded: false
+  races:
+  - name: Human
+    faction:
+    - Alliance
+    excluded: false
+  - name: Dwarf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Night Elf
+    faction:
+    - Alliance
+    excluded: false
+  - name: Gnome
+    faction:
+    - Alliance
+    excluded: false
+  - name: Orc
+    faction:
+    - Horde
+    excluded: false
+  - name: Undead
+    faction:
+    - Horde
+    excluded: false
+  - name: Tauren
+    faction:
+    - Horde
+    excluded: false
+  - name: Troll
+    faction:
+    - Horde
+    excluded: false
+  - name: Skyborne
+    faction:
+    - Alliance
+    - Horde
+    excluded: false
+
+professions:
+  - name: "Alchemy"
+    category: "primary"
+    type: "crafting"
+    excluded: false
+  - name: "Blacksmithing"
+    category: "primary"
+    type: "crafting"
+    excluded: false
+  - name: "Enchanting"
+    category: "primary"
+    type: "crafting"
+    excluded: false
+  - name: "Engineering"
+    category: "primary"
+    type: "crafting"
+    excluded: false
+  - name: "Herbalism"
+    category: "primary"
+    type: "gathering"
+    excluded: false
+  - name: "Leatherworking"
+    category: "primary"
+    type: "crafting"
+    excluded: false
+  - name: "Mining"
+    category: "primary"
+    type: "gathering"
+    excluded: false
+  - name: "Skinning"
+    category: "primary"
+    type: "gathering"
+    excluded: false
+  - name: "Tailoring"
+    category: "primary"
+    type: "crafting"
+    excluded: false
+  - name: "Cooking"
+    category: "secondary"
+    excluded: false
+  - name: "First Aid"
+    category: "secondary"
+    excluded: false
+  - name: "Fishing"
+    category: "secondary"
+    excluded: false
+  - name: "Inscription"
+    category: "primary"
+    type: "crafting"
+    excluded: true
+  - name: "Jewelcrafting"
+    category: "primary"
+    type: "crafting"
+    excluded: true
+  - name: "Archaeology"
+    category: "secondary"
+    excluded: true

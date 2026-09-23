@@ -17,6 +17,7 @@ Thumbs.db
 build/
 dist/
 releases/
+release/
 *.spec
 
 # Local config

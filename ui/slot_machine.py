@@ -23,15 +23,102 @@ Entries (pool items and the result) may be plain strings, or
 lets a caller (e.g. poe2/ui.py tagging item/ascendancy skills) attach a
 display-only color per entry without this widget knowing anything about
 what the color *means* -- color is opaque here.
+
+Optional built-in lock toggle (show_lock=True): a small custom-painted
+padlock (LockToggle, below) to the right of the reel, replacing the
+pattern every module had been repeating -- a separate row of
+QCheckBoxes underneath the whole result panel, one per result, wired up
+by hand in each module's own ui.py. Baking it into this shared widget
+means any module gets a working, consistently-styled lock for free just
+by passing show_lock=True, rather than every module reimplementing the
+same checkbox-plus-wiring. Off by default, so every existing usage
+across the project is completely unaffected until a module explicitly
+opts in.
+
+The lock is a floating overlay (positioned in resizeEvent), not a
+layout sibling of the reel -- the reel always fills this widget's FULL
+width regardless of show_lock, so it's always centered on the row's
+true center. A [reel][lock] side-by-side layout can't achieve that: the
+lock eats space only from the right, so the reel's own centered point
+drifts left of the row's true center by half the lock's footprint --
+correct arithmetic for "centered within the remaining space," but not
+what "centered" means visually.
 """
 
 import random
 
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QGraphicsDropShadowEffect
-from PySide6.QtCore import Qt, QTimer, Signal
-from PySide6.QtGui import QColor
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QAbstractButton, QGraphicsDropShadowEffect
+from PySide6.QtCore import Qt, QTimer, Signal, QRectF
+from PySide6.QtGui import QColor, QPainter, QPen
 
 IDLE_INTERVAL_MS = 35  # constant, fastest tick while idling
+
+
+class LockToggle(QAbstractButton):
+    """A small, custom-painted padlock -- shackle arc + body, drawn via
+    QPainter rather than styled through a QCheckBox's own indicator
+    (Qt's QSS can only draw boxes/circles via border-radius tricks, not
+    an actual recognizable lock shape). QAbstractButton gives the same
+    interaction semantics a QCheckBox has (setCheckable, isChecked,
+    setChecked, a toggled signal) while leaving the visual entirely up
+    to paintEvent -- exactly what's needed here, not a repurposed
+    checkbox with unusual styling bolted on.
+
+    Deliberately minimal: two shapes (an outlined arc, an outlined-or-
+    filled rounded rect), no text, no extra ornamentation -- meant to
+    read as "a lock" at a glance without competing for attention.
+
+    color: single color used for both shapes; only the body FILLS when
+    checked, the shackle stays an outline in both states (a padlock's
+    shackle doesn't conceptually "fill") -- keeps the checked/unchecked
+    difference to the smallest change that still reads clearly.
+
+    unlocked_opacity: how visible the icon is before it's checked --
+    translucent by default (a quiet, easy-to-ignore affordance until it
+    matters), full opacity once checked. Adjustable per call site
+    rather than hardcoded, since "how subtle is subtle enough" is
+    exactly the kind of thing worth tuning without editing this file
+    again.
+    """
+
+    def __init__(self, color: str, size: int = 14, unlocked_opacity: float = 0.10, parent=None):
+        super().__init__(parent)
+        self.setCheckable(True)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
+        self._color = color
+        self._unlocked_opacity = unlocked_opacity
+        self.setFixedSize(size, size)
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+
+        w, h = self.width(), self.height()
+        color = QColor(self._color)
+        color.setAlphaF(1.0 if self.isChecked() else self._unlocked_opacity)
+
+        pen = QPen(color)
+        pen.setWidthF(max(1.0, w * 0.1))
+        painter.setPen(pen)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
+
+        # Shackle: the top half of an ellipse, traced as an arc -- reads
+        # as the rounded metal hook of a padlock. Always just an
+        # outline, in both states.
+        shackle_rect = QRectF(w * 0.30, h * 0.08, w * 0.40, h * 0.47)
+        painter.drawArc(shackle_rect, 0, 180 * 16)  # Qt angles are in 1/16th of a degree; 0->180 traces the top half
+
+        # Body: a small rounded rect, overlapping the shackle's base
+        # slightly so the two shapes read as one connected lock rather
+        # than two floating pieces. Outlined while unlocked, filled
+        # solid once locked -- the one visual change between states.
+        body_rect = QRectF(w * 0.15, h * 0.45, w * 0.70, h * 0.47)
+        if self.isChecked():
+            painter.setBrush(color)
+        radius = min(body_rect.width(), body_rect.height()) * 0.25
+        painter.drawRoundedRect(body_rect, radius, radius)
+
+        painter.end()
 
 
 def _normalize_entry(entry):
@@ -46,14 +133,88 @@ def _normalize_pool(pool):
     return [_normalize_entry(e) for e in pool]
 
 
+def _build_varied_ring(entries: list, length: int) -> list:
+    """Builds a ring of exactly `length` entries with no two adjacent
+    entries sharing the same name, whenever that's mathematically
+    possible -- guaranteed whenever there are 2+ distinct names, since
+    each is repeated evenly here, via the standard "rearrange so no two
+    adjacent items match" technique: group same-value entries together,
+    then fill every-other ring position (0, 2, 4, ...) before wrapping
+    to fill the remaining ones (1, 3, 5, ...). With only ONE distinct
+    name, adjacent duplicates are unavoidable -- nothing else exists to
+    show -- so this just returns that name repeated.
+
+    Fixes a real bug: naively concatenating a short pool to reach the
+    needed ring length, then shuffling the whole flat block, had a real
+    chance of clustering the same name across several adjacent ring
+    positions -- more likely the shorter/less varied the pool was, up
+    to guaranteed with only one distinct "other" name. Since the
+    slowest, most visible ticks are deliberately concentrated right
+    before landing (the ease-out curve, then the fizzle tail on top of
+    it), a slow tick landing inside such a cluster looked exactly like
+    the reel visibly stalling on one entry right before flipping to the
+    real result.
+
+    Also fixes the ring's own wraparound (last entry back to first) --
+    relevant for start_idle(), which spins indefinitely and does
+    eventually wrap the index around (unlike a real spin() landing,
+    which by construction never needs enough ticks to reach the wrap
+    point -- see spin()'s own ring-sizing comment)."""
+    unique_entries = list(entries)
+    if len(unique_entries) <= 1:
+        return list(unique_entries) * max(1, length)
+
+    repeats = -(-length // len(unique_entries))  # ceil division
+    shuffled_names = list(unique_entries)
+    random.shuffle(shuffled_names)  # randomizes which name's "group" goes first
+    grouped_pool = []
+    for entry in shuffled_names:
+        grouped_pool += [entry] * repeats
+    grouped_pool = grouped_pool[:length]
+
+    ring = [None] * length
+    pos = 0
+    for item in grouped_pool:
+        ring[pos] = item
+        pos += 2
+        if pos >= length:
+            pos = 1
+
+    # The even/odd fill guarantees no adjacent duplicate in sequence,
+    # but not across the ring's own wrap (index length-1 back to index
+    # 0) -- possible when length is odd and the repeat counts don't
+    # divide evenly. Best-effort fix: swap the last entry with an
+    # earlier one that would be compatible at BOTH swap sites (not just
+    # checking the position being swapped INTO -- the value actually
+    # being moved there needs checking, not whatever was sitting there
+    # before). Not always achievable: with exactly 2 distinct names on
+    # an odd-length ring, one name must occur more than floor(n/2)
+    # times, which makes a wraparound clash mathematically unavoidable
+    # (pigeonhole) -- in that case this just leaves it, since forcing a
+    # swap would only move the clash elsewhere, not remove it.
+    if length >= 2 and ring[-1][0] == ring[0][0]:
+        last_val = ring[-1][0]
+        for i in range(1, length - 1):
+            candidate_val = ring[i][0]
+            last_val_ok_at_i = last_val != ring[i - 1][0] and last_val != ring[i + 1][0]
+            candidate_ok_at_end = candidate_val != ring[length - 2][0] and candidate_val != ring[0][0]
+            if last_val_ok_at_i and candidate_ok_at_end:
+                ring[-1], ring[i] = ring[i], ring[-1]
+                break
+
+    return ring
+
+
 class SlotMachine(QWidget):
     finished = Signal(str)
     clicked = Signal(str)  # emitted with the landed result, click only registers while stopped
+    lock_toggled = Signal(bool)  # only emitted when show_lock=True
 
     def __init__(self, text_color="#ffffff", dim_color="#888888",
                  font_family="Arial", parent=None, compact: bool = False,
                  show_glow: bool = True, current_font_size: int = 34,
-                 min_height: int = None, bordered_rows: bool = False):
+                 min_height: int = None, bordered_rows: bool = False,
+                 show_lock: bool = False):
         """
         compact: when True, prev/next are still created and still added
         to the layout (so nothing else in this class needs to
@@ -94,6 +255,19 @@ class SlotMachine(QWidget):
         unaffected -- built for PoE1's full 3-line reel, where each row
         stays visible (unlike compact mode, where prev/next collapse to
         0px and a border on them would never show anyway).
+
+        show_lock: adds a small checkbox to the right of the reel --
+        is_locked()/set_locked() read and set it, lock_toggled fires on
+        change. Off by default so every existing usage is unaffected.
+        Deliberately just a bare checkbox, no label text next to it, to
+        stay visually quiet -- this sits directly beside a result a
+        person is actively looking at, not off in a separate row of
+        checkboxes underneath the whole panel like every module used to
+        build by hand. Locking state is never touched automatically by
+        start_idle()/spin()/set_static() -- only set_locked() changes
+        it, so a lock persists across rolls exactly the way every
+        module's own hand-built checkbox already worked, until the
+        module itself explicitly clears it (e.g. on a Clear action).
         """
         super().__init__(parent)
         self.setObjectName("slot_machine_root")
@@ -104,8 +278,22 @@ class SlotMachine(QWidget):
         self._compact = compact
         self._show_glow = show_glow
         self._bordered_rows = bordered_rows
+        self._show_lock = show_lock
 
+        # Always the simple, single QVBoxLayout, regardless of
+        # show_lock -- the reel (prev/current/next stack) fills this
+        # widget's FULL width either way, so it's always centered on
+        # the row's true center point. A [reel][lock] side-by-side
+        # layout (an earlier version of this) can't achieve that: the
+        # lock only eats space from the right, so the reel's own
+        # centered point drifts left of the row's true center by half
+        # the lock's footprint -- correct arithmetic for "centered
+        # within the remaining space," but not what "centered" should
+        # mean visually. The lock checkbox (when show_lock) is instead
+        # a floating overlay positioned in resizeEvent, not a layout
+        # sibling competing for horizontal space at all.
         layout = QVBoxLayout(self)
+
         if compact:
             # prev/next are genuinely 0px tall here, but Qt's layout
             # spacing still reserves space AROUND them regardless of
@@ -146,6 +334,20 @@ class SlotMachine(QWidget):
         layout.addWidget(self.prev_lbl)
         layout.addWidget(self.current_lbl)
         layout.addWidget(self.next_lbl)
+
+        self.lock_checkbox = None
+        if show_lock:
+            # text_color, not dim_color -- the lock reads as a
+            # "prominent" element of the row (like the landed result
+            # itself), translucent until checked via LockToggle's own
+            # unlocked_opacity rather than needing a separate dim
+            # color. Explicitly parented (LockToggle(..., parent=self))
+            # since it isn't added to any layout, which would otherwise
+            # handle parenting automatically.
+            self.lock_checkbox = LockToggle(color=text_color, size=16, parent=self)
+            self.lock_checkbox.setToolTip("Lock this result so it stays the same on the next roll")
+            self.lock_checkbox.toggled.connect(self.lock_toggled.emit)
+            self._position_lock_checkbox()
 
         if min_height is not None:
             self.setMinimumHeight(min_height)
@@ -222,15 +424,43 @@ class SlotMachine(QWidget):
             self.clicked.emit(self._result)
         super().mousePressEvent(event)
 
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._position_lock_checkbox()
+
+    def _position_lock_checkbox(self):
+        """The lock checkbox has no layout parent (it's a floating
+        overlay, not a layout sibling -- see __init__'s own comment on
+        why), so nothing repositions it automatically as this widget
+        resizes; this does that manually. Right-aligned, vertically
+        centered on the whole widget, with a small margin."""
+        if self.lock_checkbox is None:
+            return
+        margin = 4
+        x = self.width() - self.lock_checkbox.width() - margin
+        y = (self.height() - self.lock_checkbox.height()) // 2
+        self.lock_checkbox.move(max(0, x), max(0, y))
+
+    def is_locked(self) -> bool:
+        """False when show_lock wasn't set -- no checkbox exists to be
+        checked, so there's nothing to lock."""
+        return bool(self.lock_checkbox and self.lock_checkbox.isChecked())
+
+    def set_locked(self, locked: bool):
+        """No-op when show_lock wasn't set. Qt's own setChecked only
+        fires the toggled signal (and so lock_toggled, via the
+        constructor's connection) when the value actually changes, so
+        this is safe to call unconditionally on every Clear without
+        worrying about redundant signal emissions."""
+        if self.lock_checkbox:
+            self.lock_checkbox.setChecked(locked)
+
     def start_idle(self, pool):
         """Begin continuous fast spinning with no landing -- the default
         state whenever nothing's been rolled/committed yet.
         pool: list of names, or (name, color) tuples."""
         entries = _normalize_pool(pool) if pool else [("—", None)]
-        ring = []
-        while len(ring) < 14:
-            ring += entries
-        random.shuffle(ring)
+        ring = _build_varied_ring(entries, max(14, len(entries)))
 
         if self._timer.isActive():
             self._timer.stop()
@@ -244,7 +474,8 @@ class SlotMachine(QWidget):
         self._timer.start(IDLE_INTERVAL_MS)
 
     def spin(self, pool, result, duration_ms: int = 5000,
-              fizzle_ticks: int = 3, fizzle_max_interval: int = 420):
+              fizzle_ticks: int = 3, fizzle_max_interval: int = 420,
+              base_interval: int = None):
         """
         pool: eligible option names at roll time (for visual variety --
               doesn't need to be exhaustive, just needs a few entries).
@@ -259,6 +490,21 @@ class SlotMachine(QWidget):
         past it (up to fizzle_max_interval) before the reel actually
         stops -- avoids the landing feeling like a hard cut from "still
         ticking at speed" to "frozen".
+        base_interval: the FIRST tick's speed (and the floor the ease-
+        out curve starts from). None (the default) uses the same speed
+        idle mode ticks at (IDLE_INTERVAL_MS, 35ms) -- unchanged
+        behavior for every existing call site. Worth raising for a spin
+        that starts right as another one lands (a cascaded reveal, e.g.
+        race starting only once class lands): the quadratic ease-out
+        bunches most ticks toward the fast end of the curve by
+        construction, and at 35ms several of those early ticks are
+        individually too fast to read as distinct movement -- which, if
+        nothing else is animating nearby to help sell "it's still
+        rolling," can look like the reel freezing for a stretch before
+        suddenly, visibly moving right at the end. Raising the floor
+        (e.g. to 90ms) means every tick starts in the visibly-distinct
+        range, no fast/blurry phase at all -- confirmed by actually
+        computing the resulting schedule, not just guessing.
         Interrupts idle mode automatically if it was running.
         """
         if self._timer.isActive():
@@ -277,12 +523,12 @@ class SlotMachine(QWidget):
                     break
 
         others = [e for e in entries if e[0] != result_name]
-        random.shuffle(others)
         if not others:
             others = [(result_name, result_color)]
 
         self._schedule = self._build_schedule(
-            duration_ms, fizzle_ticks=fizzle_ticks, fizzle_max_interval=fizzle_max_interval
+            duration_ms, fizzle_ticks=fizzle_ticks, fizzle_max_interval=fizzle_max_interval,
+            base_interval=base_interval,
         )
         self._step = 0
         landing_index = len(self._schedule)
@@ -291,11 +537,10 @@ class SlotMachine(QWidget):
         # needs, not a fixed pad -- otherwise a small pool caps the tick
         # count (via a short ring) and the animation undershoots the
         # requested duration regardless of how long the schedule wants
-        # to run.
-        ring = []
-        while len(ring) < landing_index + 4:
-            ring += others
-        random.shuffle(ring)
+        # to run. _build_varied_ring (not a naive shuffle) keeps same-
+        # name entries from clustering next to each other regardless of
+        # how short `others` is -- see that function's own docstring.
+        ring = _build_varied_ring(others, landing_index + 4)
         ring.insert(landing_index, (result_name, result_color))
 
         self._ring = ring
@@ -318,7 +563,8 @@ class SlotMachine(QWidget):
             self.finished.emit(result_name)
 
     def _build_schedule(self, duration_ms: int, max_interval: int = 220,
-                          fizzle_ticks: int = 3, fizzle_max_interval: int = 420) -> list[int]:
+                          fizzle_ticks: int = 3, fizzle_max_interval: int = 420,
+                          base_interval: int = None) -> list[int]:
         """Per-tick interval durations (ms). Two phases:
           1. Main ease-out, short first growing longer, up to max_interval.
              Tick *count* is derived from duration_ms directly (via the
@@ -331,8 +577,12 @@ class SlotMachine(QWidget):
              duration_ms alone would suggest); tune fizzle_ticks /
              fizzle_max_interval to taste, or pass fizzle_ticks=0 to get
              the old hard-stop behavior back.
+
+        base_interval: overrides the curve's own starting/floor speed
+        (see spin()'s own docstring for why this exists). None uses
+        IDLE_INTERVAL_MS, unchanged from before this parameter existed.
         """
-        base = IDLE_INTERVAL_MS
+        base = base_interval if base_interval is not None else IDLE_INTERVAL_MS
         avg_interval = base + (max_interval - base) / 3  # mean of a t^2 ease-out over [0,1]
         steps = max(1, round(duration_ms / avg_interval))
 

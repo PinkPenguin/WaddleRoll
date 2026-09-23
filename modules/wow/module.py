@@ -23,8 +23,8 @@ class Module(GameModule):
     accent_color = "#c9a84c"       # keep in sync with GOLD in ui.py
     icon = "⚔️"
 
-    default_size = (540, 680)
-    min_size = (540, 680)
+    default_size = (550, 750)
+    min_size = (550, 750)
 
     def get_widget(self, parent=None):
         return WowWidget(config_dir=CONFIG_DIR, assets_dir=ASSETS_DIR, parent=parent)
